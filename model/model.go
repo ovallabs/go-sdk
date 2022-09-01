@@ -20,8 +20,8 @@ const (
 type (
 	// CreateCustomerRequest attributes payload to create new API customer
 	CreateCustomerRequest struct {
-		Name            string `json:"name,omitempty"`
-		Email           string `json:"email,omitempty"`
+		Name            string `json:"name"`
+		Email           string `json:"email"`
 		Reference       string `json:"reference"`
 		MobileNumber    string `json:"mobileNumber"`
 		YieldOfferingID string `json:"yield_offering_id"`
@@ -30,11 +30,11 @@ type (
 	// UpdateCustomerRequest attributes payload to update API customer
 	UpdateCustomerRequest struct {
 		CustomerID      string `json:"customer_id"`
-		Name            string `json:"name,omitempty"`
-		Email           string `json:"email,omitempty"`
-		Reference       string `json:"reference,omitempty"`
-		MobileNumber    string `json:"mobileNumber,omitempty"`
-		YieldOfferingID string `json:"yield_offering_id,omitempty"`
+		Name            string `json:"name"`
+		Email           string `json:"email"`
+		Reference       string `json:"reference"`
+		MobileNumber    string `json:"mobile_number"`
+		YieldOfferingID string `json:"yield_offering_id"`
 	}
 
 	// GetCustomerByIDRequest attributes payload to update API customer
@@ -128,3 +128,9 @@ type (
 		Transaction     []*Transaction `json:"transaction"`
 	}
 )
+
+// Meta data for pagination
+type Meta struct {
+	PageCount     int `json:"page-count,omitempty"`
+	ResourceCount int `json:"resource-count,omitempty"`
+}
