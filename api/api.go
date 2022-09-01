@@ -3,20 +3,27 @@ package api
 
 import (
 	"context"
-	"github.com/ovalfi/go-sdk/model"
 	"time"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
 	"github.com/rs/zerolog"
+	
+	"github.com/ovalfi/go-sdk/model"
 )
 
 // RemoteCalls abstracted definition of supported functions
 type RemoteCalls interface {
+	// Customer APIs
 	CreateCustomer(ctx context.Context, request model.CreateCustomerRequest) (model.Customer, error)
 	UpdateCustomer(ctx context.Context, request model.UpdateCustomerRequest) (model.Customer, error)
 	GetAllCustomers(ctx context.Context) ([]model.Customer, error)
 	GetCustomerByID(ctx context.Context, request model.GetCustomerByIDRequest) (model.CustomerInfo, error)
+
+	// Yield APIs
+	GetBusinessPortfolios(ctx context.Context) ([]model.Portfolio, error)
+
+	// Run in sandbox mode
 	RunInSandboxMode()
 }
 
@@ -53,6 +60,5 @@ func (c *Call) ReloadIdempotentID() {
 // RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 func (c *Call) RunInSandboxMode() {
 	c.client.SetDebug(true)
-	//c.client.EnableTrace()
 	c.sandboxMode = true
 }
