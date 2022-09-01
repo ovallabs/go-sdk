@@ -2,6 +2,8 @@ module github.com/ovalfi/go-sdk
 
 go 1.17
 
+replace github.com/go-resty/resty/v2 => gopkg.in/resty.v1 v1.12.0
+
 require (
 	github.com/go-resty/resty/v2 v2.7.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
