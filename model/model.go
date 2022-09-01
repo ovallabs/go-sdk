@@ -128,9 +128,3 @@ type (
 		Transaction     []*Transaction `json:"transaction"`
 	}
 )
-
-// Meta data for pagination
-type Meta struct {
-	PageCount     int `json:"page-count,omitempty"`
-	ResourceCount int `json:"resource-count,omitempty"`
-}
