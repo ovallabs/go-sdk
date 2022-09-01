@@ -28,6 +28,7 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
+		SetHeader("X-Signature", c.signature).
 		SetContext(ctx).
 		Post(endpoint)
 
