@@ -1,3 +1,4 @@
+// Package helpers hold utility functions and methods
 package helpers
 
 import (
@@ -5,6 +6,7 @@ import (
 	"fmt"
 )
 
+// GetSignatureFromReferenceAndPubKey returns the string equivalent of a SHA256 hash on reference and public key
 func GetSignatureFromReferenceAndPubKey(reference, publicKey string) string {
 	concat := fmt.Sprintf("%s%s", publicKey, reference)
 	hash := sha256.New()

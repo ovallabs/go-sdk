@@ -1,6 +1,8 @@
 // Package model defines object and payload models
 package model
 
+import "database/sql"
+
 const (
 	// BaseURL is the definition of ovalfi base url
 	BaseURL = "https://sandbox-api.ovalfi-app.com/api/"
@@ -43,15 +45,25 @@ type (
 	GetCustomerByIDRequest struct {
 		CustomerID string `json:"customer_id"`
 	}
+
+	// CreateYieldOfferingProfilesRequest payload for API yield offerings
+	CreateYieldOfferingProfilesRequest struct {
+		Name                  string  `json:"name"`
+		Description           string  `json:"description"`
+		APYRate               float64 `json:"apy_rate"`
+		Currency              string  `json:"currency"`
+		DepositLockDay        int     `json:"deposit_lock_day"`
+		MinimumDepositAllowed float64 `json:"minimum_deposit_allowed"`
+		MaximumDepositAllowed float64 `json:"maximum_deposit_allowed"`
+		YieldableAfterDay     int     `json:"yieldable_after_day"`
+		WithdrawalLimitRate   float64 `json:"withdrawal_limit_rate"`
+		PortfolioID           string  `json:"portfolio_id"`
+		Reference             string  `json:"reference"`
+	}
 )
 
-// Data transfer objects
 type (
-	UpdatedAt struct {
-		Time  string `json:"time"`
-		Valid bool   `json:"valid"`
-	}
-
+	// Destination for a transfer
 	Destination struct {
 		BankDetails      BankDetails      `json:"bankDetails"`
 		PersonalDetails  PersonalDetails  `json:"personalDetails"`
@@ -92,6 +104,7 @@ type (
 		SwiftCode   string `json:"swiftCode"`
 	}
 
+	// Transaction data object for customer transactions
 	Transaction struct {
 		ID          string      `json:"id"`
 		BusinessID  string      `json:"businessID"`
@@ -107,18 +120,20 @@ type (
 		BatchDate   string      `json:"batchDate"`
 	}
 
+	// Customer data object
 	Customer struct {
-		ID              string     `json:"id"`
-		Name            string     `json:"customer_name"`
-		MobileNumber    string     `json:"mobile_number"`
-		Email           string     `json:"email"`
-		Channel         string     `json:"channel"`
-		Reference       string     `json:"reference"`
-		YieldOfferingID string     `json:"api_yield_offering_id"`
-		UpdatedAt       *UpdatedAt `json:"updated_at"`
-		CreatedAt       string     `json:"created_at"`
+		ID              string       `json:"id"`
+		Name            string       `json:"customer_name"`
+		MobileNumber    string       `json:"mobile_number"`
+		Email           string       `json:"email"`
+		Channel         string       `json:"channel"`
+		Reference       string       `json:"reference"`
+		YieldOfferingID string       `json:"api_yield_offering_id"`
+		UpdatedAt       sql.NullTime `json:"updated_at"`
+		CreatedAt       string       `json:"created_at"`
 	}
 
+	// CustomerInfo data object for additional customer details
 	CustomerInfo struct {
 		Customer
 		DepositCount    int64          `json:"deposit_count"`

@@ -3,14 +3,15 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/ovalfi/go-sdk/helpers"
 	"net/http"
 
+	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
 
 const customerAPIVersion = "v1/customer"
 
+// CreateCustomer makes an API request using Call to create a customer
 func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerRequest) (model.Customer, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, customerAPIVersion)
 
@@ -48,6 +49,7 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 	return response.Data, nil
 }
 
+// UpdateCustomer makes an API request using Call to update a customer
 func (c *Call) UpdateCustomer(ctx context.Context, request model.UpdateCustomerRequest) (model.Customer, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, customerAPIVersion)
 
@@ -83,6 +85,7 @@ func (c *Call) UpdateCustomer(ctx context.Context, request model.UpdateCustomerR
 	return response.Data, nil
 }
 
+// GetAllCustomers makes an API request using Call to get all customers
 func (c *Call) GetAllCustomers(ctx context.Context) ([]model.Customer, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, customerAPIVersion)
 
@@ -113,6 +116,7 @@ func (c *Call) GetAllCustomers(ctx context.Context) ([]model.Customer, error) {
 	return response.Data, nil
 }
 
+// GetCustomerByID makes an API request using Call to get a customer by ID
 func (c *Call) GetCustomerByID(ctx context.Context, request model.GetCustomerByIDRequest) (model.CustomerInfo, error) {
 	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, customerAPIVersion, request.CustomerID)
 
