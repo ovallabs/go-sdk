@@ -3,12 +3,13 @@ package api
 import (
 	"context"
 	"fmt"
+	"github.com/ovalfi/go-sdk/helpers"
 	"net/http"
 
 	"github.com/ovalfi/go-sdk/model"
 )
 
-const customerAPIVersion = "/v1/customer"
+const customerAPIVersion = "v1/customer"
 
 func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerRequest) (model.Customer, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, customerAPIVersion)
@@ -21,6 +22,7 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
+	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
 	response := struct {
 		Data model.Customer `json:"data"`
 	}{}
@@ -28,7 +30,7 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader("X-Signature", c.signature).
+		SetHeader("Signature", signature).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -47,7 +49,7 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 }
 
 func (c *Call) UpdateCustomer(ctx context.Context, request model.UpdateCustomerRequest) (model.Customer, error) {
-	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, customerAPIVersion, request.CustomerID)
+	endpoint := fmt.Sprintf("%s%s", c.baseURL, customerAPIVersion)
 
 	fL := c.logger.With().Str("func", "UpdateCustomer").Str("endpoint", endpoint).Logger()
 	fL.Info().Msg("starting...")
@@ -112,7 +114,7 @@ func (c *Call) GetAllCustomers(ctx context.Context) ([]model.Customer, error) {
 }
 
 func (c *Call) GetCustomerByID(ctx context.Context, request model.GetCustomerByIDRequest) (model.CustomerInfo, error) {
-	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, customerAPIVersion, request.CustomerID)
+	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, customerAPIVersion, request.CustomerID)
 
 	fL := c.logger.With().Str("func", "GetCustomerByID").Str("endpoint", endpoint).Logger()
 	fL.Info().Msg("starting...")

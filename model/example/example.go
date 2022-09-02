@@ -3,11 +3,11 @@ package example
 import "github.com/ovalfi/go-sdk/model"
 
 var (
-	NewCustomerRequest = model.CreateCustomerRequest{
+	NewCreateCustomerRequest = model.CreateCustomerRequest{
 		Name:            "Nonso",
 		Email:           "chinonso@ovalfinance.com",
-		Reference:       "12345678",
+		Reference:       "ref123",
 		MobileNumber:    "09080340608",
-		YieldOfferingID: "580fc48e-91bc-4520-93ce-c6256e3de5ea",
+		YieldOfferingID: "ef8891af-e887-4e2c-ac79-7a9682d1ad77",
 	}
 )

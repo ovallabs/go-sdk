@@ -3,11 +3,13 @@ package model
 
 const (
 	// BaseURL is the definition of ovalfi base url
-	BaseURL = "https://sandbox-api.ovalfi-app.com"
-	// Signature sample sandbox environment signature
-	Signature = "segsalerty@gmail.com"
+	BaseURL = "https://sandbox-api.ovalfi-app.com/api/"
+
+	// PublicKey sample sandbox environment signature
+	PublicKey = "IYtqe0xG0voYzbPhUEtTIEKyKj4Keq0O"
+
 	// BearerToken sample sandbox environment bearer token
-	BearerToken = "segun"
+	BearerToken = "eyJidXNpbmVzc0lEIjoiOTIzYjJkZjUtNGE4OS00Y2ViLWIxNDgtYzJlNWFjNTJkMDRlIiwidXNlcklEIjoiMjQ4YmFhNDMtYzQ0Yi00ZjYwLWI2MWQtY2VlZjYwOThjNzg1Iiwia2V5Ijoib2xhcHJvZzEifQ=="
 
 	// LogStrRequest log string key
 	LogStrRequest = "request"
@@ -23,7 +25,7 @@ type (
 		Name            string `json:"name"`
 		Email           string `json:"email"`
 		Reference       string `json:"reference"`
-		MobileNumber    string `json:"mobileNumber"`
+		MobileNumber    string `json:"mobile_number"`
 		YieldOfferingID string `json:"yield_offering_id"`
 	}
 

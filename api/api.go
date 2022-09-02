@@ -8,7 +8,7 @@ import (
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
 	"github.com/rs/zerolog"
-	
+
 	"github.com/ovalfi/go-sdk/model"
 )
 
@@ -22,6 +22,7 @@ type RemoteCalls interface {
 
 	// Yield APIs
 	GetBusinessPortfolios(ctx context.Context) ([]model.Portfolio, error)
+	CreateYieldOfferingProfile(ctx context.Context, request model.CreateYieldOfferingProfilesRequest) (model.YieldOfferingProfile, error)
 
 	// Run in sandbox mode
 	RunInSandboxMode()
@@ -32,20 +33,20 @@ type Call struct {
 	client       *resty.Client
 	logger       zerolog.Logger
 	baseURL      string
-	signature    string
+	publicKey    string
 	bearerToken  string
 	sandboxMode  bool
 	idempotentID uuid.UUID
 }
 
 // New initialises the object Call
-func New(z *zerolog.Logger, c *resty.Client, signature, bearerToken, bURL string) RemoteCalls {
+func New(z *zerolog.Logger, c *resty.Client, publicKey, bearerToken, bURL string) RemoteCalls {
 	c.SetTimeout(10 * time.Second)
 	call := &Call{
 		client:       c,
 		logger:       z.With().Str("sdk", "ovalfi").Logger(),
 		baseURL:      bURL,
-		signature:    signature,
+		publicKey:    publicKey,
 		bearerToken:  bearerToken,
 		idempotentID: uuid.New(),
 	}
