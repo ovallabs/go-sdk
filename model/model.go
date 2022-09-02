@@ -18,6 +18,9 @@ const (
 
 	// LogStrResponse log string key
 	LogStrResponse = "response"
+
+	// LogErrorCode log error_code
+	LogErrorCode = "error_code"
 )
 
 // Requests for the endpoints

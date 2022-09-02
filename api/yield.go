@@ -35,7 +35,7 @@ func (c *Call) GetBusinessPortfolios(ctx context.Context) ([]model.Portfolio, er
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
 		return []model.Portfolio{}, model.ErrNetworkError
 	}
 
@@ -71,7 +71,7 @@ func (c *Call) CreateYieldOfferingProfile(ctx context.Context, request model.Cre
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
 		return model.YieldOfferingProfile{}, model.ErrNetworkError
 	}
 
@@ -104,7 +104,7 @@ func (c *Call) UpdateYieldOfferingProfile(ctx context.Context, request model.Upd
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
 		return model.UpdatedYieldOfferingProfile{}, model.ErrNetworkError
 	}
 
@@ -136,7 +136,7 @@ func (c *Call) GetAllYieldProfiles(ctx context.Context) ([]model.YieldOfferingPr
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
 		return []model.YieldOfferingProfile{}, model.ErrNetworkError
 	}
 
@@ -168,7 +168,7 @@ func (c *Call) GetYieldProfileByID(ctx context.Context, request model.GetYieldPr
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
 		return model.YieldOfferingProfile{}, model.ErrNetworkError
 	}
 
