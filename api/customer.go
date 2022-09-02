@@ -90,6 +90,7 @@ func (c *Call) GetAllCustomers(ctx context.Context) ([]model.Customer, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, customerAPIVersion)
 
 	fL := c.logger.With().Str("func", "GetAllCustomers").Str("endpoint", endpoint).Logger()
+	fL.Info().Msg("starting...")
 	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 

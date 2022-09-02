@@ -60,6 +60,18 @@ type (
 		PortfolioID           string  `json:"portfolio_id"`
 		Reference             string  `json:"reference"`
 	}
+
+	// UpdateYieldOfferingProfilesRequest payload for updating yield offerings
+	UpdateYieldOfferingProfilesRequest struct {
+		YieldOfferingID string `json:"yield_offering_id"`
+		Name            string `json:"name"`
+		Description     string `json:"description"`
+	}
+
+	// GetYieldProfileByIDRequest attributes payload to update yield offering by ID
+	GetYieldProfileByIDRequest struct {
+		YieldProfileID string `json:"yield_offering_id"`
+	}
 )
 
 type (
@@ -143,5 +155,40 @@ type (
 		Transfer        float64        `json:"transfer"`
 		Balance         float64        `json:"balance"`
 		Transaction     []*Transaction `json:"transaction"`
+	}
+
+	// Portfolio data object for business portfolios
+	Portfolio struct {
+		ID          string `json:"id"`
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		Network     string `json:"network"`
+		APYRate     string `json:"apy_rate"`
+	}
+
+	// YieldOfferingProfile data object for yield offerings
+	YieldOfferingProfile struct {
+		YieldOfferingID       string  `json:"yield_offering_id"`
+		Name                  string  `json:"name"`
+		Description           string  `json:"description"`
+		APYRate               float64 `json:"apy_rate"`
+		Currency              string  `json:"currency"`
+		DepositLockDay        int     `json:"deposit_lock_day"`
+		MinimumDepositAllowed float64 `json:"minimum_deposit_allowed"`
+		MaximumDepositAllowed float64 `json:"maximum_deposit_allowed"`
+		YieldableAfterDay     int     `json:"yieldable_after_day"`
+		WithdrawalLimitRate   float64 `json:"withdrawal_limit_rate"`
+		PortfolioID           string  `json:"portfolio_id"`
+		Reference             string  `json:"reference"`
+	}
+
+	// UpdatedYieldOfferingProfile data object for updated yield offerings
+	UpdatedYieldOfferingProfile struct {
+		YieldOfferingID string       `json:"yield_offering_id"`
+		Name            string       `json:"name"`
+		Description     string       `json:"description"`
+		CreatedAt       string       `json:"created_at"`
+		UpdatedAt       sql.NullTime `json:"updated_at"`
+		Reference       string       `json:"reference"`
 	}
 )

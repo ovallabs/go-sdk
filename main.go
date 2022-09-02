@@ -11,7 +11,6 @@ import (
 )
 
 func main() {
-	_ = os.Setenv("TZ", "Africa/Lagos")
 	logger := zerolog.New(os.Stderr).With().Timestamp().Logger()
 	client := resty.New()
 	logger.Info().Msg("app is starting")
@@ -19,14 +18,6 @@ func main() {
 	apiCalls := api.New(&logger, client, model.PublicKey, model.BearerToken, model.BaseURL)
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
 	//ctx := context.Background()
-
-	//portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Printf("portfolios: %+v\n", portfolios)
-	//"portfolio_id": "c7115f87-11aa-4d69-bcb4-c12dd7f5bf2f"
 
 	//newCustomer, err := apiCalls.CreateCustomer(ctx, example.NewCreateCustomerRequest)
 	//if err != nil {
@@ -57,6 +48,14 @@ func main() {
 	//}
 	//fmt.Printf("new customer: %+v\n", retrievedCustomers)
 
+	//portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("portfolios: %+v\n", portfolios)
+	//"portfolio_id": "c7115f87-11aa-4d69-bcb4-c12dd7f5bf2f"
+
 	//newYieldOffering, err := apiCalls.CreateYieldOfferingProfile(ctx, example.NewCreateYieldOfferingProfilesRequest)
 	//if err != nil {
 	//	fmt.Printf("Error: %v\n", err)
@@ -64,4 +63,26 @@ func main() {
 	//}
 	//fmt.Printf("new yield offering: %+v\n", newYieldOffering)
 	//"yield_offering_id": "ef8891af-e887-4e2c-ac79-7a9682d1ad77"
+
+	//updatedYieldOffering, err := apiCalls.UpdateYieldOfferingProfile(ctx, example.NewUpdateYieldOfferingProfilesRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("updated yield offering: %+v\n", updatedYieldOffering)
+	//"yield_offering_id": "ef8891af-e887-4e2c-ac79-7a9682d1ad77"
+
+	//yieldProfiles, err := apiCalls.GetAllYieldProfiles(ctx)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("yield profiles: %+v\n", yieldProfiles)
+
+	//retrievedYieldProfile, err := apiCalls.GetYieldProfileByID(ctx, example.NewGetYieldProfileByIDRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("retrieved yield profile: %+v\n", retrievedYieldProfile)
 }
