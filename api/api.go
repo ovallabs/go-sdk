@@ -23,6 +23,9 @@ type RemoteCalls interface {
 	// Yield APIs
 	GetBusinessPortfolios(ctx context.Context) ([]model.Portfolio, error)
 	CreateYieldOfferingProfile(ctx context.Context, request model.CreateYieldOfferingProfilesRequest) (model.YieldOfferingProfile, error)
+	UpdateYieldOfferingProfile(ctx context.Context, request model.UpdateYieldOfferingProfilesRequest) (model.UpdatedYieldOfferingProfile, error)
+	GetAllYieldProfiles(ctx context.Context) ([]model.YieldOfferingProfile, error)
+	GetYieldProfileByID(ctx context.Context, request model.GetYieldProfileByIDRequest) (model.YieldOfferingProfile, error)
 
 	// Run in sandbox mode
 	RunInSandboxMode()

@@ -41,7 +41,7 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
 		return model.Customer{}, model.ErrNetworkError
 	}
 
@@ -77,7 +77,7 @@ func (c *Call) UpdateCustomer(ctx context.Context, request model.UpdateCustomerR
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
 		return model.Customer{}, model.ErrNetworkError
 	}
 
@@ -90,6 +90,7 @@ func (c *Call) GetAllCustomers(ctx context.Context) ([]model.Customer, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, customerAPIVersion)
 
 	fL := c.logger.With().Str("func", "GetAllCustomers").Str("endpoint", endpoint).Logger()
+	fL.Info().Msg("starting...")
 	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
@@ -108,7 +109,7 @@ func (c *Call) GetAllCustomers(ctx context.Context) ([]model.Customer, error) {
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
 		return []model.Customer{}, model.ErrNetworkError
 	}
 
@@ -140,7 +141,7 @@ func (c *Call) GetCustomerByID(ctx context.Context, request model.GetCustomerByI
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
 		return model.CustomerInfo{}, model.ErrNetworkError
 	}
 
