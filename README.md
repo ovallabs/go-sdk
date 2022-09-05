@@ -203,11 +203,11 @@ Use the template below to file your complaints.
 
 
 <!-- Contributions -->
-## 	:plus: Contributions
+## 	:help: Contributions
 Contributions are always welcome.
 
 <!-- Development -->
-### :running: Development
+### Development
 
 Clone the project
 
