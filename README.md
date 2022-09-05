@@ -10,19 +10,23 @@
 <!-- Badges -->
 <p>
   <a href="https://github.com/ovalfi/go-sdk/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/Louis3797/awesome-readme-template" alt="contributors" />
+    CONTRIBUTORS
   </a>
+*
   <a href="https://github.com/ovalfi/go-sdk/network/members">
-    <img src="https://img.shields.io/github/forks/Louis3797/awesome-readme-template" alt="forks" />
+    FORKS
   </a>
+*
   <a href="https://github.com/ovalfi/go-sdk/stargazers">
-    <img src="https://img.shields.io/github/stars/Louis3797/awesome-readme-template" alt="stars" />
+    STARS
   </a>
+*
   <a href="https://github.com/ovalfi/go-sdk/issues/">
-    <img src="https://img.shields.io/github/issues/Louis3797/awesome-readme-template" alt="open issues" />
+    ISSUES
   </a>
+*
   <a href="https://github.com/ovalfi/go-sdk/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/Louis3797/awesome-readme-template.svg" alt="license" />
+    LICENSE
   </a>
 </p>
 
