@@ -90,6 +90,7 @@ To run this project, you will need to add the following environment variables to
 
 `BEARER_TOKEN`
 
+
 <!-- Getting Started -->
 ## 	:toolbox: Getting Started
 
@@ -105,25 +106,108 @@ This project requires Go >= 1.17
 <!-- Installation -->
 ### :gear: Installation
 
-Install go-sdk with 
+Install go-sdk with
 
 ```bash
-  cd go-sdk
   go get github.com/ovalfi/go-sdk
 ```
 
-<!-- Running Tests -->
-### :test_tube: Running Tests
 
-To run tests, run the following command
+<!-- Example -->
+## :bulb: Example
 
-```bash
-  cd go-sdk
-  go test
+### Creating A Customer
+
+```go
+package main
+
+import (
+	"context"
+	
+    "github.com/ovalfi/go-sdk/api"
+    "github.com/ovalfi/go-sdk/model"
+)
+
+func main() {
+    logger := log.New() // Any logger of your choice
+	client := resty.New() // A REST API client of your choice
+    apiCalls := api.New(&logger, client, config.PUBLIC_KEY, config.BEARER_TOKEN, config.BASE_URL)
+	ctx := context.Background()
+    
+	customer, err := apiCalls.CreateCustomer(ctx, model.CreateCustomerRequest{
+        Name:            "Nonso",
+        Email:           "chinonso@ovalfinance.com",
+        Reference:       "ref123",
+        MobileNumber:    "09012345678",
+        YieldOfferingID: "ef8891af-e887-4e2c-ac79-7a9682d1ad77",
+      },
+    )
+	
+    if err != nil {
+    	handleError(err) // Handle the error per your business logic
+    	return
+    }
+	
+	UseCustomer(customer) // Use the customers per your business logic
+}
 ```
 
-<!-- Run Locally -->
-### :running: Run Locally
+### Getting Business Portfolios
+
+```go
+package main
+
+import (
+	"context"
+	
+    "github.com/ovalfi/go-sdk/api"
+    "github.com/ovalfi/go-sdk/model"
+)
+
+func main() {
+    logger := log.New() // Any logger of your choice
+	client := resty.New() // A REST API client of your choice
+    apiCalls := api.New(&logger, client, config.PUBLIC_KEY, config.BEARER_TOKEN, config.BASE_URL)
+	ctx := context.Background()
+    
+	portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
+	
+    if err != nil {
+    	handleError(err) // Handle the error per your business logic
+    	return
+    }
+	
+	UsePortfolios(portfolios) // Use the portfolios per your business logic
+}
+```
+
+
+<!-- Roadmap -->
+## :compass: Roadmap
+
+* [x] Customer APIs
+* [x] Yield Offering APIs
+* [ ] Deposit APIs
+* [ ] Withdrawal APIs
+
+
+<!-- Issues -->
+## :book: Issues
+
+If you come across a bug or unexpected behaviour, create an issue [here](https://github.com/ovalfi/go-sdk/issues/).
+Use the template below to file your complaints.
+ - What happened
+ - Expected behavior
+ - Steps to reproduce
+ - Versions
+
+
+<!-- Contributions -->
+## 	:plus: Contributions
+Contributions are always welcome.
+
+<!-- Development -->
+### :running: Development
 
 Clone the project
 
@@ -151,25 +235,15 @@ Uncomment the lines in `main.go` and change your `BASE_URL` environment variable
   go run main.go
 ```
 
+<!-- Running Tests -->
+### :test_tube: Running Tests
 
-<!-- Roadmap -->
-## :compass: Roadmap
+To run tests, run the following command
 
-* [x] Customer APIs
-* [x] Yield Offering APIs
-* [ ] Deposit APIs
-* [ ] Withdrawal APIs
-
-
-<!-- Issues -->
-## :book: Issues
-
-If you come across a bug or unexpected behaviour, create an issue [here](https://github.com/ovalfi/go-sdk/issues/).
-Use the template below to file your complaints.
- - What happened
- - Expected behavior
- - Steps to reproduce
- - Versions
+```bash
+  cd go-sdk
+  go test
+```
 
 
 <!-- License -->
