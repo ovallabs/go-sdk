@@ -122,19 +122,19 @@ Install go-sdk with
 package main
 
 import (
-	"context"
+    "context"
 	
     "github.com/ovalfi/go-sdk/api"
     "github.com/ovalfi/go-sdk/model"
 )
 
 func main() {
-    logger := log.New() // Any logger of your choice
-	client := resty.New() // A REST API client of your choice
+    logger := log.New() // Any logger of your choice 
+    client := resty.New() // A REST API client of your choice
     apiCalls := api.New(&logger, client, config.PUBLIC_KEY, config.BEARER_TOKEN, config.BASE_URL)
-	ctx := context.Background()
+    ctx := context.Background()
     
-	customer, err := apiCalls.CreateCustomer(ctx, model.CreateCustomerRequest{
+    customer, err := apiCalls.CreateCustomer(ctx, model.CreateCustomerRequest{
         Name:            "Nonso",
         Email:           "chinonso@ovalfinance.com",
         Reference:       "ref123",
@@ -148,7 +148,7 @@ func main() {
     	return
     }
 	
-	UseCustomer(customer) // Use the customers per your business logic
+    UseCustomer(customer) // Use the customers per your business logic
 }
 ```
 
@@ -158,7 +158,7 @@ func main() {
 package main
 
 import (
-	"context"
+    "context"
 	
     "github.com/ovalfi/go-sdk/api"
     "github.com/ovalfi/go-sdk/model"
@@ -166,18 +166,18 @@ import (
 
 func main() {
     logger := log.New() // Any logger of your choice
-	client := resty.New() // A REST API client of your choice
+    client := resty.New() // A REST API client of your choice
     apiCalls := api.New(&logger, client, config.PUBLIC_KEY, config.BEARER_TOKEN, config.BASE_URL)
-	ctx := context.Background()
+    ctx := context.Background()
     
-	portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
+    portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
 	
     if err != nil {
     	handleError(err) // Handle the error per your business logic
     	return
     }
 	
-	UsePortfolios(portfolios) // Use the portfolios per your business logic
+    UsePortfolios(portfolios) // Use the portfolios per your business logic
 }
 ```
 
