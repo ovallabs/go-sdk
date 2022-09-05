@@ -203,7 +203,7 @@ Use the template below to file your complaints.
 
 
 <!-- Contributions -->
-## 	:help: Contributions
+## 	:running: Contributions
 Contributions are always welcome.
 
 <!-- Development -->
