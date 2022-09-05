@@ -63,7 +63,7 @@
 
 <!-- About the Project -->
 ## :star2: About the Project
-This project is an sdk alternative to using OvalFi's public REST APIs. It is written in go and
+This project is an sdk alternative to using OvalFi's public [REST APIs](https://docs.ovalfi.com/docs). It is written in go and
 uses `restyClient` to talk to the public REST APIs over HTTP.
 
 
@@ -109,7 +109,7 @@ Install go-sdk with
 
 ```bash
   cd go-sdk
-  go install go-sdk
+  go get github.com/ovalfi/go-sdk
 ```
 
 <!-- Running Tests -->
@@ -161,26 +161,22 @@ Uncomment the lines in `main.go` and change your `BASE_URL` environment variable
 * [ ] Withdrawal APIs
 
 
+<!-- Issues -->
+## :book: Issues
+
+If you come across a bug or unexpected behaviour, create an issue [here](https://github.com/ovalfi/go-sdk/issues/).
+Use the template below to file your complaints.
+ - What happened
+ - Expected behavior
+ - Steps to reproduce
+ - Versions
+
 
 <!-- License -->
 ## :warning: License
 [License](https://github.com/ovalfi/go-sdk/blob/main/LICENSE)
 
 Distributed under the GNU General Public License v2.0. See LICENSE.txt for more information.
-
-
-<!-- Contact -->
-## :handshake: Contact
-
-Segun Mustafa - segun@ovalfi.com
-
-Kehinde Odetola - kehinde@ovalfi.com
-
-Olawale Oladapo - olawale@ovalfi.com
-
-Chinonso Okoli - chinonso@ovalfi.com
-
-Project Link: [https://github.com/ovalfi/go-sdk](https://github.com/ovalfi/go-sdk)
 
 
 <!-- Acknowledgments -->
