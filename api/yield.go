@@ -25,7 +25,6 @@ func (c *Call) GetBusinessPortfolios(ctx context.Context) ([]model.Portfolio, er
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
-		SetHeader("X-Idempotent-ID", c.idempotentID.String()).
 		SetContext(ctx).
 		Get(endpoint)
 
