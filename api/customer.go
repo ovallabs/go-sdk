@@ -57,7 +57,7 @@ func (c *Call) UpdateCustomer(ctx context.Context, request model.UpdateCustomerR
 	fL.Info().Msg("starting...")
 	fL.Info().Str("email", request.Email).Str("name", request.Name).
 		Str("mobileNumber", request.MobileNumber).Str("reference", request.Reference).
-		Str("yieldOfferingId", request.MobileNumber).
+		Str("yieldOfferingId", request.YieldOfferingID).
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 

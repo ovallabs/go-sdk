@@ -1,7 +1,11 @@
 // Package model defines object and payload models
 package model
 
-import "database/sql"
+import (
+	"database/sql"
+	"github.com/google/uuid"
+	"time"
+)
 
 const (
 	// BaseURL is the definition of ovalfi base url
@@ -74,6 +78,13 @@ type (
 	// GetYieldProfileByIDRequest attributes payload to update yield offering by ID
 	GetYieldProfileByIDRequest struct {
 		YieldProfileID string `json:"yield_offering_id"`
+	}
+
+	// InitiateDepositRequest attributes payload to initiate a new API deposit
+	InitiateDepositRequest struct {
+		CustomerID string  `json:"customer_id"`
+		Reference  string  `json:"reference"`
+		Amount     float64 `json:"amount"`
 	}
 )
 
@@ -193,5 +204,46 @@ type (
 		CreatedAt       string       `json:"created_at"`
 		UpdatedAt       sql.NullTime `json:"updated_at"`
 		Reference       string       `json:"reference"`
+	}
+
+	// DepositBatchResponse to get deposit batch
+	DepositBatchResponse struct {
+		Deposits           map[string]DepositResponse   `json:"deposits"`
+		TotalAmount        float64                      `json:"total_amount"`
+		PaidDepositDetails []*ExternalAPIDepositDetails `json:"paid_deposit_details"`
+	}
+	// DepositResponse as response payload for settled/unsettled deposit payment
+	DepositResponse struct {
+		Deposits    []*Deposit `json:"deposits"`
+		TotalAmount float64    `json:"total_amount"`
+	}
+	// ExternalAPIDepositDetails struct gives details about the external api deposit
+	ExternalAPIDepositDetails struct {
+		From             string  `json:"from"`
+		To               string  `json:"to"`
+		TotalAmount      float64 `json:"total_amount"`
+		AmountPaid       float64 `json:"amount_paid"`
+		BalanceRemaining float64 `json:"balance_remaining"`
+	}
+
+	// Deposit data objet
+	Deposit struct {
+		ID              uuid.UUID    `json:"id"`
+		CustomerID      uuid.UUID    `json:"customerID"`
+		BusinessID      uuid.UUID    `json:"businessID"`
+		Name            string       `json:"name"`
+		Email           string       `json:"email"`
+		Reference       string       `json:"reference"`
+		Currency        string       `json:"currency"`
+		Amount          float64      `json:"amount"`
+		Channel         string       `json:"channel"`
+		CreatedAt       time.Time    `json:"createdAt"`
+		SettledAt       sql.NullTime `json:"settledAt"`
+		BalanceBefore   float64      `json:"balanceBefore"`
+		BalanceAfter    float64      `json:"balanceAfter"`
+		DepositBeforeID uuid.UUID    `json:"depositBeforeID"`
+		BatchDate       sql.NullTime `json:"batchDate"`
+		Status          string       `json:"status"`
+		CancelReason    *string      `json:"cancelReason"`
 	}
 )
