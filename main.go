@@ -85,4 +85,11 @@ func main() {
 	//	return
 	//}
 	//fmt.Printf("retrieved yield profile: %+v\n", retrievedYieldProfile)
+
+	//newWithdrawal, err := apiCalls.InitiateWithdrawal(ctx, example.NewInitiateWithdrawalRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("new withdrawal initiated: %+v\n", newWithdrawal)
 }

@@ -1,7 +1,11 @@
 // Package model defines object and payload models
 package model
 
-import "database/sql"
+import (
+	"database/sql"
+	"github.com/google/uuid"
+	"time"
+)
 
 const (
 	// BaseURL is the definition of ovalfi base url
@@ -74,6 +78,14 @@ type (
 	// GetYieldProfileByIDRequest attributes payload to update yield offering by ID
 	GetYieldProfileByIDRequest struct {
 		YieldProfileID string `json:"yield_offering_id"`
+	}
+
+	// InitiateWithdrawalRequest attributes payload to initiate a new API withdrawal
+	InitiateWithdrawalRequest struct {
+		BusinessID string  `json:"business_id"`
+		CustomerID string  `json:"customer_id"`
+		Reference  string  `json:"reference"`
+		Amount     float64 `json:"amount"`
 	}
 )
 
@@ -193,5 +205,17 @@ type (
 		CreatedAt       string       `json:"created_at"`
 		UpdatedAt       sql.NullTime `json:"updated_at"`
 		Reference       string       `json:"reference"`
+	}
+
+	// Withdrawal data object
+	Withdrawal struct {
+		ID         uuid.UUID `json:"id"`
+		BusinessID uuid.UUID `json:"business_id"`
+		CustomerID uuid.UUID `json:"customer_id"`
+		Reference  string    `json:"reference"`
+		Amount     float64   `json:"amount"`
+		Status     string    `json:"status"`
+		CreatedAt  time.Time `json:"created_at"`
+		Channel    string    `json:"channel"`
 	}
 )

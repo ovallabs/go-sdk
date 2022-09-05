@@ -27,6 +27,9 @@ type RemoteCalls interface {
 	GetAllYieldProfiles(ctx context.Context) ([]model.YieldOfferingProfile, error)
 	GetYieldProfileByID(ctx context.Context, request model.GetYieldProfileByIDRequest) (model.YieldOfferingProfile, error)
 
+	// Withdrawal APIs
+	InitiateWithdrawal(ctx context.Context, request model.InitiateWithdrawalRequest) (model.Withdrawal, error)
+
 	// Run in sandbox mode
 	RunInSandboxMode()
 }
