@@ -81,6 +81,30 @@ type (
 		YieldProfileID string `json:"yield_offering_id"`
 	}
 
+	// InitiateDepositRequest attributes payload to initiate a new API deposit
+	InitiateDepositRequest struct {
+		CustomerID string  `json:"customer_id"`
+		Reference  string  `json:"reference"`
+		Amount     float64 `json:"amount"`
+	}
+
+	// InitiateTransferRequest attributes payload to initiate a new API transfer
+	InitiateTransferRequest struct {
+		CustomerID  string              `json:"customer_id"`
+		Amount      float64             `json:"amount"`
+		Currency    string              `json:"currency"`
+		Destination TransferDestination `json:"destination"`
+		Note        string              `json:"note"`
+		Reason      string              `json:"reason"`
+		Reference   string              `json:"reference"`
+	}
+
+	// TransferDestination holds recipient's bank and personal info
+	TransferDestination struct {
+		BankDetails     BankDetails     `json:"bank_details"`
+		PersonalDetails PersonalDetails `json:"personal_details"`
+	}
+
 	// InitiateWithdrawalRequest attributes payload to initiate a new API withdrawal
 	InitiateWithdrawalRequest struct {
 		BusinessID string  `json:"business_id"`
@@ -206,6 +230,55 @@ type (
 		CreatedAt       string       `json:"created_at"`
 		UpdatedAt       sql.NullTime `json:"updated_at"`
 		Reference       string       `json:"reference"`
+	}
+
+	// DepositBatchResponse to get deposit batch
+	DepositBatchResponse struct {
+		Deposits           map[string]DepositResponse   `json:"deposits"`
+		TotalAmount        float64                      `json:"total_amount"`
+		PaidDepositDetails []*ExternalAPIDepositDetails `json:"paid_deposit_details"`
+	}
+	// DepositResponse as response payload for settled/unsettled deposit payment
+	DepositResponse struct {
+		Deposits    []*Deposit `json:"deposits"`
+		TotalAmount float64    `json:"total_amount"`
+	}
+	// ExternalAPIDepositDetails struct gives details about the external api deposit
+	ExternalAPIDepositDetails struct {
+		From             string  `json:"from"`
+		To               string  `json:"to"`
+		TotalAmount      float64 `json:"total_amount"`
+		AmountPaid       float64 `json:"amount_paid"`
+		BalanceRemaining float64 `json:"balance_remaining"`
+	}
+
+	// Deposit data objet
+	Deposit struct {
+		ID              uuid.UUID    `json:"id"`
+		CustomerID      uuid.UUID    `json:"customerID"`
+		BusinessID      uuid.UUID    `json:"businessID"`
+		Name            string       `json:"name"`
+		Email           string       `json:"email"`
+		Reference       string       `json:"reference"`
+		Currency        string       `json:"currency"`
+		Amount          float64      `json:"amount"`
+		Channel         string       `json:"channel"`
+		CreatedAt       time.Time    `json:"createdAt"`
+		SettledAt       sql.NullTime `json:"settledAt"`
+		BalanceBefore   float64      `json:"balanceBefore"`
+		BalanceAfter    float64      `json:"balanceAfter"`
+		DepositBeforeID uuid.UUID    `json:"depositBeforeID"`
+		BatchDate       sql.NullTime `json:"batchDate"`
+		Status          string       `json:"status"`
+		CancelReason    *string      `json:"cancelReason"`
+	}
+
+	// Transfer data object
+	Transfer struct {
+		ID uuid.UUID `json:"id"`
+		InitiateTransferRequest
+		CreatedAt time.Time `json:"created_at"`
+		Status    string    `json:"status"`
 	}
 
 	// Withdrawal data object
