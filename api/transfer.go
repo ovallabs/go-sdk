@@ -3,9 +3,10 @@ package api
 import (
 	"context"
 	"fmt"
+	"net/http"
+
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
-	"net/http"
 )
 
 const transferAPIVersion = "v1/transfer"
@@ -16,10 +17,7 @@ func (c *Call) InitiateTransfer(ctx context.Context, request model.InitiateTrans
 
 	fL := c.logger.With().Str("func", "InitiateTransfer").Str("endpoint", endpoint).Logger()
 	fL.Info().Msg("starting...")
-	fL.Info().Str("customerID", request.CustomerID).Str("reference", request.Reference).
-		Str("currency", request.Currency).Interface("destination", request.Destination).
-		Float64("amount", request.Amount).Str("note", request.Note).Str("reason", request.Reason).
-		Str("reference", request.Reference).
+	fL.Info().Interface("request", request).
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
