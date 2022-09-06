@@ -17,9 +17,7 @@ func (c *Call) InitiateWithdrawal(ctx context.Context, request model.InitiateWit
 
 	fL := c.logger.With().Str("func", "InitiateWithdrawal").Str("endpoint", endpoint).Logger()
 	fL.Info().Msg("starting...")
-	fL.Info().Str("customerID", request.CustomerID).Str("reference", request.Reference).
-		Float64("amount", request.Amount).
-		Interface(model.LogStrRequest, "empty").Msg("request")
+	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
 	defer fL.Info().Msg("done...")
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
