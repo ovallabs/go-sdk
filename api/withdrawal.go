@@ -3,9 +3,10 @@ package api
 import (
 	"context"
 	"fmt"
+	"net/http"
+
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
-	"net/http"
 )
 
 const withdrawalAPIVersion = "v1/withdrawal"
