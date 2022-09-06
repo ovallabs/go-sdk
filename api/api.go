@@ -32,6 +32,9 @@ type RemoteCalls interface {
 	GetAllDeposits(ctx context.Context) (model.DepositBatchResponse, error)
 	GetDepositByBatchID(ctx context.Context, batchDate string) (model.Deposit, error)
 
+	// Transfer API
+	InitiateTransfer(ctx context.Context, request model.InitiateTransferRequest) (model.Transfer, error)
+
 	// Run in sandbox mode
 	RunInSandboxMode()
 }

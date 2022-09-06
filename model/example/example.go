@@ -60,4 +60,37 @@ var (
 		Reference:  "ref123",
 		Amount:     300,
 	}
+
+	NewTransferRequest = model.InitiateTransferRequest{
+		CustomerID: "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd",
+		Amount:     20,
+		Currency:   "USD",
+		Destination: model.TransferDestination{
+			BankDetails: model.BankDetails{
+				AccountNumber: "11094843943",
+				AccountName:   "Oval Banks",
+				RoutingNumber: "3094395343",
+				SwiftCode:     "",
+				BankName:      "Oval US Investment Bank",
+				BankBranch:    "",
+				Country:       "US",
+				City:          "",
+				BankAddress:   "",
+				District:      "",
+				PostalCode:    "",
+				IsWithinUS:    "yes",
+			},
+			PersonalDetails: model.PersonalDetails{
+				Name:       "'Wale Oladapo",
+				Country:    "GB",
+				City:       "London",
+				Address:    "London",
+				District:   "",
+				PostalCode: "304903",
+			},
+		},
+		Note:      "",
+		Reason:    "Gift token",
+		Reference: "ref123",
+	}
 )

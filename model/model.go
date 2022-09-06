@@ -87,6 +87,23 @@ type (
 		Reference  string  `json:"reference"`
 		Amount     float64 `json:"amount"`
 	}
+
+	// InitiateTransferRequest attributes payload to initiate a new API transfer
+	InitiateTransferRequest struct {
+		CustomerID  string              `json:"customer_id"`
+		Amount      float64             `json:"amount"`
+		Currency    string              `json:"currency"`
+		Destination TransferDestination `json:"destination"`
+		Note        string              `json:"note"`
+		Reason      string              `json:"reason"`
+		Reference   string              `json:"reference"`
+	}
+
+	// TransferDestination holds recipient's bank and personal info
+	TransferDestination struct {
+		BankDetails     BankDetails     `json:"bank_details"`
+		PersonalDetails PersonalDetails `json:"personal_details"`
+	}
 )
 
 type (
@@ -246,5 +263,13 @@ type (
 		BatchDate       sql.NullTime `json:"batchDate"`
 		Status          string       `json:"status"`
 		CancelReason    *string      `json:"cancelReason"`
+	}
+
+	// Transfer data object
+	Transfer struct {
+		ID uuid.UUID `json:"id"`
+		InitiateTransferRequest
+		CreatedAt time.Time `json:"created_at"`
+		Status    string    `json:"status"`
 	}
 )
