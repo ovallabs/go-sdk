@@ -1,7 +1,12 @@
 // Package model defines object and payload models
 package model
 
-import "database/sql"
+import (
+	"database/sql"
+	"time"
+
+	"github.com/google/uuid"
+)
 
 const (
 	// BaseURL is the definition of ovalfi base url
@@ -75,6 +80,30 @@ type (
 	GetYieldProfileByIDRequest struct {
 		YieldProfileID string `json:"yield_offering_id"`
 	}
+
+	// InitiateDepositRequest attributes payload to initiate a new API deposit
+	InitiateDepositRequest struct {
+		CustomerID string  `json:"customer_id"`
+		Reference  string  `json:"reference"`
+		Amount     float64 `json:"amount"`
+	}
+
+	// InitiateTransferRequest attributes payload to initiate a new API transfer
+	InitiateTransferRequest struct {
+		CustomerID  string              `json:"customer_id"`
+		Amount      float64             `json:"amount"`
+		Currency    string              `json:"currency"`
+		Destination TransferDestination `json:"destination"`
+		Note        string              `json:"note"`
+		Reason      string              `json:"reason"`
+		Reference   string              `json:"reference"`
+	}
+
+	// TransferDestination holds recipient's bank and personal info
+	TransferDestination struct {
+		BankDetails     BankDetails     `json:"bank_details"`
+		PersonalDetails PersonalDetails `json:"personal_details"`
+	}
 )
 
 type (
@@ -87,18 +116,18 @@ type (
 
 	// BankDetails recipient's bank details
 	BankDetails struct {
-		AccountNumber string `json:"accountNumber"`
-		AccountName   string `json:"accountName"`
-		RoutingNumber string `json:"routingNumber"`
-		SwiftCode     string `json:"swiftCode"`
-		BankName      string `json:"bankName"`
-		BankBranch    string `json:"bankBranch"`
+		AccountNumber string `json:"account_number"`
+		AccountName   string `json:"account_name"`
+		RoutingNumber string `json:"routing_number"`
+		SwiftCode     string `json:"swift_code"`
+		BankName      string `json:"bank_name"`
+		BankBranch    string `json:"bank_branch"`
 		Country       string `json:"country"`
 		City          string `json:"city"`
-		BankAddress   string `json:"bankAddress"`
+		BankAddress   string `json:"bank_address"`
 		District      string `json:"district"`
-		PostalCode    string `json:"postalCode"`
-		IsWithinUS    string `json:"isWithinUS"`
+		PostalCode    string `json:"postal_code"`
+		IsWithinUS    string `json:"is_within_us"`
 	}
 
 	// PersonalDetails recipient's personal details
@@ -108,7 +137,7 @@ type (
 		City       string `json:"city"`
 		Address    string `json:"address"`
 		District   string `json:"district"`
-		PostalCode string `json:"postalCode"`
+		PostalCode string `json:"postal_code"`
 	}
 
 	// IntermediaryBank recipient's intermediary bank
@@ -193,5 +222,13 @@ type (
 		CreatedAt       string       `json:"created_at"`
 		UpdatedAt       sql.NullTime `json:"updated_at"`
 		Reference       string       `json:"reference"`
+	}
+
+	// Transfer data object
+	Transfer struct {
+		ID uuid.UUID `json:"id"`
+		InitiateTransferRequest
+		CreatedAt time.Time `json:"created_at"`
+		Status    string    `json:"status"`
 	}
 )

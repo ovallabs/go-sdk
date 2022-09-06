@@ -27,6 +27,9 @@ type RemoteCalls interface {
 	GetAllYieldProfiles(ctx context.Context) ([]model.YieldOfferingProfile, error)
 	GetYieldProfileByID(ctx context.Context, request model.GetYieldProfileByIDRequest) (model.YieldOfferingProfile, error)
 
+	// Transfer API
+	InitiateTransfer(ctx context.Context, request model.InitiateTransferRequest) (model.Transfer, error)
+
 	// Run in sandbox mode
 	RunInSandboxMode()
 }
