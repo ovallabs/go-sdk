@@ -85,4 +85,25 @@ func main() {
 	//	return
 	//}
 	//fmt.Printf("retrieved yield profile: %+v\n", retrievedYieldProfile)
+
+	//newDeposit, err := apiCalls.InitiateDeposit(ctx, example.NewDepositRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("new deposit initiated: %+v\n", newDeposit)
+
+	//deposits, err := apiCalls.GetAllDeposits(ctx)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("get all deposits initiated: %+v\n", deposits)
+
+	//batchDeposit, err := apiCalls.GetDepositByBatchID(ctx, "2022-09-05T00:00:00Z")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("get deposit by batchDateID initiated: %+v\n", batchDeposit)
 }

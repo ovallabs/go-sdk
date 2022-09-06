@@ -17,10 +17,7 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 
 	fL := c.logger.With().Str("func", "CreateCustomer").Str("endpoint", endpoint).Logger()
 	fL.Info().Msg("starting...")
-	fL.Info().Str("email", request.Email).Str("name", request.Name).
-		Str("mobileNumber", request.MobileNumber).Str("reference", request.Reference).
-		Str("yieldOfferingId", request.YieldOfferingID).
-		Interface(model.LogStrRequest, "empty").Msg("request")
+	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
 	defer fL.Info().Msg("done...")
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
@@ -55,10 +52,7 @@ func (c *Call) UpdateCustomer(ctx context.Context, request model.UpdateCustomerR
 
 	fL := c.logger.With().Str("func", "UpdateCustomer").Str("endpoint", endpoint).Logger()
 	fL.Info().Msg("starting...")
-	fL.Info().Str("email", request.Email).Str("name", request.Name).
-		Str("mobileNumber", request.MobileNumber).Str("reference", request.Reference).
-		Str("yieldOfferingId", request.MobileNumber).
-		Interface(model.LogStrRequest, "empty").Msg("request")
+	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
 	defer fL.Info().Msg("done...")
 
 	response := struct {
@@ -123,7 +117,7 @@ func (c *Call) GetCustomerByID(ctx context.Context, request model.GetCustomerByI
 
 	fL := c.logger.With().Str("func", "GetCustomerByID").Str("endpoint", endpoint).Logger()
 	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
+	fL.Info().Str("customerID", request.CustomerID).Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
 	response := struct {

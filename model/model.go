@@ -116,18 +116,18 @@ type (
 
 	// BankDetails recipient's bank details
 	BankDetails struct {
-		AccountNumber string `json:"account_number"`
-		AccountName   string `json:"account_name"`
-		RoutingNumber string `json:"routing_number"`
-		SwiftCode     string `json:"swift_code"`
-		BankName      string `json:"bank_name"`
-		BankBranch    string `json:"bank_branch"`
+		AccountNumber string `json:"accountNumber"`
+		AccountName   string `json:"accountName"`
+		RoutingNumber string `json:"routingNumber"`
+		SwiftCode     string `json:"swiftCode"`
+		BankName      string `json:"bankName"`
+		BankBranch    string `json:"bankBranch"`
 		Country       string `json:"country"`
 		City          string `json:"city"`
-		BankAddress   string `json:"bank_address"`
+		BankAddress   string `json:"bankAddress"`
 		District      string `json:"district"`
-		PostalCode    string `json:"postal_code"`
-		IsWithinUS    string `json:"is_within_us"`
+		PostalCode    string `json:"postalCode"`
+		IsWithinUS    string `json:"isWithinUS"`
 	}
 
 	// PersonalDetails recipient's personal details
@@ -137,7 +137,7 @@ type (
 		City       string `json:"city"`
 		Address    string `json:"address"`
 		District   string `json:"district"`
-		PostalCode string `json:"postal_code"`
+		PostalCode string `json:"postalCode"`
 	}
 
 	// IntermediaryBank recipient's intermediary bank
@@ -222,6 +222,47 @@ type (
 		CreatedAt       string       `json:"created_at"`
 		UpdatedAt       sql.NullTime `json:"updated_at"`
 		Reference       string       `json:"reference"`
+	}
+
+	// DepositBatchResponse to get deposit batch
+	DepositBatchResponse struct {
+		Deposits           map[string]DepositResponse   `json:"deposits"`
+		TotalAmount        float64                      `json:"total_amount"`
+		PaidDepositDetails []*ExternalAPIDepositDetails `json:"paid_deposit_details"`
+	}
+	// DepositResponse as response payload for settled/unsettled deposit payment
+	DepositResponse struct {
+		Deposits    []*Deposit `json:"deposits"`
+		TotalAmount float64    `json:"total_amount"`
+	}
+	// ExternalAPIDepositDetails struct gives details about the external api deposit
+	ExternalAPIDepositDetails struct {
+		From             string  `json:"from"`
+		To               string  `json:"to"`
+		TotalAmount      float64 `json:"total_amount"`
+		AmountPaid       float64 `json:"amount_paid"`
+		BalanceRemaining float64 `json:"balance_remaining"`
+	}
+
+	// Deposit data objet
+	Deposit struct {
+		ID              uuid.UUID    `json:"id"`
+		CustomerID      uuid.UUID    `json:"customerID"`
+		BusinessID      uuid.UUID    `json:"businessID"`
+		Name            string       `json:"name"`
+		Email           string       `json:"email"`
+		Reference       string       `json:"reference"`
+		Currency        string       `json:"currency"`
+		Amount          float64      `json:"amount"`
+		Channel         string       `json:"channel"`
+		CreatedAt       time.Time    `json:"createdAt"`
+		SettledAt       sql.NullTime `json:"settledAt"`
+		BalanceBefore   float64      `json:"balanceBefore"`
+		BalanceAfter    float64      `json:"balanceAfter"`
+		DepositBeforeID uuid.UUID    `json:"depositBeforeID"`
+		BatchDate       sql.NullTime `json:"batchDate"`
+		Status          string       `json:"status"`
+		CancelReason    *string      `json:"cancelReason"`
 	}
 
 	// Transfer data object

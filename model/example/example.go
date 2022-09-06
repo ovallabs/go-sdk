@@ -55,6 +55,12 @@ var (
 		YieldProfileID: "ef8891af-e887-4e2c-ac79-7a9682d1ad77",
 	}
 
+	NewDepositRequest = model.InitiateDepositRequest{
+		CustomerID: "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd",
+		Reference:  "ref123",
+		Amount:     300,
+	}
+
 	NewTransferRequest = model.InitiateTransferRequest{
 		CustomerID: "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd",
 		Amount:     20,
