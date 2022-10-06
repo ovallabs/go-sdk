@@ -93,4 +93,10 @@ var (
 		Reason:    "Gift token",
 		Reference: "ref123",
 	}
+
+	NewInitiateWithdrawalRequest = model.InitiateWithdrawalRequest{
+		CustomerID: "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd",
+		Reference:  "ref123",
+		Amount:     210,
+	}
 )

@@ -35,6 +35,9 @@ type RemoteCalls interface {
 	// Transfer API
 	InitiateTransfer(ctx context.Context, request model.InitiateTransferRequest) (model.Transfer, error)
 
+	// Withdrawal APIs
+	InitiateWithdrawal(ctx context.Context, request model.InitiateWithdrawalRequest) (model.Withdrawal, error)
+
 	// Run in sandbox mode
 	RunInSandboxMode()
 }

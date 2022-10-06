@@ -104,6 +104,14 @@ type (
 		BankDetails     BankDetails     `json:"bank_details"`
 		PersonalDetails PersonalDetails `json:"personal_details"`
 	}
+
+	// InitiateWithdrawalRequest attributes payload to initiate a new API withdrawal
+	InitiateWithdrawalRequest struct {
+		BusinessID string  `json:"business_id"`
+		CustomerID string  `json:"customer_id"`
+		Reference  string  `json:"reference"`
+		Amount     float64 `json:"amount"`
+	}
 )
 
 type (
@@ -271,5 +279,17 @@ type (
 		InitiateTransferRequest
 		CreatedAt time.Time `json:"created_at"`
 		Status    string    `json:"status"`
+	}
+
+	// Withdrawal data object
+	Withdrawal struct {
+		ID         uuid.UUID `json:"id"`
+		BusinessID uuid.UUID `json:"business_id"`
+		CustomerID uuid.UUID `json:"customer_id"`
+		Reference  string    `json:"reference"`
+		Amount     float64   `json:"amount"`
+		Status     string    `json:"status"`
+		CreatedAt  time.Time `json:"created_at"`
+		Channel    string    `json:"channel"`
 	}
 )

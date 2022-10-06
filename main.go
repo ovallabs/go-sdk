@@ -106,4 +106,11 @@ func main() {
 	//	return
 	//}
 	//fmt.Printf("get deposit by batchDateID initiated: %+v\n", batchDeposit)
+
+	//newWithdrawal, err := apiCalls.InitiateWithdrawal(ctx, example.NewInitiateWithdrawalRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("new withdrawal initiated: %+v\n", newWithdrawal)
 }
