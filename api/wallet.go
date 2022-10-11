@@ -8,7 +8,10 @@ import (
 	"github.com/ovalfi/go-sdk/model"
 )
 
-const walletAPIVersion = "v1/customer/wallet"
+const (
+	walletAPIVersion = "v1/customer/wallet"
+	assetAPIVersion  = "v1/supported-assets"
+)
 
 // GetWallet makes an API request using Call to get customer wallet
 func (c Call) GetWallet(ctx context.Context, request model.WalletRequest) (model.Wallet, error) {
@@ -53,6 +56,36 @@ func (c Call) GetWallets(ctx context.Context, customerID string) ([]*model.Walle
 
 	response := struct {
 		Data []*model.Wallet `json:"data"`
+	}{}
+	res, err := c.client.R().
+		SetAuthToken(c.bearerToken).
+		SetResult(&response).
+		SetContext(ctx).
+		Get(endpoint)
+
+	if err != nil {
+		fL.Err(err).Msg("error occurred")
+		return nil, err
+	}
+
+	if res.StatusCode() != http.StatusOK {
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		return nil, model.ErrNetworkError
+	}
+
+	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
+	return response.Data, nil
+}
+
+func (c Call) SupportedAsset(ctx context.Context) ([]*model.SupportedCurrencies, error) {
+	endpoint := fmt.Sprintf("%s%s", c.baseURL, assetAPIVersion)
+
+	fL := c.logger.With().Str("func", "SupportedAsset").Str("endpoint", endpoint).Logger()
+	fL.Info().Msg("starting...")
+	defer fL.Info().Msg("done...")
+
+	response := struct {
+		Data []*model.SupportedCurrencies `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
