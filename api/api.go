@@ -38,6 +38,10 @@ type RemoteCalls interface {
 	// Withdrawal APIs
 	InitiateWithdrawal(ctx context.Context, request model.InitiateWithdrawalRequest) (model.Withdrawal, error)
 
+	// Wallet APIs
+	GetWallet(ctx context.Context, request model.WalletRequest) (model.Wallet, error)
+	GetWallets(ctx context.Context, customerID string) ([]*model.Wallet, error)
+
 	// Run in sandbox mode
 	RunInSandboxMode()
 }

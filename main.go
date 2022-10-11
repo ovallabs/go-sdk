@@ -34,19 +34,19 @@ func main() {
 	//}
 	//fmt.Printf("new customer: %+v\n", updatedCustomer)
 
-	//retrievedCustomer, err := apiCalls.GetCustomerByID(ctx, example.NewGetCustomerByIDRequest)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Printf("new customer: %+v\n", retrievedCustomer)
+	/*retrievedCustomer, err := apiCalls.GetCustomerByID(ctx, example.NewGetCustomerByIDRequest)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("new customer: %+v\n", retrievedCustomer)
 
-	//retrievedCustomers, err := apiCalls.GetAllCustomers(ctx)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Printf("new customer: %+v\n", retrievedCustomers)
+	retrievedCustomers, err := apiCalls.GetAllCustomers(ctx)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("new customer: %+v\n", retrievedCustomers)*/
 
 	//portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
 	//if err != nil {
@@ -113,4 +113,22 @@ func main() {
 	//	return
 	//}
 	//fmt.Printf("new withdrawal initiated: %+v\n", newWithdrawal)
+
+	/*wallet, err := apiCalls.GetWallet(ctx, model.WalletRequest{
+		CustomerID: "bb1f2b22-0b5c-4c1c-a8d1-df99f02e08de",
+		Network:    "TEST",
+		Asset:      "USDC",
+	})
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("wallet info: %+v\n", wallet)
+
+	allWallet, err := apiCalls.GetWallets(ctx, "bb1f2b22-0b5c-4c1c-a8d1-df99f02e08de")
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("all wallet info: %+v\n", *allWallet[0])*/
 }

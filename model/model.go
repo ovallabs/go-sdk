@@ -13,10 +13,10 @@ const (
 	BaseURL = "https://sandbox-api.ovalfi-app.com/api/"
 
 	// PublicKey sample sandbox environment signature
-	PublicKey = "IYtqe0xG0voYzbPhUEtTIEKyKj4Keq0O"
+	PublicKey = "_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="
 
 	// BearerToken sample sandbox environment bearer token
-	BearerToken = "eyJidXNpbmVzc0lEIjoiOTIzYjJkZjUtNGE4OS00Y2ViLWIxNDgtYzJlNWFjNTJkMDRlIiwidXNlcklEIjoiMjQ4YmFhNDMtYzQ0Yi00ZjYwLWI2MWQtY2VlZjYwOThjNzg1Iiwia2V5Ijoib2xhcHJvZzEifQ=="
+	BearerToken = "eyJidXNpbmVzc0lEIjoiOTIzYjJkZjUtNGE4OS00Y2ViLWIxNDgtYzJlNWFjNTJkMDRlIiwidXNlcklEIjoiMjQ4YmFhNDMtYzQ0Yi00ZjYwLWI2MWQtY2VlZjYwOThjNzg1Iiwia2V5IjoidXBwcHBwIn0="
 
 	// LogStrRequest log string key
 	LogStrRequest = "request"
@@ -111,6 +111,13 @@ type (
 		CustomerID string  `json:"customer_id"`
 		Reference  string  `json:"reference"`
 		Amount     float64 `json:"amount"`
+	}
+
+	// WalletRequest attributes payload to get wallet address
+	WalletRequest struct {
+		CustomerID string `json:"customer_id"`
+		Network    string `json:"network"`
+		Asset      string `json:"asset"`
 	}
 )
 
@@ -291,5 +298,16 @@ type (
 		Status     string    `json:"status"`
 		CreatedAt  time.Time `json:"created_at"`
 		Channel    string    `json:"channel"`
+	}
+
+	// Wallet data object
+	Wallet struct {
+		CustomerID    uuid.UUID  `json:"customer_id"`
+		WalletAddress string     `json:"wallet_address"`
+		Asset         string     `json:"asset"`
+		Network       string     `json:"network"`
+		Type          string     `json:"type"`
+		CreatedAt     time.Time  `json:"created_at"`
+		UpdatedAt     *time.Time `json:"updated_at"`
 	}
 )
