@@ -310,4 +310,10 @@ type (
 		CreatedAt     time.Time  `json:"created_at"`
 		UpdatedAt     *time.Time `json:"updated_at"`
 	}
+
+	// SupportedAsset data object
+	SupportedAsset struct {
+		Asset    string   `json:"asset"`
+		Networks []string `json:"networks"`
+	}
 )

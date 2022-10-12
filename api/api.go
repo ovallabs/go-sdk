@@ -41,6 +41,7 @@ type RemoteCalls interface {
 	// Wallet APIs
 	GetWallet(ctx context.Context, request model.WalletRequest) (model.Wallet, error)
 	GetWallets(ctx context.Context, customerID string) ([]*model.Wallet, error)
+	GetSupportedAssets(ctx context.Context) ([]*model.SupportedAsset, error)
 
 	// Run in sandbox mode
 	RunInSandboxMode()

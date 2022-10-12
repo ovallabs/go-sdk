@@ -17,7 +17,7 @@ func main() {
 	defer logger.Info().Msg("stopped")
 	apiCalls := api.New(&logger, client, model.PublicKey, model.BearerToken, model.BaseURL)
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
-	//ctx := context.Background()
+	// ctx := context.Background()
 
 	//newCustomer, err := apiCalls.CreateCustomer(ctx, example.NewCreateCustomerRequest)
 	//if err != nil {
@@ -131,4 +131,10 @@ func main() {
 		return
 	}
 	fmt.Printf("all wallet info: %+v\n", *allWallet[0])*/
+	/*assets, err := apiCalls.GetSupportedAssets(ctx)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("assets", assets)*/
 }
