@@ -311,8 +311,8 @@ type (
 		UpdatedAt     *time.Time `json:"updated_at"`
 	}
 
-	// SupportedAssets data object
-	SupportedAssets struct {
+	// SupportedAsset data object
+	SupportedAsset struct {
 		Asset    string   `json:"asset"`
 		Networks []string `json:"networks"`
 	}
