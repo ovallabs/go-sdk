@@ -77,15 +77,16 @@ func (c Call) GetWallets(ctx context.Context, customerID string) ([]*model.Walle
 	return response.Data, nil
 }
 
-func (c Call) SupportedAsset(ctx context.Context) ([]*model.SupportedCurrencies, error) {
+// GetSupportedAssets makes an API request using Call to get all supported assets
+func (c Call) GetSupportedAssets(ctx context.Context) ([]*model.SupportedAssets, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, assetAPIVersion)
 
-	fL := c.logger.With().Str("func", "SupportedAsset").Str("endpoint", endpoint).Logger()
+	fL := c.logger.With().Str("func", "GetSupportedAssets").Str("endpoint", endpoint).Logger()
 	fL.Info().Msg("starting...")
 	defer fL.Info().Msg("done...")
 
 	response := struct {
-		Data []*model.SupportedCurrencies `json:"data"`
+		Data []*model.SupportedAssets `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
