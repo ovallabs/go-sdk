@@ -54,6 +54,12 @@ type (
 		CustomerID string `json:"customer_id"`
 	}
 
+	// GetCustomerBalanceRequest attributes payload to get customer balance
+	GetCustomerBalanceRequest struct {
+		CustomerID      uuid.UUID `json:"customer_id"`
+		YieldOfferingID uuid.UUID `json:"yield_offering_id"`
+	}
+
 	// CreateYieldOfferingProfilesRequest payload for API yield offerings
 	CreateYieldOfferingProfilesRequest struct {
 		Name                  string  `json:"name"`
@@ -315,5 +321,20 @@ type (
 	SupportedAsset struct {
 		Asset    string   `json:"asset"`
 		Networks []string `json:"networks"`
+	}
+
+	// CustomerBalanceResponse object
+	CustomerBalanceResponse struct {
+		YieldOfferingID uuid.UUID `json:"yield_offering_id"`
+		Name            string    `json:"name"`
+		Currency        string    `json:"currency"`
+		Amount          float64   `json:"balance"`
+	}
+
+	// CustomerBalancesResponse object
+	CustomerBalancesResponse struct {
+		CustomerID   uuid.UUID                  `json:"customer_id"`
+		TotalBalance float64                    `json:"total_balance"`
+		Detail       []*CustomerBalanceResponse `json:"detail"`
 	}
 )

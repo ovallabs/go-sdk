@@ -19,6 +19,8 @@ type RemoteCalls interface {
 	UpdateCustomer(ctx context.Context, request model.UpdateCustomerRequest) (model.Customer, error)
 	GetAllCustomers(ctx context.Context) ([]model.Customer, error)
 	GetCustomerByID(ctx context.Context, request model.GetCustomerByIDRequest) (model.CustomerInfo, error)
+	GetCustomerBalance(ctx context.Context, request model.GetCustomerBalanceRequest) (model.CustomerBalanceResponse, error)
+	GetCustomerBalances(ctx context.Context, customerID uuid.UUID) (model.CustomerBalancesResponse, error)
 
 	// Yield APIs
 	GetBusinessPortfolios(ctx context.Context) ([]model.Portfolio, error)

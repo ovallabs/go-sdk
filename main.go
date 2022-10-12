@@ -17,7 +17,7 @@ func main() {
 	defer logger.Info().Msg("stopped")
 	apiCalls := api.New(&logger, client, model.PublicKey, model.BearerToken, model.BaseURL)
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
-	// ctx := context.Background()
+	//ctx := context.Background()
 
 	//newCustomer, err := apiCalls.CreateCustomer(ctx, example.NewCreateCustomerRequest)
 	//if err != nil {
@@ -136,5 +136,21 @@ func main() {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Println("assets", assets)*/
+	fmt.Println("assets", assets)
+	balances, err := apiCalls.GetCustomerBalances(ctx, uuid.MustParse("cefec56e-3781-4b3a-bda6-ba4e7c0e49cd"))
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("balances", balances)
+
+	balance, err := apiCalls.GetCustomerBalance(ctx, model.GetCustomerBalanceRequest{
+		CustomerID:      uuid.MustParse("cefec56e-3781-4b3a-bda6-ba4e7c0e49cd"),
+		YieldOfferingID: uuid.MustParse("ef8891af-e887-4e2c-ac79-7a9682d1ad77"),
+	})
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("balances", balance)*/
 }
