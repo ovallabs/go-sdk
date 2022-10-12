@@ -130,8 +130,8 @@ func main() {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Printf("all wallet info: %+v\n", *allWallet[0])
-	assets, err := apiCalls.SupportedAsset(ctx)
+	fmt.Printf("all wallet info: %+v\n", *allWallet[0])*/
+	/*assets, err := apiCalls.GetSupportedAssets(ctx)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
