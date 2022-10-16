@@ -33,6 +33,7 @@ type RemoteCalls interface {
 	InitiateDeposit(ctx context.Context, request model.InitiateDepositRequest) (model.Deposit, error)
 	GetAllDeposits(ctx context.Context) (model.DepositBatchResponse, error)
 	GetDepositByBatchID(ctx context.Context, batchDate string) (model.Deposit, error)
+	InternalFundsTransfer(ctx context.Context, request model.FundTransferRequest) (model.Deposit, error)
 
 	// Transfer API
 	InitiateTransfer(ctx context.Context, request model.InitiateTransferRequest) (model.Transfer, error)

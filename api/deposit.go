@@ -9,7 +9,10 @@ import (
 	"github.com/ovalfi/go-sdk/model"
 )
 
-const depositAPIVersion = "v1/deposit"
+const (
+	depositAPIVersion      = "v1/deposit"
+	fundTransferAPIVersion = "v1/transfer-funds"
+)
 
 // InitiateDeposit makes an API request using Call to initiate a deposit
 func (c *Call) InitiateDeposit(ctx context.Context, request model.InitiateDepositRequest) (model.Deposit, error) {
@@ -108,5 +111,33 @@ func (c *Call) GetDepositByBatchID(ctx context.Context, batchDate string) (model
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
+	return response.Data, nil
+}
+
+// InternalFundsTransfer makes an api
+func (c *Call) InternalFundsTransfer(ctx context.Context, request model.FundTransferRequest) (model.Deposit, error) {
+	endpoint := fmt.Sprintf("%s%s", c.baseURL, fundTransferAPIVersion)
+
+	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	response := struct {
+		Data model.Deposit `json:"data"`
+	}{}
+
+	res, err := c.client.R().
+		SetAuthToken(c.bearerToken).
+		SetBody(request).
+		SetResult(response).
+		SetHeader("Signature", signature).
+		SetContext(ctx).
+		Post(endpoint)
+
+	if err != nil {
+		return model.Deposit{}, err
+	}
+
+	if res.StatusCode() != http.StatusOK {
+		return model.Deposit{}, model.ErrNetworkError
+	}
+
 	return response.Data, nil
 }
