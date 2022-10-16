@@ -152,5 +152,17 @@ func main() {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Println("balances", balance)*/
+	fmt.Println("balances", balance)
+	deposit, err := apiCalls.InternalFundsTransfer(ctx, model.FundTransferRequest{
+		CustomerID:      uuid.MustParse("cefec56e-3781-4b3a-bda6-ba4e7c0e49cd"),
+		Reference:       "ddffd",
+		Amount:          10,
+		Action:          model.Credit,
+		YieldOfferingID: uuid.MustParse("ef8891af-e887-4e2c-ac79-7a9682d1ad77"),
+	})
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("deposit", deposit)*/
 }
