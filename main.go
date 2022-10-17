@@ -19,12 +19,12 @@ func main() {
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
 	//ctx := context.Background()
 
-	//newCustomer, err := apiCalls.CreateCustomer(ctx, example.NewCreateCustomerRequest)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Printf("new customer: %+v\n", newCustomer)
+	/*newCustomer, err := apiCalls.CreateCustomer(ctx, example.NewCreateCustomerRequest)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("new customer: %+v\n", newCustomer)*/
 	//"id": "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd"
 
 	//updatedCustomer, err := apiCalls.UpdateCustomer(ctx, example.NewUpdateCustomerRequest)
@@ -165,4 +165,12 @@ func main() {
 		return
 	}
 	fmt.Println("deposit", deposit)*/
+	/*cID := uuid.MustParse("5e37dc39-5b70-492a-a5ad-46c75d06111e")
+	size := 1
+	transaction, err := apiCalls.GetTransactions(ctx, &model.TransactionRequest{CustomerID: &cID, Size: &size})
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("transaction", transaction)*/
 }
