@@ -38,21 +38,21 @@ const (
 type (
 	// CreateCustomerRequest attributes payload to create new API customer
 	CreateCustomerRequest struct {
-		Name             string      `json:"name"`
-		Email            string      `json:"email"`
-		Reference        string      `json:"reference"`
-		MobileNumber     string      `json:"mobile_number"`
-		YieldOfferingIDs []uuid.UUID `json:"yield_offering_id"`
+		Name            string      `json:"name"`
+		Email           string      `json:"email"`
+		Reference       string      `json:"reference"`
+		MobileNumber    string      `json:"mobile_number"`
+		YieldOfferingID []uuid.UUID `json:"yield_offering_ids"`
 	}
 
 	// UpdateCustomerRequest attributes payload to update API customer
 	UpdateCustomerRequest struct {
-		CustomerID       string      `json:"customer_id"`
-		Name             string      `json:"name"`
-		Email            string      `json:"email"`
-		Reference        string      `json:"reference"`
-		MobileNumber     string      `json:"mobile_number"`
-		YieldOfferingIDs []uuid.UUID `json:"yield_offering_id"`
+		CustomerID      string      `json:"customer_id"`
+		Name            string      `json:"name"`
+		Email           string      `json:"email"`
+		Reference       string      `json:"reference"`
+		MobileNumber    string      `json:"mobile_number"`
+		YieldOfferingID []uuid.UUID `json:"yield_offering_ids"`
 	}
 
 	// GetCustomerByIDRequest attributes payload to update API customer
