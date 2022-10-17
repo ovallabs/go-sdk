@@ -38,21 +38,21 @@ const (
 type (
 	// CreateCustomerRequest attributes payload to create new API customer
 	CreateCustomerRequest struct {
-		Name            string      `json:"name"`
-		Email           string      `json:"email"`
-		Reference       string      `json:"reference"`
-		MobileNumber    string      `json:"mobile_number"`
-		YieldOfferingID []uuid.UUID `json:"yield_offering_ids"`
+		Name             string      `json:"name"`
+		Email            string      `json:"email"`
+		Reference        string      `json:"reference"`
+		MobileNumber     string      `json:"mobile_number"`
+		YieldOfferingIDs []uuid.UUID `json:"yield_offering_ids"`
 	}
 
 	// UpdateCustomerRequest attributes payload to update API customer
 	UpdateCustomerRequest struct {
-		CustomerID      string      `json:"customer_id"`
-		Name            string      `json:"name"`
-		Email           string      `json:"email"`
-		Reference       string      `json:"reference"`
-		MobileNumber    string      `json:"mobile_number"`
-		YieldOfferingID []uuid.UUID `json:"yield_offering_ids"`
+		CustomerID       string      `json:"customer_id"`
+		Name             string      `json:"name"`
+		Email            string      `json:"email"`
+		Reference        string      `json:"reference"`
+		MobileNumber     string      `json:"mobile_number"`
+		YieldOfferingIDs []uuid.UUID `json:"yield_offering_ids"`
 	}
 
 	// GetCustomerByIDRequest attributes payload to update API customer
@@ -353,10 +353,10 @@ type (
 
 	// CustomerBalanceResponse object
 	CustomerBalanceResponse struct {
-		YieldOfferingID []uuid.UUID `json:"yield_offering_id"`
-		Name            string      `json:"name"`
-		Currency        string      `json:"currency"`
-		Amount          float64     `json:"balance"`
+		YieldOfferingID uuid.UUID `json:"yield_offering_id"`
+		Name            string    `json:"name"`
+		Currency        string    `json:"currency"`
+		Amount          float64   `json:"balance"`
 	}
 
 	// CustomerBalancesResponse object
