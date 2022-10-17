@@ -38,21 +38,21 @@ const (
 type (
 	// CreateCustomerRequest attributes payload to create new API customer
 	CreateCustomerRequest struct {
-		Name            string `json:"name"`
-		Email           string `json:"email"`
-		Reference       string `json:"reference"`
-		MobileNumber    string `json:"mobile_number"`
-		YieldOfferingID string `json:"yield_offering_id"`
+		Name             string      `json:"name"`
+		Email            string      `json:"email"`
+		Reference        string      `json:"reference"`
+		MobileNumber     string      `json:"mobile_number"`
+		YieldOfferingIDs []uuid.UUID `json:"yield_offering_ids"`
 	}
 
 	// UpdateCustomerRequest attributes payload to update API customer
 	UpdateCustomerRequest struct {
-		CustomerID      string `json:"customer_id"`
-		Name            string `json:"name"`
-		Email           string `json:"email"`
-		Reference       string `json:"reference"`
-		MobileNumber    string `json:"mobile_number"`
-		YieldOfferingID string `json:"yield_offering_id"`
+		CustomerID       string      `json:"customer_id"`
+		Name             string      `json:"name"`
+		Email            string      `json:"email"`
+		Reference        string      `json:"reference"`
+		MobileNumber     string      `json:"mobile_number"`
+		YieldOfferingIDs []uuid.UUID `json:"yield_offering_ids"`
 	}
 
 	// GetCustomerByIDRequest attributes payload to update API customer
@@ -98,6 +98,16 @@ type (
 		CustomerID string  `json:"customer_id"`
 		Reference  string  `json:"reference"`
 		Amount     float64 `json:"amount"`
+	}
+
+	// TransactionRequest attributes payload for getting transactions
+	TransactionRequest struct {
+		CustomerID      *uuid.UUID `json:"customer_id"`
+		BatchDate       *string    `json:"batch_date"`
+		Reference       *string    `json:"reference"`
+		YieldOfferingID *uuid.UUID `json:"yield_offering_id"`
+		Size            *int       `json:"size"`
+		Page            *int       `json:"page"`
 	}
 
 	// InitiateTransferRequest attributes payload to initiate a new API transfer
@@ -188,18 +198,19 @@ type (
 
 	// Transaction data object for customer transactions
 	Transaction struct {
-		ID          string      `json:"id"`
-		BusinessID  string      `json:"businessID"`
-		CustomerID  string      `json:"customerID"`
-		Type        string      `json:"type"`
-		Amount      float64     `json:"amount"`
-		Currency    string      `json:"currency"`
-		Reference   string      `json:"reference"`
-		Status      string      `json:"status"`
-		Destination Destination `json:"destination"`
-		CompletedAt string      `json:"completedAt"`
-		CreatedAt   string      `json:"createdAt"`
-		BatchDate   string      `json:"batchDate"`
+		ID              string      `json:"id"`
+		BusinessID      string      `json:"businessID"`
+		CustomerID      string      `json:"customerID"`
+		YieldOfferingID string      `json:"yieldOfferingID"`
+		Type            string      `json:"type"`
+		Amount          float64     `json:"amount"`
+		Currency        string      `json:"currency"`
+		Reference       string      `json:"reference"`
+		Status          string      `json:"status"`
+		Destination     Destination `json:"destination"`
+		CompletedAt     string      `json:"completedAt"`
+		CreatedAt       string      `json:"createdAt"`
+		BatchDate       string      `json:"batchDate"`
 	}
 
 	// Customer data object
@@ -353,5 +364,22 @@ type (
 		CustomerID   uuid.UUID                  `json:"customer_id"`
 		TotalBalance float64                    `json:"total_balance"`
 		Detail       []*CustomerBalanceResponse `json:"detail"`
+	}
+
+	// Page object
+	Page struct {
+		Page            int64 `json:"page"`
+		Size            int64 `json:"size"`
+		HasNextPage     bool  `json:"hasNextPage"`
+		HasPreviousPage bool  `json:"hasPreviousPage"`
+		TotalCount      int64 `json:"totalCount"`
+	}
+
+	// TransactionResponse object
+	TransactionResponse struct {
+		Item struct {
+			Transactions []*Transaction `json:"transactions"`
+		} `json:"item"`
+		Page Page `json:"page"`
 	}
 )
