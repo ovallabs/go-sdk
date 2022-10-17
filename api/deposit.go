@@ -5,12 +5,15 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/google/uuid"
+
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
 
 const (
 	depositAPIVersion      = "v1/deposit"
+	depositsAPIVersion     = "v1/deposits"
 	fundTransferAPIVersion = "v1/transfer-funds"
 )
 
@@ -52,7 +55,7 @@ func (c *Call) InitiateDeposit(ctx context.Context, request model.InitiateDeposi
 
 // GetAllDeposits makes an API request using Call to get all deposits
 func (c *Call) GetAllDeposits(ctx context.Context) (model.DepositBatchResponse, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, depositAPIVersion)
+	endpoint := fmt.Sprintf("%s%s", c.baseURL, depositsAPIVersion)
 
 	fL := c.logger.With().Str("func", "GetAllDeposits").Str("endpoint", endpoint).Logger()
 	fL.Info().Msg("starting...")
@@ -82,14 +85,9 @@ func (c *Call) GetAllDeposits(ctx context.Context) (model.DepositBatchResponse, 
 	return response.Data, nil
 }
 
-// GetDepositByBatchID makes an API request using Call to get deposit by id
-func (c *Call) GetDepositByBatchID(ctx context.Context, batchDate string) (model.Deposit, error) {
-	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, depositAPIVersion, batchDate)
-
-	fL := c.logger.With().Str("func", "GetDepositByBatchID").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Str("batchDateID", batchDate).Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+// GetDepositID makes an API request using Call to get deposit by id
+func (c *Call) GetDepositID(ctx context.Context, id uuid.UUID) (model.Deposit, error) {
+	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, depositAPIVersion, id)
 
 	response := struct {
 		Data model.Deposit `json:"data"`
@@ -101,16 +99,13 @@ func (c *Call) GetDepositByBatchID(ctx context.Context, batchDate string) (model
 		Get(endpoint)
 
 	if err != nil {
-		fL.Err(err).Msg("error occurred")
 		return model.Deposit{}, err
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
 		return model.Deposit{}, model.ErrNetworkError
 	}
 
-	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
 	return response.Data, nil
 }
 
