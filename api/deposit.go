@@ -3,8 +3,9 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/google/uuid"
 	"net/http"
+
+	"github.com/google/uuid"
 
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
@@ -12,6 +13,7 @@ import (
 
 const (
 	depositAPIVersion      = "v1/deposit"
+	depositsAPIVersion     = "v1/deposits"
 	fundTransferAPIVersion = "v1/transfer-funds"
 )
 
@@ -53,7 +55,7 @@ func (c *Call) InitiateDeposit(ctx context.Context, request model.InitiateDeposi
 
 // GetAllDeposits makes an API request using Call to get all deposits
 func (c *Call) GetAllDeposits(ctx context.Context) (model.DepositBatchResponse, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, "v1/deposits")
+	endpoint := fmt.Sprintf("%s%s", c.baseURL, depositsAPIVersion)
 
 	fL := c.logger.With().Str("func", "GetAllDeposits").Str("endpoint", endpoint).Logger()
 	fL.Info().Msg("starting...")
