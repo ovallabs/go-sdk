@@ -26,6 +26,12 @@ const (
 
 	// LogErrorCode log error_code
 	LogErrorCode = "error_code"
+
+	// Credit action credit a user from it holding balance to a yield offering
+	Credit FundTransferAction = "credit"
+
+	// Debit action debit a user from it holding balance to a yield offering
+	Debit FundTransferAction = "debit"
 )
 
 // Requests for the endpoints
@@ -124,6 +130,17 @@ type (
 		CustomerID string `json:"customer_id"`
 		Network    string `json:"network"`
 		Asset      string `json:"asset"`
+	}
+
+	FundTransferAction string
+
+	// FundTransferRequest attributes payload to transfer funds from one yield offering to another
+	FundTransferRequest struct {
+		CustomerID      uuid.UUID          `json:"customer_id"`
+		Reference       string             `json:"reference"`
+		Amount          float64            `json:"amount"`
+		Action          FundTransferAction `json:"action"`
+		YieldOfferingID uuid.UUID          `json:"yield_offering_id"`
 	}
 )
 
