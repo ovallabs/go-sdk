@@ -215,15 +215,15 @@ type (
 
 	// Customer data object
 	Customer struct {
-		ID              string       `json:"id"`
-		Name            string       `json:"customer_name"`
-		MobileNumber    string       `json:"mobile_number"`
-		Email           string       `json:"email"`
-		Channel         string       `json:"channel"`
-		Reference       string       `json:"reference"`
-		YieldOfferingID string       `json:"api_yield_offering_id"`
-		UpdatedAt       sql.NullTime `json:"updated_at"`
-		CreatedAt       string       `json:"created_at"`
+		ID               string       `json:"id"`
+		Name             string       `json:"customer_name"`
+		MobileNumber     string       `json:"mobile_number"`
+		Email            string       `json:"email"`
+		Channel          string       `json:"channel"`
+		Reference        string       `json:"reference"`
+		YieldOfferingIDs []uuid.UUID  `json:"api_yield_offering_ids"`
+		UpdatedAt        sql.NullTime `json:"updated_at"`
+		CreatedAt        string       `json:"created_at"`
 	}
 
 	// CustomerInfo data object for additional customer details
