@@ -13,10 +13,12 @@ const (
 	BaseURL = "https://sandbox-api.ovalfi-app.com/api/"
 
 	// PublicKey sample sandbox environment signature
-	PublicKey = "_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="
+	PublicKey = "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu" // "_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="
 
 	// BearerToken sample sandbox environment bearer token
-	BearerToken = "eyJidXNpbmVzc0lEIjoiOTIzYjJkZjUtNGE4OS00Y2ViLWIxNDgtYzJlNWFjNTJkMDRlIiwidXNlcklEIjoiMjQ4YmFhNDMtYzQ0Yi00ZjYwLWI2MWQtY2VlZjYwOThjNzg1Iiwia2V5IjoidXBwcHBwIn0="
+	BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoicGVudGEifQ=="
+
+	//BearerToken = "eyJidXNpbmVzc0lEIjoiOTIzYjJkZjUtNGE4OS00Y2ViLWIxNDgtYzJlNWFjNTJkMDRlIiwidXNlcklEIjoiMjQ4YmFhNDMtYzQ0Yi00ZjYwLWI2MWQtY2VlZjYwOThjNzg1Iiwia2V5IjoidXBwcHBwIn0="
 
 	// LogStrRequest log string key
 	LogStrRequest = "request"
@@ -119,6 +121,22 @@ type (
 		Note        string              `json:"note"`
 		Reason      string              `json:"reason"`
 		Reference   string              `json:"reference"`
+	}
+
+	// GetExchangeRateRequest attributes payload to get exchange rates
+	GetExchangeRateRequest struct {
+		Amount              float64 `json:"amount"`
+		SourceCurrency      string  `json:"sourceCurrency"`
+		DestinationCurrency string  `json:"destinationCurrency"`
+	}
+
+	// ExchangeRateDetails attributes payload to get exchange rates
+	ExchangeRateDetails struct {
+		ExchangeRate     float64 `json:"exchange_rate"`
+		FeeFlat          float64 `json:"flat_fee"`
+		FeePercentage    float64 `json:"fee_percentage"`
+		FeeAmount        float64 `json:"fee_amount"`
+		AmountReceivable float64 `json:"amount_receivable"`
 	}
 
 	// TransferDestination holds recipient's bank and personal info
