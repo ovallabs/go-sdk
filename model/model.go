@@ -309,7 +309,7 @@ type (
 		BalanceBefore   float64    `json:"balance_before"`
 		BalanceAfter    float64    `json:"balance_after"`
 		DepositBeforeID uuid.UUID  `json:"deposit_before_id"`
-		BatchDate       *time.Time `json:"batch_date"`
+		BatchDate       *string    `json:"batch_date"`
 		Status          string     `json:"status"`
 		CancelReason    *string    `json:"cancel_reason"`
 	}
