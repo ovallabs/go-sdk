@@ -47,3 +47,39 @@ func (c *Call) InitiateTransfer(ctx context.Context, request model.InitiateTrans
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
 	return response.Data, nil
 }
+
+// GetExchangeRates makes an API request using Call to get exchange rates
+func (c *Call) GetExchangeRates(ctx context.Context, request model.GetExchangeRateRequest) (model.ExchangeRateDetails, error) {
+	endpoint := fmt.Sprintf("%s%s/quote?amount=%f&source_currency=%s&destination_currency=%s",
+		c.baseURL, transferAPIVersion, request.Amount, request.SourceCurrency, request.DestinationCurrency)
+
+	fL := c.logger.With().Str("func", "GetExchangeRates").Str("endpoint", endpoint).Logger()
+	fL.Info().Msg("starting...")
+	fL.Info().Interface("request", request).
+		Interface(model.LogStrRequest, "empty").Msg("request")
+	defer fL.Info().Msg("done...")
+
+	response := struct {
+		Data model.ExchangeRateDetails `json:"data"`
+	}{}
+
+	res, err := c.client.R().
+		SetAuthToken(c.bearerToken).
+		SetBody(request).
+		SetResult(&response).
+		SetContext(ctx).
+		Get(endpoint)
+
+	if err != nil {
+		fL.Err(err).Msg("error occurred")
+		return model.ExchangeRateDetails{}, err
+	}
+
+	if res.StatusCode() != http.StatusOK {
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		return model.ExchangeRateDetails{}, model.ErrNetworkError
+	}
+
+	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
+	return response.Data, nil
+}

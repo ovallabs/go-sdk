@@ -179,4 +179,15 @@ func main() {
 		return
 	}
 	fmt.Println("deposit", deposit)*/
+
+	/*details, err := apiCalls.GetExchangeRates(context.Background(), model.GetExchangeRateRequest{
+		Amount:              3000,
+		SourceCurrency:      "USD",
+		DestinationCurrency: "NGN",
+	})
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("details", details)*/
 }

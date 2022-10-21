@@ -37,6 +37,7 @@ type RemoteCalls interface {
 
 	// Transfer API
 	InitiateTransfer(ctx context.Context, request model.InitiateTransferRequest) (model.Transfer, error)
+	GetExchangeRates(ctx context.Context, request model.GetExchangeRateRequest) (model.ExchangeRateDetails, error)
 
 	// Withdrawal APIs
 	InitiateWithdrawal(ctx context.Context, request model.InitiateWithdrawalRequest) (model.Withdrawal, error)
