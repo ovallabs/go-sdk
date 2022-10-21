@@ -173,4 +173,10 @@ func main() {
 		return
 	}
 	fmt.Println("transaction", transaction)*/
+	/*deposit, err := apiCalls.GetDepositID(ctx, uuid.MustParse("9c6c34d9-49b1-47c6-88f6-98ca0163c597"))
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("deposit", deposit)*/
 }
