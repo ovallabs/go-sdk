@@ -295,23 +295,23 @@ type (
 
 	// Deposit data objet
 	Deposit struct {
-		ID              uuid.UUID    `json:"id"`
-		CustomerID      uuid.UUID    `json:"customerID"`
-		BusinessID      uuid.UUID    `json:"businessID"`
-		Name            string       `json:"name"`
-		Email           string       `json:"email"`
-		Reference       string       `json:"reference"`
-		Currency        string       `json:"currency"`
-		Amount          float64      `json:"amount"`
-		Channel         string       `json:"channel"`
-		CreatedAt       time.Time    `json:"createdAt"`
-		SettledAt       sql.NullTime `json:"settledAt"`
-		BalanceBefore   float64      `json:"balanceBefore"`
-		BalanceAfter    float64      `json:"balanceAfter"`
-		DepositBeforeID uuid.UUID    `json:"depositBeforeID"`
-		BatchDate       sql.NullTime `json:"batchDate"`
-		Status          string       `json:"status"`
-		CancelReason    *string      `json:"cancelReason"`
+		ID              uuid.UUID  `json:"id"`
+		CustomerID      uuid.UUID  `json:"customer_id"`
+		BusinessID      uuid.UUID  `json:"business_id"`
+		Name            string     `json:"name"`
+		Email           string     `json:"email"`
+		Reference       string     `json:"reference"`
+		Currency        string     `json:"currency"`
+		Amount          float64    `json:"amount"`
+		Channel         string     `json:"channel"`
+		CreatedAt       time.Time  `json:"created_at"`
+		SettledAt       *time.Time `json:"settled_at"`
+		BalanceBefore   float64    `json:"balance_before"`
+		BalanceAfter    float64    `json:"balance_after"`
+		DepositBeforeID uuid.UUID  `json:"deposit_before_id"`
+		BatchDate       *time.Time `json:"batch_date"`
+		Status          string     `json:"status"`
+		CancelReason    *string    `json:"cancel_reason"`
 	}
 
 	// Transfer data object
