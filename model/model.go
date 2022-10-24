@@ -366,6 +366,7 @@ type (
 	// SupportedAsset data object
 	SupportedAsset struct {
 		Asset    string   `json:"asset"`
+		LogoURL  string   `json:"logoUrl"`
 		Networks []string `json:"networks"`
 	}
 
