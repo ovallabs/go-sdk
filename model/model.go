@@ -233,15 +233,15 @@ type (
 
 	// Customer data object
 	Customer struct {
-		ID               string       `json:"id"`
-		Name             string       `json:"customer_name"`
-		MobileNumber     string       `json:"mobile_number"`
-		Email            string       `json:"email"`
-		Channel          string       `json:"channel"`
-		Reference        string       `json:"reference"`
-		YieldOfferingIDs []uuid.UUID  `json:"api_yield_offering_ids"`
-		UpdatedAt        sql.NullTime `json:"updated_at"`
-		CreatedAt        string       `json:"created_at"`
+		ID               string      `json:"id"`
+		Name             string      `json:"customer_name"`
+		MobileNumber     string      `json:"mobile_number"`
+		Email            string      `json:"email"`
+		Channel          string      `json:"channel"`
+		Reference        string      `json:"reference"`
+		YieldOfferingIDs []uuid.UUID `json:"api_yield_offering_ids"`
+		UpdatedAt        *time.Time  `json:"updated_at"`
+		CreatedAt        string      `json:"created_at"`
 	}
 
 	// CustomerInfo data object for additional customer details
@@ -400,5 +400,24 @@ type (
 			Transactions []*Transaction `json:"transactions"`
 		} `json:"item"`
 		Page Page `json:"page"`
+	}
+
+	// AccountResolveRequest request payload to resolve account
+	AccountResolveRequest struct {
+		BankCode      string `json:"bank_code" validate:"required"`
+		AccountNumber string `json:"account_number" validate:"required"`
+	}
+
+	// AccountDetailResponse response payload to resolve account
+	AccountDetailResponse struct {
+		AccountName   string `json:"account_name"`
+		AccountNumber string `json:"account_number"`
+		BankCode      string `json:"bank_code"`
+	}
+
+	// BankCodeResponse response payload to get list of banks
+	BankCodeResponse struct {
+		BankName string `json:"name"`
+		Code     string `json:"code"`
 	}
 )

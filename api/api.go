@@ -50,6 +50,10 @@ type RemoteCalls interface {
 	// Transaction APIs
 	GetTransactions(ctx context.Context, request *model.TransactionRequest) (model.TransactionResponse, error)
 
+	// Payment APIs
+	GetBanks(ctx context.Context) ([]model.BankCodeResponse, error)
+	ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetailResponse, error)
+
 	// Run in sandbox mode
 	RunInSandboxMode()
 }

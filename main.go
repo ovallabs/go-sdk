@@ -27,12 +27,12 @@ func main() {
 	fmt.Printf("new customer: %+v\n", newCustomer)*/
 	//"id": "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd"
 
-	//updatedCustomer, err := apiCalls.UpdateCustomer(ctx, example.NewUpdateCustomerRequest)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Printf("new customer: %+v\n", updatedCustomer)
+	/*updatedCustomer, err := apiCalls.UpdateCustomer(ctx, example.NewUpdateCustomerRequest)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("new customer: %+v\n", updatedCustomer)*/
 
 	/*retrievedCustomer, err := apiCalls.GetCustomerByID(ctx, example.NewGetCustomerByIDRequest)
 	if err != nil {
@@ -190,4 +190,22 @@ func main() {
 		return
 	}
 	fmt.Println("details", details)*/
+
+	/*banks, err := apiCalls.GetBanks(context.Background())
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("banks", banks)*/
+
+	/*account, err := apiCalls.ResolveBankAccount(context.Background(), model.AccountResolveRequest{
+		BankCode:      "057",
+		AccountNumber: "2209276822",
+	})
+
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("account", account)*/
 }
