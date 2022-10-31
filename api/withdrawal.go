@@ -46,3 +46,59 @@ func (c *Call) InitiateWithdrawal(ctx context.Context, request model.InitiateWit
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
 	return response.Data, nil
 }
+
+// FiatWithdrawal makes an API request to withdrawal to a provided bank account
+func (c *Call) FiatWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error) {
+	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, withdrawalAPIVersion, "/fiat")
+
+	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	response := struct {
+		Data model.Withdrawal `json:"data"`
+	}{}
+
+	res, err := c.client.R().
+		SetAuthToken(c.bearerToken).
+		SetBody(request).
+		SetResult(&response).
+		SetHeader("Signature", signature).
+		SetContext(ctx).
+		Post(endpoint)
+
+	if err != nil {
+		return model.Withdrawal{}, err
+	}
+
+	if res.StatusCode() != http.StatusOK {
+		return model.Withdrawal{}, model.ErrNetworkError
+	}
+
+	return response.Data, nil
+}
+
+// CryptoWithdrawal makes an API request to withdrawal to a specified crypto wallet address
+func (c Call) CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error) {
+	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, withdrawalAPIVersion, "/crypto")
+
+	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	response := struct {
+		Data model.Withdrawal `json:"data"`
+	}{}
+
+	res, err := c.client.R().
+		SetAuthToken(c.bearerToken).
+		SetBody(request).
+		SetResult(&response).
+		SetHeader("Signature", signature).
+		SetContext(ctx).
+		Post(endpoint)
+
+	if err != nil {
+		return model.Withdrawal{}, err
+	}
+
+	if res.StatusCode() != http.StatusOK {
+		return model.Withdrawal{}, model.ErrNetworkError
+	}
+
+	return response.Data, nil
+}

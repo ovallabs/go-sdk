@@ -41,6 +41,8 @@ type RemoteCalls interface {
 
 	// Withdrawal APIs
 	InitiateWithdrawal(ctx context.Context, request model.InitiateWithdrawalRequest) (model.Withdrawal, error)
+	FiatWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error)
+	CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error)
 
 	// Wallet APIs
 	GetWallet(ctx context.Context, request model.WalletRequest) (model.Wallet, error)
