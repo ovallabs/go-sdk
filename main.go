@@ -208,4 +208,20 @@ func main() {
 		return
 	}
 	fmt.Println("account", account)*/
+	/*withdrawal, err := apiCalls.FiatWithdrawal(ctx, model.WithdrawalRequest{
+		CustomerID:      uuid.MustParse("9f40fb69-64e3-4d23-853a-0243af155427"),
+		Reference:       "polkj",
+		Amount:          10,
+		YieldOfferingID: uuid.MustParse("42ee80d8-2a95-419c-aad1-5643d306948e"),
+		PayoutCurrency:  "NGN",
+		BankDetail: &model.BankDetail{
+			BankCode:      "057",
+			AccountNumber: "2209276822",
+		},
+	})
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("withdrawal", withdrawal)*/
 }

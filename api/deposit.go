@@ -12,9 +12,10 @@ import (
 )
 
 const (
-	depositAPIVersion      = "v1/deposit"
-	depositsAPIVersion     = "v1/deposits"
-	fundTransferAPIVersion = "v1/transfer-funds"
+	depositAPIVersion       = "v1/deposit"
+	depositsAPIVersion      = "v1/deposits"
+	fundTransferAPIVersion  = "v1/transfer-funds"
+	intraTransferAPIVersion = "v1/intra-transfer"
 )
 
 // InitiateDeposit makes an API request using Call to initiate a deposit
@@ -132,6 +133,34 @@ func (c *Call) InternalFundsTransfer(ctx context.Context, request model.FundTran
 
 	if res.StatusCode() != http.StatusOK {
 		return model.Deposit{}, model.ErrNetworkError
+	}
+
+	return response.Data, nil
+}
+
+// IntraTransfer makes an API request to transfer funds between two customers
+func (c *Call) IntraTransfer(ctx context.Context, request model.IntraTransferRequest) (model.IntraTransferResponse, error) {
+	endpoint := fmt.Sprintf("%s%s", c.baseURL, intraTransferAPIVersion)
+
+	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	response := struct {
+		Data model.IntraTransferResponse `json:"data"`
+	}{}
+
+	res, err := c.client.R().
+		SetAuthToken(c.bearerToken).
+		SetBody(request).
+		SetResult(response).
+		SetHeader("Signature", signature).
+		SetContext(ctx).
+		Post(endpoint)
+
+	if err != nil {
+		return model.IntraTransferResponse{}, err
+	}
+
+	if res.StatusCode() != http.StatusOK {
+		return model.IntraTransferResponse{}, model.ErrNetworkError
 	}
 
 	return response.Data, nil

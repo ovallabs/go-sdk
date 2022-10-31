@@ -170,6 +170,44 @@ type (
 		Action          FundTransferAction `json:"action"`
 		YieldOfferingID uuid.UUID          `json:"yield_offering_id"`
 	}
+
+	// TransferParty attributes payload to hold sender and receiver payload
+	TransferParty struct {
+		CustomerID      string `json:"customer_id"`
+		YieldOfferingID string `json:"yield_offering_id"`
+	}
+
+	// IntraTransferRequest attributes payload to transfer funds between customers
+	IntraTransferRequest struct {
+		Reference string        `json:"reference"`
+		Amount    float64       `json:"amount"`
+		Sender    TransferParty `json:"sender"`
+		Receiver  TransferParty `json:"receiver"`
+	}
+
+	// BankDetail bank details for withdrawal
+	BankDetail struct {
+		BankCode      string `json:"bank_code"`
+		AccountNumber string `json:"account_number"`
+	}
+
+	// WalletDetail wallet details for withdrawal
+	WalletDetail struct {
+		Address string `json:"address"`
+		Network string `json:"network"`
+		Asset   string `json:"asset"`
+	}
+
+	// WithdrawalRequest attribute payload for crypto and fiat withdrawal
+	WithdrawalRequest struct {
+		CustomerID      uuid.UUID     `json:"customer_id"`
+		Reference       string        `json:"reference"`
+		Amount          float64       `json:"amount"`
+		YieldOfferingID uuid.UUID     `json:"yield_offering_id"`
+		PayoutCurrency  string        `json:"payout_currency"`
+		BankDetail      *BankDetail   `json:"bank_detail"`
+		WalletDetail    *WalletDetail `json:"wallet_detail"`
+	}
 )
 
 type (
@@ -342,14 +380,22 @@ type (
 
 	// Withdrawal data object
 	Withdrawal struct {
-		ID         uuid.UUID `json:"id"`
-		BusinessID uuid.UUID `json:"business_id"`
-		CustomerID uuid.UUID `json:"customer_id"`
-		Reference  string    `json:"reference"`
-		Amount     float64   `json:"amount"`
-		Status     string    `json:"status"`
-		CreatedAt  time.Time `json:"created_at"`
-		Channel    string    `json:"channel"`
+		ID                 string      `json:"id"`
+		CustomerID         string      `json:"customer_id"`
+		Reference          string      `json:"reference"`
+		Amount             int         `json:"amount"`
+		Channel            string      `json:"channel"`
+		Currency           string      `json:"currency"`
+		CreatedAt          time.Time   `json:"created_at"`
+		CompletedAt        *time.Time  `json:"completed_at"`
+		UpdatedAt          *time.Time  `json:"updated_at"`
+		BatchDate          *time.Time  `json:"batch_date"`
+		Status             string      `json:"status"`
+		WithdrawalAmount   float64     `json:"withdrawal_amount"`
+		WithdrawalCurrency string      `json:"withdrawal_currency"`
+		PayoutDetail       interface{} `json:"payout_detail"`
+		CancelReason       *string     `json:"cancel_reason"`
+		YieldOfferingID    string      `json:"yield_offering_id"`
 	}
 
 	// Wallet data object
@@ -419,5 +465,14 @@ type (
 	BankCodeResponse struct {
 		BankName string `json:"name"`
 		Code     string `json:"code"`
+	}
+
+	// IntraTransferResponse response payload for intra transfer
+	IntraTransferResponse struct {
+		ID        uuid.UUID     `json:"id"`
+		Reference string        `json:"reference"`
+		Amount    float64       `json:"amount"`
+		Sender    TransferParty `json:"sender"`
+		Receiver  TransferParty `json:"receiver"`
 	}
 )
