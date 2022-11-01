@@ -165,6 +165,24 @@ func main() {
 		return
 	}
 	fmt.Println("deposit", deposit)*/
+
+	/*intraTransfer, err := apiCalls.IntraTransfer(ctx, model.IntraTransferRequest{
+		Reference: "some-test-reference",
+		Amount:    20,
+		Sender: model.TransferParty{
+			CustomerID:      "4a31a43b-7c54-4578-a020-87d1d2b0f6f5",
+			YieldOfferingID: "21c48a42-d840-4f66-bdb0-c7510a038bd4",
+		},
+		Receiver: model.TransferParty{
+			CustomerID:      "a6c04a14-9214-4cd1-9945-cb7a04b9fa07",
+			YieldOfferingID: "d0f25fb9-b3ef-42ba-b1f9-e946722b064f",
+		},
+	})
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("deposit", intraTransfer)*/
 	/*cID := uuid.MustParse("5e37dc39-5b70-492a-a5ad-46c75d06111e")
 	size := 1
 	transaction, err := apiCalls.GetTransactions(ctx, &model.TransactionRequest{CustomerID: &cID, Size: &size})
