@@ -122,7 +122,7 @@ func (c *Call) InternalFundsTransfer(ctx context.Context, request model.FundTran
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
-		SetResult(response).
+		SetResult(&response).
 		SetHeader("Signature", signature).
 		SetContext(ctx).
 		Post(endpoint)
@@ -150,7 +150,7 @@ func (c *Call) IntraTransfer(ctx context.Context, request model.IntraTransferReq
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
-		SetResult(response).
+		SetResult(&response).
 		SetHeader("Signature", signature).
 		SetContext(ctx).
 		Post(endpoint)
