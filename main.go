@@ -186,11 +186,15 @@ func main() {
 	/*cID := uuid.MustParse("5e37dc39-5b70-492a-a5ad-46c75d06111e")
 	size := 1
 	transaction, err := apiCalls.GetTransactions(ctx, &model.TransactionRequest{CustomerID: &cID, Size: &size})
+	//cID := uuid.MustParse("5e37dc39-5b70-492a-a5ad-46c75d06111e")
+	//size := 1
+	/*ref := "07b1057f-e85e-441e-ac4f-d1a498617762"
+	transaction, err := apiCalls.GetTransactions(context.Background(), &model.TransactionRequest{Reference: &ref})
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Println("transaction", transaction)*/
+	fmt.Println("transaction", *transaction.Items.Transactions[0])*/
 	/*deposit, err := apiCalls.GetDepositID(ctx, uuid.MustParse("9c6c34d9-49b1-47c6-88f6-98ca0163c597"))
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)

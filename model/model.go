@@ -442,9 +442,9 @@ type (
 
 	// TransactionResponse object
 	TransactionResponse struct {
-		Item struct {
+		Items struct {
 			Transactions []*Transaction `json:"transactions"`
-		} `json:"item"`
+		} `json:"items"`
 		Page Page `json:"page"`
 	}
 
