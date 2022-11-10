@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	walletAPIVersion = "v1/customer/wallet"
-	assetAPIVersion  = "v1/supported-assets"
+	walletAPIVersion = "v1/payments/crypto/wallet"
+	assetAPIVersion  = "v1/payments/crypto/supported-assets"
 )
 
 // GetWallet makes an API request using Call to get customer wallet

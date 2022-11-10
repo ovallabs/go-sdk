@@ -46,7 +46,7 @@ func main() {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Printf("new customer: %+v\n", retrievedCustomers)*/
+	fmt.Printf("new customer: %+v\n", retrievedCustomers)
 
 	//portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
 	//if err != nil {
@@ -117,7 +117,7 @@ func main() {
 	/*wallet, err := apiCalls.GetWallet(ctx, model.WalletRequest{
 		CustomerID: "bb1f2b22-0b5c-4c1c-a8d1-df99f02e08de",
 		Network:    "TEST",
-		Asset:      "USDC",
+		Asset:      "USDT",
 	})
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
@@ -125,7 +125,7 @@ func main() {
 	}
 	fmt.Printf("wallet info: %+v\n", wallet)
 
-	allWallet, err := apiCalls.GetWallets(ctx, "bb1f2b22-0b5c-4c1c-a8d1-df99f02e08de")
+	/*allWallet, err := apiCalls.GetWallets(ctx, "bb1f2b22-0b5c-4c1c-a8d1-df99f02e08de")
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
@@ -246,4 +246,22 @@ func main() {
 		return
 	}
 	fmt.Println("withdrawal", withdrawal)*/
+	/*account, err := apiCalls.GenerateBankAccount(context.Background(), model.BankAccountRequest{
+		CustomerID:  uuid.MustParse("163c4dbb-7032-4ee7-8ab1-75b6cc01726f"),
+		BVN:         "22481815830",
+		Reference:   "ref5679",
+		PhoneNumber: "2349090909091",
+	})
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("account", account)
+
+	bank, err := apiCalls.GetBankAccount(ctx, uuid.MustParse("163c4dbb-7032-4ee7-8ab1-75b6cc01726f"))
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("bank", bank)*/
 }

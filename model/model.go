@@ -208,6 +208,14 @@ type (
 		BankDetail      *BankDetail   `json:"bank_detail"`
 		WalletDetail    *WalletDetail `json:"wallet_detail"`
 	}
+
+	// BankAccountRequest attribute payload to create bank account
+	BankAccountRequest struct {
+		CustomerID  uuid.UUID `json:"customer_id"`
+		BVN         string    `json:"bvn"`
+		Reference   string    `json:"reference"`
+		PhoneNumber string    `json:"phone_number"`
+	}
 )
 
 type (
@@ -351,23 +359,21 @@ type (
 
 	// Deposit data objet
 	Deposit struct {
-		ID              uuid.UUID `json:"id"`
-		CustomerID      uuid.UUID `json:"customer_id"`
-		BusinessID      uuid.UUID `json:"business_id"`
-		Name            string    `json:"name"`
-		Email           string    `json:"email"`
-		Reference       string    `json:"reference"`
-		Currency        string    `json:"currency"`
-		Amount          float64   `json:"amount"`
-		Channel         string    `json:"channel"`
-		CreatedAt       time.Time `json:"created_at"`
-		SettledAt       *string   `json:"settled_at"`
-		BalanceBefore   float64   `json:"balance_before"`
-		BalanceAfter    float64   `json:"balance_after"`
-		DepositBeforeID uuid.UUID `json:"deposit_before_id"`
-		BatchDate       *string   `json:"batch_date"`
-		Status          string    `json:"status"`
-		CancelReason    *string   `json:"cancel_reason"`
+		ID              uuid.UUID  `json:"id"`
+		CustomerID      uuid.UUID  `json:"customer_id"`
+		BusinessID      uuid.UUID  `json:"business_id"`
+		Name            string     `json:"name"`
+		Email           string     `json:"email"`
+		Reference       string     `json:"reference"`
+		Currency        string     `json:"currency"`
+		Amount          float64    `json:"amount"`
+		Channel         string     `json:"channel"`
+		CreatedAt       time.Time  `json:"created_at"`
+		SettledAt       *time.Time `json:"settled_at"`
+		DepositBeforeID uuid.UUID  `json:"deposit_before_id"`
+		BatchDate       *string    `json:"batch_date"`
+		Status          string     `json:"status"`
+		CancelReason    *string    `json:"cancel_reason"`
 	}
 
 	// Transfer data object
@@ -474,5 +480,14 @@ type (
 		Amount    float64       `json:"amount"`
 		Sender    TransferParty `json:"sender"`
 		Receiver  TransferParty `json:"receiver"`
+	}
+
+	// BankAccountResponse response payload to create bank account
+	BankAccountResponse struct {
+		CustomerID    uuid.UUID `json:"customer_id"`
+		AccountNumber string    `json:"account_number"`
+		AccountName   string    `json:"account_name"`
+		BankName      string    `json:"bank_name"`
+		BankCode      string    `json:"bank_code"`
 	}
 )
