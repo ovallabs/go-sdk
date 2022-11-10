@@ -56,6 +56,8 @@ type RemoteCalls interface {
 	// Payment APIs
 	GetBanks(ctx context.Context) ([]model.BankCodeResponse, error)
 	ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetailResponse, error)
+	GenerateBankAccount(ctx context.Context, request model.BankAccountRequest) (model.BankAccountResponse, error)
+	GetBankAccount(ctx context.Context, customerID uuid.UUID) (model.BankAccountResponse, error)
 
 	// Run in sandbox mode
 	RunInSandboxMode()
