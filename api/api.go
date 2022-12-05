@@ -3,8 +3,6 @@ package api
 
 import (
 	"context"
-	"time"
-
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
 	"github.com/rs/zerolog"
@@ -76,7 +74,6 @@ type Call struct {
 
 // New initialises the object Call
 func New(z *zerolog.Logger, c *resty.Client, publicKey, bearerToken, bURL string) RemoteCalls {
-	c.SetTimeout(10 * time.Second)
 	call := &Call{
 		client:       c,
 		logger:       z.With().Str("sdk", "ovalfi").Logger(),
