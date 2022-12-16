@@ -102,3 +102,31 @@ func (c Call) CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequ
 
 	return response.Data, nil
 }
+
+// FeeWithdrawal makes an API request to withdrawal for withdrawal fees
+func (c *Call) FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalRequest) (model.FeeWithdrawal, error) {
+	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, withdrawalAPIVersion, "/fee")
+
+	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	response := struct {
+		Data model.FeeWithdrawal `json:"data"`
+	}{}
+
+	res, err := c.client.R().
+		SetAuthToken(c.bearerToken).
+		SetBody(request).
+		SetResult(&response).
+		SetHeader("Signature", signature).
+		SetContext(ctx).
+		Post(endpoint)
+
+	if err != nil {
+		return model.FeeWithdrawal{}, err
+	}
+
+	if res.StatusCode() != http.StatusOK {
+		return model.FeeWithdrawal{}, model.ErrNetworkError
+	}
+
+	return response.Data, nil
+}
