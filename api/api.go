@@ -3,6 +3,7 @@ package api
 
 import (
 	"context"
+
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
 	"github.com/rs/zerolog"
@@ -42,6 +43,7 @@ type RemoteCalls interface {
 	InitiateWithdrawal(ctx context.Context, request model.InitiateWithdrawalRequest) (model.Withdrawal, error)
 	FiatWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error)
 	CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error)
+	FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalRequest) (model.FeeWithdrawal, error)
 
 	// Wallet APIs
 	GetWallet(ctx context.Context, request model.WalletRequest) (model.Wallet, error)

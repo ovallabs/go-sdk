@@ -34,6 +34,12 @@ const (
 
 	// Debit action debit a user from it holding balance to a yield offering
 	Debit FundTransferAction = "debit"
+
+	// FeeTypePercentage represent FeeType in percentage
+	FeeTypePercentage FeeType = "percentage"
+
+	// FeeTypeAmount represent FeeType in amount
+	FeeTypeAmount FeeType = "amount"
 )
 
 // Requests for the endpoints
@@ -216,6 +222,21 @@ type (
 		Reference   string    `json:"reference"`
 		PhoneNumber string    `json:"phone_number"`
 	}
+
+	// FeeWithdrawalRequest attribute payload for fee withdrawal
+	FeeWithdrawalRequest struct {
+		ID                  uuid.UUID `json:"id"`
+		CustomerID          uuid.UUID `json:"customer_id" validate:"required"`
+		BusinessID          uuid.UUID `json:"-"`
+		Reference           string    `json:"reference" validate:"required"`
+		WithdrawalReference string    `json:"withdrawal_reference" validate:"required"`
+		FeeType             FeeType   `json:"fee_type" validate:"required,oneof=amount percentage"`
+		Amount              float64   `json:"amount,omitempty" validate:"required_if=FeeType amount"`
+		Percentage          float64   `json:"percentage,omitempty" validate:"required_if=FeeType percentage"`
+		YieldOfferingID     uuid.UUID `json:"yield_offering_id" validate:"required"`
+	}
+
+	FeeType string
 )
 
 type (
@@ -489,5 +510,18 @@ type (
 		AccountName   string    `json:"account_name"`
 		BankName      string    `json:"bank_name"`
 		BankCode      string    `json:"bank_code"`
+	}
+
+	// FeeWithdrawal object for fee withdrawal
+	FeeWithdrawal struct {
+		ID                  uuid.UUID `json:"id"`
+		CustomerID          uuid.UUID `json:"customer_id" validate:"required"`
+		BusinessID          uuid.UUID `json:"-"`
+		Reference           string    `json:"reference" validate:"required"`
+		WithdrawalReference string    `json:"withdrawal_reference" validate:"required"`
+		FeeType             FeeType   `json:"fee_type" validate:"required,oneof=amount percentage"`
+		Amount              float64   `json:"amount,omitempty" validate:"required_if=FeeType amount"`
+		Percentage          float64   `json:"percentage,omitempty" validate:"required_if=FeeType percentage"`
+		YieldOfferingID     uuid.UUID `json:"yield_offering_id" validate:"required"`
 	}
 )
