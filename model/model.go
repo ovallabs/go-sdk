@@ -416,7 +416,7 @@ type (
 		CreatedAt          time.Time   `json:"created_at"`
 		CompletedAt        *time.Time  `json:"completed_at"`
 		UpdatedAt          *time.Time  `json:"updated_at"`
-		BatchDate          *time.Time  `json:"batch_date"`
+		BatchDate          *string     `json:"batch_date"`
 		Status             string      `json:"status"`
 		WithdrawalAmount   float64     `json:"withdrawal_amount"`
 		WithdrawalCurrency string      `json:"withdrawal_currency"`
