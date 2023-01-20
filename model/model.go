@@ -410,7 +410,7 @@ type (
 		ID                 string      `json:"id"`
 		CustomerID         string      `json:"customer_id"`
 		Reference          string      `json:"reference"`
-		Amount             int         `json:"amount"`
+		Amount             float64     `json:"amount"`
 		Channel            string      `json:"channel"`
 		Currency           string      `json:"currency"`
 		CreatedAt          time.Time   `json:"created_at"`
