@@ -209,3 +209,35 @@ func (c Call) GetCustomerBalances(ctx context.Context, customerID uuid.UUID) (mo
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
 	return response.Data, nil
 }
+
+func (c Call) DeleteCustomer(ctx context.Context, customerID uuid.UUID) error {
+	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, customerAPIVersion, customerID)
+
+	fL := c.logger.With().Str("func", "DeleteCustomer").Str("endpoint", endpoint).Logger()
+	fL.Info().Msg("starting...")
+	fL.Info().Str("customerID", customerID.String()).Interface(model.LogStrRequest, "empty").Msg("request")
+
+	defer fL.Info().Msg("done...")
+
+	var response interface{}
+
+	res, err := c.client.R().
+		SetAuthToken(c.bearerToken).
+		SetResult(&response).
+		SetContext(ctx).
+		Delete(endpoint)
+
+	if err != nil {
+		fL.Err(err).Msg("error occurred")
+		return err
+	}
+
+	if res.StatusCode() != http.StatusOK {
+		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		return model.ErrNetworkError
+	}
+
+	fL.Info().Interface(model.LogStrResponse, response).Msg("response")
+
+	return nil
+}

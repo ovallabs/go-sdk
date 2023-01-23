@@ -1,6 +1,9 @@
 package main
 
 import (
+	"context"
+	"fmt"
+	"github.com/google/uuid"
 	"os"
 
 	"github.com/go-resty/resty/v2"
@@ -280,4 +283,13 @@ func main() {
 		return
 	}
 	fmt.Println("withdrawal", feeWithdrawal)*/
+
+	err := apiCalls.DeleteCustomer(context.Background(), uuid.MustParse("4a31a43b-7c54-4578-a020-87d1d2b0f6f5"))
+
+	if err != nil {
+		fmt.Printf("Error: %v\n\n", err)
+		return
+	} else {
+		fmt.Printf("Succesfuly deleted")
+	}
 }
