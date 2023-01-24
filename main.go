@@ -1,9 +1,6 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"github.com/google/uuid"
 	"os"
 
 	"github.com/go-resty/resty/v2"
@@ -268,28 +265,28 @@ func main() {
 	}
 	fmt.Println("bank", bank)*/
 
-	/*feeWithdrawal, err := apiCalls.FeeWithdrawal(context.Background(), model.FeeWithdrawalRequest{
-		CustomerID:          uuid.MustParse("4a31a43b-7c54-4578-a020-87d1d2b0f6f5"),
-		BusinessID:          uuid.MustParse("b21a44b0-c25b-474b-a986-8af627109c19"),
-		Reference:           "c982d536-7a1d-4034-bc1a-0f3527da1c28",
-		WithdrawalReference: "dae68c86-d80b-4652-9bec-38f2daf4db86",
-		FeeType:             "amount",
-		Amount:              10,
-		Percentage:          0,
-		YieldOfferingID:     uuid.MustParse("21c48a42-d840-4f66-bdb0-c7510a038bd4"),
-	})
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("withdrawal", feeWithdrawal)*/
+	//feeWithdrawal, err := apiCalls.FeeWithdrawal(context.Background(), model.FeeWithdrawalRequest{
+	//	CustomerID:          uuid.MustParse("4a31a43b-7c54-4578-a020-87d1d2b0f6f5"),
+	//	BusinessID:          uuid.MustParse("b21a44b0-c25b-474b-a986-8af627109c19"),
+	//	Reference:           "c982d536-7a1d-4034-bc1a-0f3527da1c28",
+	//	WithdrawalReference: "dae68c86-d80b-4652-9bec-38f2daf4db86",
+	//	FeeType:             "amount",
+	//	Amount:              10,
+	//	Percentage:          0,
+	//	YieldOfferingID:     uuid.MustParse("21c48a42-d840-4f66-bdb0-c7510a038bd4"),
+	//})
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("withdrawal", feeWithdrawal)
 
-	err := apiCalls.DeleteCustomer(context.Background(), uuid.MustParse("4a31a43b-7c54-4578-a020-87d1d2b0f6f5"))
-
-	if err != nil {
-		fmt.Printf("Error: %v\n\n", err)
-		return
-	} else {
-		fmt.Printf("Succesfuly deleted")
-	}
+	//err := apiCalls.DeleteCustomer(context.Background(), uuid.MustParse("260483ca-07b4-4ab6-a224-2ddf33144439"))
+	//
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n\n", err)
+	//	return
+	//} else {
+	//	fmt.Printf("Succesfuly deleted")
+	//}
 }
