@@ -77,7 +77,7 @@ func (c *Call) GetExchangeRates(ctx context.Context, request model.GetExchangeRa
 
 	if res.StatusCode() != http.StatusOK {
 		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.ExchangeRateDetails{}, model.ErrServiceNotAvailable
+		return model.ExchangeRateDetails{}, model.ParseError(err)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
