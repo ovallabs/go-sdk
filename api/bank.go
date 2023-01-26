@@ -19,6 +19,12 @@ const (
 func (c Call) ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetailResponse, error) {
 	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, bankEndpoint, "/resolve-account")
 
+	fL := c.logger.With().Str("func", "ResolveBankAccount").Str("endpoint", endpoint).Logger()
+	fL.Info().Msg("starting...")
+	fL.Info().Interface("request", request).
+		Interface(model.LogStrRequest, "empty").Msg("request")
+	defer fL.Info().Msg("done...")
+
 	response := struct {
 		Data model.AccountDetailResponse `json:"data"`
 	}{}
@@ -31,11 +37,19 @@ func (c Call) ResolveBankAccount(ctx context.Context, request model.AccountResol
 		Post(endpoint)
 
 	if err != nil {
+		fL.Err(err).Msg("error occurred")
 		return model.AccountDetailResponse{}, err
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return model.AccountDetailResponse{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.AccountDetailResponse{}, model.ErrNetworkError
+		}
+		return model.AccountDetailResponse{}, model.ParseError(errRes.Error.Details)
 	}
 
 	return response.Data, nil
@@ -44,6 +58,11 @@ func (c Call) ResolveBankAccount(ctx context.Context, request model.AccountResol
 // GetBanks makes an API request using Call to get list of banks
 func (c Call) GetBanks(ctx context.Context) ([]model.BankCodeResponse, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, bankEndpoint)
+
+	fL := c.logger.With().Str("func", "GetBanks").Str("endpoint", endpoint).Logger()
+	fL.Info().Msg("starting...")
+	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
+	defer fL.Info().Msg("done...")
 
 	response := struct {
 		Data []model.BankCodeResponse `json:"data"`
@@ -56,11 +75,19 @@ func (c Call) GetBanks(ctx context.Context) ([]model.BankCodeResponse, error) {
 		Get(endpoint)
 
 	if err != nil {
+		fL.Err(err).Msg("error occurred")
 		return response.Data, err
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return response.Data, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return []model.BankCodeResponse{}, model.ErrNetworkError
+		}
+		return []model.BankCodeResponse{}, model.ParseError(errRes.Error.Details)
 	}
 
 	return response.Data, nil
@@ -69,6 +96,12 @@ func (c Call) GetBanks(ctx context.Context) ([]model.BankCodeResponse, error) {
 // GenerateBankAccount makes an API request to generate bank account
 func (c *Call) GenerateBankAccount(ctx context.Context, request model.BankAccountRequest) (model.BankAccountResponse, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, bankAccountEndpoint)
+
+	fL := c.logger.With().Str("func", "GenerateBankAccount").Str("endpoint", endpoint).Logger()
+	fL.Info().Msg("starting...")
+	fL.Info().Interface("request", request).
+		Interface(model.LogStrRequest, "empty").Msg("request")
+	defer fL.Info().Msg("done...")
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
 	response := struct {
@@ -88,7 +121,14 @@ func (c *Call) GenerateBankAccount(ctx context.Context, request model.BankAccoun
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return model.BankAccountResponse{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.BankAccountResponse{}, model.ErrNetworkError
+		}
+		return model.BankAccountResponse{}, model.ParseError(errRes.Error.Details)
 	}
 
 	return response.Data, nil
@@ -97,6 +137,13 @@ func (c *Call) GenerateBankAccount(ctx context.Context, request model.BankAccoun
 // GetBankAccount makes an API request to get bank account
 func (c *Call) GetBankAccount(ctx context.Context, customerID uuid.UUID) (model.BankAccountResponse, error) {
 	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, bankAccountEndpoint, customerID)
+
+	fL := c.logger.With().Str("func", "GetBankAccount").Str("endpoint", endpoint).Logger()
+	fL.Info().Msg("starting...")
+	fL.Info().Interface("request", customerID.String()).
+		Interface(model.LogStrRequest, "empty").Msg("request")
+	defer fL.Info().Msg("done...")
+
 	response := struct {
 		Data model.BankAccountResponse `json:"data"`
 	}{}
@@ -107,11 +154,19 @@ func (c *Call) GetBankAccount(ctx context.Context, customerID uuid.UUID) (model.
 		Get(endpoint)
 
 	if err != nil {
+		fL.Err(err).Msg("error occurred")
 		return model.BankAccountResponse{}, err
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return model.BankAccountResponse{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.BankAccountResponse{}, model.ErrNetworkError
+		}
+		return model.BankAccountResponse{}, model.ParseError(errRes.Error.Details)
 	}
 
 	return response.Data, nil

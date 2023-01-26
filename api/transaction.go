@@ -50,6 +50,11 @@ func (c *Call) GetTransactions(ctx context.Context, request *model.TransactionRe
 		endpoint = fmt.Sprintf("%s%s?%s", c.baseURL, transactionAPIVersion, params.Encode())
 	}
 
+	fL := c.logger.With().Str("func", "GetTransactions").Str("endpoint", endpoint).Logger()
+	fL.Info().Msg("starting...")
+	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
+	defer fL.Info().Msg("done...")
+
 	response := struct {
 		Data model.TransactionResponse `json:"data"`
 	}{}
@@ -62,11 +67,19 @@ func (c *Call) GetTransactions(ctx context.Context, request *model.TransactionRe
 		Get(endpoint)
 
 	if err != nil {
+		fL.Err(err).Msg("error occurred")
 		return model.TransactionResponse{}, err
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		return model.TransactionResponse{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.TransactionResponse{}, model.ErrNetworkError
+		}
+		return model.TransactionResponse{}, model.ParseError(errRes.Error.Details)
 	}
 
 	return response.Data, nil

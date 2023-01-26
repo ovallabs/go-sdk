@@ -37,8 +37,14 @@ func (c Call) GetWallet(ctx context.Context, request model.WalletRequest) (model
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.Wallet{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.Wallet{}, model.ErrNetworkError
+		}
+		return model.Wallet{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -69,8 +75,14 @@ func (c Call) GetWallets(ctx context.Context, customerID string) ([]*model.Walle
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return nil, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return nil, model.ErrNetworkError
+		}
+		return nil, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -100,8 +112,14 @@ func (c Call) GetSupportedAssets(ctx context.Context) ([]*model.SupportedAsset, 
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return nil, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return nil, model.ErrNetworkError
+		}
+		return nil, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")

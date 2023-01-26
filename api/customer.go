@@ -40,8 +40,14 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.Customer{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.Customer{}, model.ErrNetworkError
+		}
+		return model.Customer{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -73,8 +79,14 @@ func (c *Call) UpdateCustomer(ctx context.Context, request model.UpdateCustomerR
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.Customer{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.Customer{}, model.ErrNetworkError
+		}
+		return model.Customer{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -105,8 +117,14 @@ func (c *Call) GetAllCustomers(ctx context.Context) ([]model.Customer, error) {
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return []model.Customer{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return []model.Customer{}, model.ErrNetworkError
+		}
+		return []model.Customer{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -137,8 +155,14 @@ func (c *Call) GetCustomerByID(ctx context.Context, request model.GetCustomerByI
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.CustomerInfo{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.CustomerInfo{}, model.ErrNetworkError
+		}
+		return model.CustomerInfo{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -170,8 +194,14 @@ func (c Call) GetCustomerBalance(ctx context.Context, request model.GetCustomerB
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.CustomerBalanceResponse{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.CustomerBalanceResponse{}, model.ErrNetworkError
+		}
+		return model.CustomerBalanceResponse{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -202,8 +232,14 @@ func (c Call) GetCustomerBalances(ctx context.Context, customerID uuid.UUID) (mo
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.CustomerBalancesResponse{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.CustomerBalancesResponse{}, model.ErrNetworkError
+		}
+		return model.CustomerBalancesResponse{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -233,8 +269,14 @@ func (c Call) DeleteCustomer(ctx context.Context, customerID uuid.UUID) error {
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.ErrNetworkError
+		}
+		return model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response).Msg("response")
