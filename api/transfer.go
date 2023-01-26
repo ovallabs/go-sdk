@@ -41,7 +41,13 @@ func (c *Call) InitiateTransfer(ctx context.Context, request model.InitiateTrans
 
 	if res.StatusCode() != http.StatusOK {
 		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.Transfer{}, model.ErrNetworkError
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.Transfer{}, model.ErrNetworkError
+		}
+		return model.Transfer{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -77,7 +83,13 @@ func (c *Call) GetExchangeRates(ctx context.Context, request model.GetExchangeRa
 
 	if res.StatusCode() != http.StatusOK {
 		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.ExchangeRateDetails{}, model.ParseError(err)
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.ExchangeRateDetails{}, model.ErrNetworkError
+		}
+		return model.ExchangeRateDetails{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")

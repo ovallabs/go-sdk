@@ -1,9 +1,12 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"os"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/ovalfi/go-sdk/model/example"
 	"github.com/rs/zerolog"
 
 	"github.com/ovalfi/go-sdk/api"
@@ -39,52 +42,52 @@ func main() {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Printf("new customer: %+v\n", retrievedCustomer)
+	fmt.Printf("new customer: %+v\n", retrievedCustomer)*/
 
-	retrievedCustomers, err := apiCalls.GetAllCustomers(ctx)
+	/*retrievedCustomers, err := apiCalls.GetAllCustomers(ctx)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Printf("new customer: %+v\n", retrievedCustomers)
+	fmt.Printf("new customer: %+v\n", retrievedCustomers)*/
 
-	//portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Printf("portfolios: %+v\n", portfolios)
-	//"portfolio_id": "c7115f87-11aa-4d69-bcb4-c12dd7f5bf2f"
+	/*portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("portfolios: %+v\n", portfolios)
+	"portfolio_id": "c7115f87-11aa-4d69-bcb4-c12dd7f5bf2f"*/
 
-	//newYieldOffering, err := apiCalls.CreateYieldOfferingProfile(ctx, example.NewCreateYieldOfferingProfilesRequest)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Printf("new yield offering: %+v\n", newYieldOffering)
-	//"yield_offering_id": "ef8891af-e887-4e2c-ac79-7a9682d1ad77"
+	/*newYieldOffering, err := apiCalls.CreateYieldOfferingProfile(ctx, example.NewCreateYieldOfferingProfilesRequest)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("new yield offering: %+v\n", newYieldOffering)
+	"yield_offering_id": "ef8891af-e887-4e2c-ac79-7a9682d1ad77"*/
 
-	//updatedYieldOffering, err := apiCalls.UpdateYieldOfferingProfile(ctx, example.NewUpdateYieldOfferingProfilesRequest)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Printf("updated yield offering: %+v\n", updatedYieldOffering)
-	//"yield_offering_id": "ef8891af-e887-4e2c-ac79-7a9682d1ad77"
+	/*updatedYieldOffering, err := apiCalls.UpdateYieldOfferingProfile(ctx, example.NewUpdateYieldOfferingProfilesRequest)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("updated yield offering: %+v\n", updatedYieldOffering)
+	"yield_offering_id": "ef8891af-e887-4e2c-ac79-7a9682d1ad77"*/
 
-	//yieldProfiles, err := apiCalls.GetAllYieldProfiles(ctx)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Printf("yield profiles: %+v\n", yieldProfiles)
+	/*yieldProfiles, err := apiCalls.GetAllYieldProfiles(ctx)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("yield profiles: %+v\n", yieldProfiles)*/
 
-	//retrievedYieldProfile, err := apiCalls.GetYieldProfileByID(ctx, example.NewGetYieldProfileByIDRequest)
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Printf("retrieved yield profile: %+v\n", retrievedYieldProfile)
+	retrievedYieldProfile, err := apiCalls.GetYieldProfileByID(context.Background(), example.NewGetYieldProfileByIDRequest)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Printf("retrieved yield profile: %+v\n", retrievedYieldProfile)
 
 	//newDeposit, err := apiCalls.InitiateDeposit(ctx, example.NewDepositRequest)
 	//if err != nil {
@@ -130,7 +133,7 @@ func main() {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Printf("all wallet info: %+v\n", *allWallet[0])*/
+	fmt.Printf("all wallet info: %+v\n", *allWallet[0])
 	/*assets, err := apiCalls.GetSupportedAssets(ctx)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
@@ -205,7 +208,22 @@ func main() {
 	/*details, err := apiCalls.GetExchangeRates(context.Background(), model.GetExchangeRateRequest{
 		Amount:              3000,
 		SourceCurrency:      "USD",
-		DestinationCurrency: "NGN",
+		DestinationCurrency: "TRON",
+	})
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
+	}
+	fmt.Println("details", details)*/
+
+	/*details, err := apiCalls.InitiateTransfer(context.Background(), model.InitiateTransferRequest{
+		CustomerID:  "9f40fb69-64e3-4d23-853a-0243af155427",
+		Amount:      3000,
+		Currency:    "USD",
+		Destination: model.TransferDestination{},
+		Note:        "",
+		Reason:      "",
+		Reference:   "",
 	})
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
@@ -230,6 +248,7 @@ func main() {
 		return
 	}
 	fmt.Println("account", account)*/
+
 	/*withdrawal, err := apiCalls.FiatWithdrawal(ctx, model.WithdrawalRequest{
 		CustomerID:      uuid.MustParse("9f40fb69-64e3-4d23-853a-0243af155427"),
 		Reference:       "polkj",

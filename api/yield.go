@@ -34,8 +34,14 @@ func (c *Call) GetBusinessPortfolios(ctx context.Context) ([]model.Portfolio, er
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return []model.Portfolio{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return []model.Portfolio{}, model.ErrNetworkError
+		}
+		return []model.Portfolio{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -70,8 +76,14 @@ func (c *Call) CreateYieldOfferingProfile(ctx context.Context, request model.Cre
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.YieldOfferingProfile{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.YieldOfferingProfile{}, model.ErrNetworkError
+		}
+		return model.YieldOfferingProfile{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -103,8 +115,14 @@ func (c *Call) UpdateYieldOfferingProfile(ctx context.Context, request model.Upd
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.UpdatedYieldOfferingProfile{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.UpdatedYieldOfferingProfile{}, model.ErrNetworkError
+		}
+		return model.UpdatedYieldOfferingProfile{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -135,8 +153,14 @@ func (c *Call) GetAllYieldProfiles(ctx context.Context) ([]model.YieldOfferingPr
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return []model.YieldOfferingProfile{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return []model.YieldOfferingProfile{}, model.ErrNetworkError
+		}
+		return []model.YieldOfferingProfile{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
@@ -167,8 +191,14 @@ func (c *Call) GetYieldProfileByID(ctx context.Context, request model.GetYieldPr
 	}
 
 	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		return model.YieldOfferingProfile{}, model.ErrNetworkError
+		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
+		var errRes model.ErrorResponse
+		errRes, err = model.GetErrorDetails(string(res.Body()))
+		if err != nil {
+			fL.Err(err).Msg("error occurred")
+			return model.YieldOfferingProfile{}, model.ErrNetworkError
+		}
+		return model.YieldOfferingProfile{}, model.ParseError(errRes.Error.Details)
 	}
 
 	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")

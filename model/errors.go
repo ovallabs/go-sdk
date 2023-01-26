@@ -1,9 +1,11 @@
 package model
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
-	"strings"
+
+	"github.com/rs/zerolog/log"
 )
 
 var (
@@ -11,9 +13,35 @@ var (
 	ErrNetworkError = errors.New("network error")
 )
 
-// ParseError parses error message to one that we can see publicly
-func ParseError(errMsg error) error {
-	// the error looks like: "user with this email does not exist"
-	response := fmt.Errorf("%q%q", strings.ToUpper(errMsg.Error()[0:1]), errMsg.Error()[1:])
+// ParseError parses error message to a more specific format
+func ParseError(errMsg string) error {
+	response := fmt.Errorf("%s", errors.New(errMsg))
 	return response
+}
+
+type (
+	// ErrorResponse object
+	ErrorResponse struct {
+		Status  int       `json:"status"`
+		Data    string    `json:"data"`
+		Message string    `json:"message"`
+		Error   ErrorData `json:"error"`
+	}
+	// ErrorData struct
+	ErrorData struct {
+		ID      string `json:"id"`
+		Details string `json:"details"`
+		Message string `json:"message"`
+	}
+)
+
+// GetErrorDetails to unmarshal the err response gotten from api-service
+func GetErrorDetails(errMsg string) (ErrorResponse, error) {
+	var result ErrorResponse
+	err := json.Unmarshal([]byte(errMsg), &result)
+	if err != nil {
+		log.Err(err).Msg("json.Unmarshal failed")
+		return ErrorResponse{}, err
+	}
+	return result, nil
 }
