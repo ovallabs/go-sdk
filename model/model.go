@@ -8,6 +8,11 @@ import (
 	"github.com/google/uuid"
 )
 
+type (
+	// Key is a middleware key sting value
+	Key string
+)
+
 const (
 	// BaseURL is the definition of ovalfi base url
 	BaseURL = "https://sandbox-api.ovalfi-app.com/api/"
@@ -41,9 +46,13 @@ const (
 
 	// FeeTypeAmount represent FeeType in amount
 	FeeTypeAmount FeeType = "amount"
+
+	// RequestIDContextKey contact that holds the RequestID context key for app to storage later pass through
+	RequestIDContextKey Key = "penta_RequestIDContextKey"
+	// RequestIDHeaderKey a constant for the request id header key
+	RequestIDHeaderKey string = "X-REQUEST-ID"
 )
 
-// Requests for the endpoints
 type (
 	// CreateCustomerRequest attributes payload to create new API customer
 	CreateCustomerRequest struct {
@@ -167,6 +176,7 @@ type (
 		Asset      string `json:"asset"`
 	}
 
+	// FundTransferAction string
 	FundTransferAction string
 
 	// FundTransferRequest attributes payload to transfer funds from one yield offering to another
@@ -237,6 +247,7 @@ type (
 		YieldOfferingID     uuid.UUID `json:"yield_offering_id" validate:"required"`
 	}
 
+	// FeeType feeType string
 	FeeType string
 )
 

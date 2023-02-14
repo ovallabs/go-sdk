@@ -28,6 +28,9 @@ func (c *Call) InitiateDeposit(ctx context.Context, request model.InitiateDeposi
 	defer fL.Info().Msg("done...")
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.Deposit `json:"data"`
 	}{}
@@ -36,7 +39,10 @@ func (c *Call) InitiateDeposit(ctx context.Context, request model.InitiateDeposi
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader("Signature", signature).
+		SetHeaders(map[string]string{
+			"Signature":              signature,
+			model.RequestIDHeaderKey: ctxValue,
+		}).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -69,12 +75,16 @@ func (c *Call) GetAllDeposits(ctx context.Context) (model.DepositBatchResponse, 
 	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.DepositBatchResponse `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -107,12 +117,16 @@ func (c *Call) GetDepositID(ctx context.Context, id uuid.UUID) (model.Deposit, e
 	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.Deposit `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -146,6 +160,9 @@ func (c *Call) InternalFundsTransfer(ctx context.Context, request model.FundTran
 	defer fL.Info().Msg("done...")
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.Deposit `json:"data"`
 	}{}
@@ -154,7 +171,10 @@ func (c *Call) InternalFundsTransfer(ctx context.Context, request model.FundTran
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader("Signature", signature).
+		SetHeaders(map[string]string{
+			"Signature":              signature,
+			model.RequestIDHeaderKey: ctxValue,
+		}).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -188,6 +208,9 @@ func (c *Call) IntraTransfer(ctx context.Context, request model.IntraTransferReq
 	defer fL.Info().Msg("done...")
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.IntraTransferResponse `json:"data"`
 	}{}
@@ -196,7 +219,10 @@ func (c *Call) IntraTransfer(ctx context.Context, request model.IntraTransferReq
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader("Signature", signature).
+		SetHeaders(map[string]string{
+			"Signature":              signature,
+			model.RequestIDHeaderKey: ctxValue,
+		}).
 		SetContext(ctx).
 		Post(endpoint)
 

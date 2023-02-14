@@ -23,6 +23,9 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 	defer fL.Info().Msg("done...")
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.Customer `json:"data"`
 	}{}
@@ -30,7 +33,10 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader("Signature", signature).
+		SetHeaders(map[string]string{
+			"Signature":              signature,
+			model.RequestIDHeaderKey: ctxValue,
+		}).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -63,6 +69,9 @@ func (c *Call) UpdateCustomer(ctx context.Context, request model.UpdateCustomerR
 	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.Customer `json:"data"`
 	}{}
@@ -70,6 +79,7 @@ func (c *Call) UpdateCustomer(ctx context.Context, request model.UpdateCustomerR
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Patch(endpoint)
 
@@ -102,12 +112,16 @@ func (c *Call) GetAllCustomers(ctx context.Context) ([]model.Customer, error) {
 	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data []model.Customer `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -140,12 +154,16 @@ func (c *Call) GetCustomerByID(ctx context.Context, request model.GetCustomerByI
 	fL.Info().Str("customerID", request.CustomerID).Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.CustomerInfo `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -178,6 +196,9 @@ func (c Call) GetCustomerBalance(ctx context.Context, request model.GetCustomerB
 	fL.Info().Str("customerID", request.CustomerID.String()).Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.CustomerBalanceResponse `json:"data"`
 	}{}
@@ -185,6 +206,7 @@ func (c Call) GetCustomerBalance(ctx context.Context, request model.GetCustomerB
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -217,12 +239,16 @@ func (c Call) GetCustomerBalances(ctx context.Context, customerID uuid.UUID) (mo
 	fL.Info().Str("customerID", customerID.String()).Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.CustomerBalancesResponse `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -246,6 +272,7 @@ func (c Call) GetCustomerBalances(ctx context.Context, customerID uuid.UUID) (mo
 	return response.Data, nil
 }
 
+// DeleteCustomer to delete a customer record by customer id
 func (c Call) DeleteCustomer(ctx context.Context, customerID uuid.UUID) error {
 	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, customerAPIVersion, customerID)
 
@@ -255,11 +282,15 @@ func (c Call) DeleteCustomer(ctx context.Context, customerID uuid.UUID) error {
 
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	var response interface{}
 
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Delete(endpoint)
 

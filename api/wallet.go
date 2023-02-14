@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
 
@@ -22,12 +23,16 @@ func (c Call) GetWallet(ctx context.Context, request model.WalletRequest) (model
 	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data model.Wallet `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -60,12 +65,16 @@ func (c Call) GetWallets(ctx context.Context, customerID string) ([]*model.Walle
 	fL.Info().Interface(model.LogStrRequest, customerID).Msg("request")
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data []*model.Wallet `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -97,12 +106,16 @@ func (c Call) GetSupportedAssets(ctx context.Context) ([]*model.SupportedAsset, 
 	fL.Info().Msg("starting...")
 	defer fL.Info().Msg("done...")
 
+	// extract request id value from context
+	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+
 	response := struct {
 		Data []*model.SupportedAsset `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, ctxValue).
 		SetContext(ctx).
 		Get(endpoint)
 
