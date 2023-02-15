@@ -19,16 +19,13 @@ func (c *Call) GetBusinessPortfolios(ctx context.Context) ([]model.Portfolio, er
 	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data []model.Portfolio `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -62,10 +59,6 @@ func (c *Call) CreateYieldOfferingProfile(ctx context.Context, request model.Cre
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.YieldOfferingProfile `json:"data"`
 	}{}
@@ -73,10 +66,7 @@ func (c *Call) CreateYieldOfferingProfile(ctx context.Context, request model.Cre
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: requestID,
-		}).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -109,9 +99,6 @@ func (c *Call) UpdateYieldOfferingProfile(ctx context.Context, request model.Upd
 	fL.Info().Str("name", request.Name).Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.UpdatedYieldOfferingProfile `json:"data"`
 	}{}
@@ -119,7 +106,7 @@ func (c *Call) UpdateYieldOfferingProfile(ctx context.Context, request model.Upd
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Put(endpoint)
 
@@ -152,16 +139,13 @@ func (c *Call) GetAllYieldProfiles(ctx context.Context) ([]model.YieldOfferingPr
 	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data []model.YieldOfferingProfile `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -194,16 +178,13 @@ func (c *Call) GetYieldProfileByID(ctx context.Context, request model.GetYieldPr
 	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.YieldOfferingProfile `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Get(endpoint)
 

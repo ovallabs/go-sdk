@@ -90,6 +90,13 @@ To run this project, you will need to add the following environment variables to
 
 `BEARER_TOKEN`
 
+````
+Note: You can also set the `api_RequestIDContextKey` as the key for the request-id for the current context passed.
+This is expected to be a valid uuid.UUID string.
+
+This will be contained in our response payload, on the `X-REQUEST-ID` header.
+````
+
 
 <!-- Getting Started -->
 ## 	:toolbox: Getting Started

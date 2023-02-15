@@ -1,9 +1,12 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"os"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/ovalfi/go-sdk/model/example"
 	"github.com/rs/zerolog"
 
 	"github.com/ovalfi/go-sdk/api"
@@ -34,12 +37,12 @@ func main() {
 	}
 	fmt.Printf("new customer: %+v\n", updatedCustomer)*/
 
-	/*retrievedCustomer, err := apiCalls.GetCustomerByID(ctx, example.NewGetCustomerByIDRequest)
+	retrievedCustomer, err := apiCalls.GetCustomerByID(context.Background(), example.NewGetCustomerByIDRequest)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Printf("new customer: %+v\n", retrievedCustomer)*/
+	fmt.Printf("new customer: %+v\n", retrievedCustomer)
 
 	/*retrievedCustomers, err := apiCalls.GetAllCustomers(ctx)
 	if err != nil {

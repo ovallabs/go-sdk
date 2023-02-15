@@ -26,9 +26,6 @@ func (c Call) ResolveBankAccount(ctx context.Context, request model.AccountResol
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	// extract request id from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.AccountDetailResponse `json:"data"`
 	}{}
@@ -37,7 +34,7 @@ func (c Call) ResolveBankAccount(ctx context.Context, request model.AccountResol
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -69,9 +66,6 @@ func (c Call) GetBanks(ctx context.Context) ([]model.BankCodeResponse, error) {
 	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data []model.BankCodeResponse `json:"data"`
 	}{}
@@ -79,7 +73,7 @@ func (c Call) GetBanks(ctx context.Context) ([]model.BankCodeResponse, error) {
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -112,10 +106,6 @@ func (c *Call) GenerateBankAccount(ctx context.Context, request model.BankAccoun
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.BankAccountResponse `json:"data"`
 	}{}
@@ -124,10 +114,7 @@ func (c *Call) GenerateBankAccount(ctx context.Context, request model.BankAccoun
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: requestID,
-		}).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -159,16 +146,13 @@ func (c *Call) GetBankAccount(ctx context.Context, customerID uuid.UUID) (model.
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.BankAccountResponse `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Get(endpoint)
 

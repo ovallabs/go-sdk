@@ -23,16 +23,13 @@ func (c Call) GetWallet(ctx context.Context, request model.WalletRequest) (model
 	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
 	defer fL.Info().Msg("done...")
 
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.Wallet `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -65,16 +62,13 @@ func (c Call) GetWallets(ctx context.Context, customerID string) ([]*model.Walle
 	fL.Info().Interface(model.LogStrRequest, customerID).Msg("request")
 	defer fL.Info().Msg("done...")
 
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data []*model.Wallet `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -106,16 +100,13 @@ func (c Call) GetSupportedAssets(ctx context.Context) ([]*model.SupportedAsset, 
 	fL.Info().Msg("starting...")
 	defer fL.Info().Msg("done...")
 
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data []*model.SupportedAsset `json:"data"`
 	}{}
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Get(endpoint)
 

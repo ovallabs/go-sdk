@@ -56,9 +56,6 @@ func (c *Call) GetTransactions(ctx context.Context, request *model.TransactionRe
 	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.TransactionResponse `json:"data"`
 	}{}
@@ -66,7 +63,7 @@ func (c *Call) GetTransactions(ctx context.Context, request *model.TransactionRe
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
-		SetHeader(model.RequestIDHeaderKey, requestID).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetResult(&response).
 		SetContext(ctx).
 		Get(endpoint)

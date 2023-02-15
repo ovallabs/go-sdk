@@ -20,10 +20,6 @@ func (c *Call) InitiateWithdrawal(ctx context.Context, request model.InitiateWit
 	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
 	defer fL.Info().Msg("done...")
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.Withdrawal `json:"data"`
 	}{}
@@ -32,10 +28,7 @@ func (c *Call) InitiateWithdrawal(ctx context.Context, request model.InitiateWit
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: requestID,
-		}).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -69,10 +62,6 @@ func (c *Call) FiatWithdrawal(ctx context.Context, request model.WithdrawalReque
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.Withdrawal `json:"data"`
 	}{}
@@ -81,10 +70,7 @@ func (c *Call) FiatWithdrawal(ctx context.Context, request model.WithdrawalReque
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: requestID,
-		}).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -117,10 +103,6 @@ func (c Call) CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequ
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.Withdrawal `json:"data"`
 	}{}
@@ -129,10 +111,7 @@ func (c Call) CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequ
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: requestID,
-		}).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -165,10 +144,6 @@ func (c *Call) FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalReq
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-	// extract request id value from context
-	requestID := helpers.GetRequestID(ctx)
-
 	response := struct {
 		Data model.FeeWithdrawal `json:"data"`
 	}{}
@@ -177,10 +152,7 @@ func (c *Call) FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalReq
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: requestID,
-		}).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Post(endpoint)
 
