@@ -1,12 +1,9 @@
 package main
 
 import (
-	"context"
-	"fmt"
 	"os"
 
 	"github.com/go-resty/resty/v2"
-	"github.com/ovalfi/go-sdk/model/example"
 	"github.com/rs/zerolog"
 
 	"github.com/ovalfi/go-sdk/api"
@@ -37,7 +34,7 @@ func main() {
 	}
 	fmt.Printf("new customer: %+v\n", updatedCustomer)*/
 
-	/*retrievedCustomer, err := apiCalls.GetCustomerByID(ctx, example.NewGetCustomerByIDRequest)
+	/*retrievedCustomer, err := apiCalls.GetCustomerByID(context.Background(), example.NewGetCustomerByIDRequest)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
@@ -82,12 +79,12 @@ func main() {
 	}
 	fmt.Printf("yield profiles: %+v\n", yieldProfiles)*/
 
-	retrievedYieldProfile, err := apiCalls.GetYieldProfileByID(context.Background(), example.NewGetYieldProfileByIDRequest)
+	/*retrievedYieldProfile, err := apiCalls.GetYieldProfileByID(context.Background(), example.NewGetYieldProfileByIDRequest)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Printf("retrieved yield profile: %+v\n", retrievedYieldProfile)
+	fmt.Printf("retrieved yield profile: %+v\n", retrievedYieldProfile)*/
 
 	//newDeposit, err := apiCalls.InitiateDeposit(ctx, example.NewDepositRequest)
 	//if err != nil {

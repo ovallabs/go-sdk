@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
+
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
@@ -33,6 +34,7 @@ func (c Call) ResolveBankAccount(ctx context.Context, request model.AccountResol
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -71,6 +73,7 @@ func (c Call) GetBanks(ctx context.Context) ([]model.BankCodeResponse, error) {
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Get(endpoint)
 
@@ -104,6 +107,7 @@ func (c *Call) GenerateBankAccount(ctx context.Context, request model.BankAccoun
 	defer fL.Info().Msg("done...")
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+
 	response := struct {
 		Data model.BankAccountResponse `json:"data"`
 	}{}
@@ -112,7 +116,10 @@ func (c *Call) GenerateBankAccount(ctx context.Context, request model.BankAccoun
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader("Signature", signature).
+		SetHeaders(map[string]string{
+			"Signature":              signature,
+			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
+		}).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -150,6 +157,7 @@ func (c *Call) GetBankAccount(ctx context.Context, customerID uuid.UUID) (model.
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetResult(&response).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetContext(ctx).
 		Get(endpoint)
 

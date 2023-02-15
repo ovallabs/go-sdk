@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strconv"
 
+	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
 
@@ -62,6 +63,7 @@ func (c *Call) GetTransactions(ctx context.Context, request *model.TransactionRe
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
+		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
 		SetResult(&response).
 		SetContext(ctx).
 		Get(endpoint)
