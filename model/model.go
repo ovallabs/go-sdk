@@ -47,8 +47,8 @@ const (
 	// FeeTypeAmount represent FeeType in amount
 	FeeTypeAmount FeeType = "amount"
 
-	// RequestIDContextKey contact that holds the RequestID context key for app to storage later pass through
-	RequestIDContextKey Key = "penta_RequestIDContextKey"
+	// RequestIDContextKey contact that holds the RequestID context key for
+	RequestIDContextKey Key = "api_RequestIDContextKey"
 	// RequestIDHeaderKey a constant for the request id header key
 	RequestIDHeaderKey string = "X-REQUEST-ID"
 )

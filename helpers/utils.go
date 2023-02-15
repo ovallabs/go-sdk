@@ -4,7 +4,6 @@ package helpers
 import (
 	"context"
 	"crypto/sha256"
-	"errors"
 	"fmt"
 
 	"github.com/ovalfi/go-sdk/model"
@@ -18,11 +17,11 @@ func GetSignatureFromReferenceAndPubKey(reference, publicKey string) string {
 	return fmt.Sprintf("%x", hash.Sum(nil))
 }
 
-// GetContextValue to extract the request-id value from the context passed
-func GetContextValue(ctx context.Context, k model.Key) (string, error) {
-	if v := ctx.Value(k); v != nil {
-		fmt.Println("found value:", v)
-		return fmt.Sprintf("%s", v), nil
+// GetRequestID to extract request-id from context
+func GetRequestID(ctx context.Context) string {
+	if rID := ctx.Value(model.RequestIDContextKey); rID != nil {
+		return rID.(string)
 	}
-	return "", errors.New("something-went-wrong")
+
+	return ""
 }

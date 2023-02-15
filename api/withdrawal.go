@@ -22,7 +22,7 @@ func (c *Call) InitiateWithdrawal(ctx context.Context, request model.InitiateWit
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
 	// extract request id value from context
-	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+	requestID := helpers.GetRequestID(ctx)
 
 	response := struct {
 		Data model.Withdrawal `json:"data"`
@@ -34,7 +34,7 @@ func (c *Call) InitiateWithdrawal(ctx context.Context, request model.InitiateWit
 		SetResult(&response).
 		SetHeaders(map[string]string{
 			"Signature":              signature,
-			model.RequestIDHeaderKey: ctxValue,
+			model.RequestIDHeaderKey: requestID,
 		}).
 		SetContext(ctx).
 		Post(endpoint)
@@ -71,7 +71,7 @@ func (c *Call) FiatWithdrawal(ctx context.Context, request model.WithdrawalReque
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
 	// extract request id value from context
-	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+	requestID := helpers.GetRequestID(ctx)
 
 	response := struct {
 		Data model.Withdrawal `json:"data"`
@@ -83,7 +83,7 @@ func (c *Call) FiatWithdrawal(ctx context.Context, request model.WithdrawalReque
 		SetResult(&response).
 		SetHeaders(map[string]string{
 			"Signature":              signature,
-			model.RequestIDHeaderKey: ctxValue,
+			model.RequestIDHeaderKey: requestID,
 		}).
 		SetContext(ctx).
 		Post(endpoint)
@@ -119,7 +119,7 @@ func (c Call) CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequ
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
 	// extract request id value from context
-	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+	requestID := helpers.GetRequestID(ctx)
 
 	response := struct {
 		Data model.Withdrawal `json:"data"`
@@ -131,7 +131,7 @@ func (c Call) CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequ
 		SetResult(&response).
 		SetHeaders(map[string]string{
 			"Signature":              signature,
-			model.RequestIDHeaderKey: ctxValue,
+			model.RequestIDHeaderKey: requestID,
 		}).
 		SetContext(ctx).
 		Post(endpoint)
@@ -167,7 +167,7 @@ func (c *Call) FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalReq
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
 	// extract request id value from context
-	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+	requestID := helpers.GetRequestID(ctx)
 
 	response := struct {
 		Data model.FeeWithdrawal `json:"data"`
@@ -179,7 +179,7 @@ func (c *Call) FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalReq
 		SetResult(&response).
 		SetHeaders(map[string]string{
 			"Signature":              signature,
-			model.RequestIDHeaderKey: ctxValue,
+			model.RequestIDHeaderKey: requestID,
 		}).
 		SetContext(ctx).
 		Post(endpoint)

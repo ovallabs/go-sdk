@@ -23,7 +23,7 @@ func (c *Call) InitiateTransfer(ctx context.Context, request model.InitiateTrans
 
 	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
 	// extract request id value from context
-	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+	requestID := helpers.GetRequestID(ctx)
 
 	response := struct {
 		Data model.Transfer `json:"data"`
@@ -35,7 +35,7 @@ func (c *Call) InitiateTransfer(ctx context.Context, request model.InitiateTrans
 		SetResult(&response).
 		SetHeaders(map[string]string{
 			"Signature":              signature,
-			model.RequestIDHeaderKey: ctxValue,
+			model.RequestIDHeaderKey: requestID,
 		}).
 		SetContext(ctx).
 		Post(endpoint)
@@ -72,7 +72,7 @@ func (c *Call) GetExchangeRates(ctx context.Context, request model.GetExchangeRa
 	defer fL.Info().Msg("done...")
 
 	// extract request id value from context
-	ctxValue, _ := helpers.GetContextValue(ctx, model.RequestIDContextKey)
+	requestID := helpers.GetRequestID(ctx)
 
 	response := struct {
 		Data model.ExchangeRateDetails `json:"data"`
@@ -80,7 +80,7 @@ func (c *Call) GetExchangeRates(ctx context.Context, request model.GetExchangeRa
 
 	res, err := c.client.R().
 		SetAuthToken(c.bearerToken).
-		SetHeader(model.RequestIDHeaderKey, ctxValue).
+		SetHeader(model.RequestIDHeaderKey, requestID).
 		SetBody(request).
 		SetResult(&response).
 		SetContext(ctx).
