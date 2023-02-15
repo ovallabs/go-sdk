@@ -27,6 +27,8 @@ func (c *Call) InitiateDeposit(ctx context.Context, request model.InitiateDeposi
 	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
 	defer fL.Info().Msg("done...")
 
+	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+
 	response := struct {
 		Data model.Deposit `json:"data"`
 	}{}
@@ -35,7 +37,10 @@ func (c *Call) InitiateDeposit(ctx context.Context, request model.InitiateDeposi
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
+		SetHeaders(map[string]string{
+			"Signature":              signature,
+			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
+		}).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -146,6 +151,8 @@ func (c *Call) InternalFundsTransfer(ctx context.Context, request model.FundTran
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
+	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+
 	response := struct {
 		Data model.Deposit `json:"data"`
 	}{}
@@ -154,7 +161,10 @@ func (c *Call) InternalFundsTransfer(ctx context.Context, request model.FundTran
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
+		SetHeaders(map[string]string{
+			"Signature":              signature,
+			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
+		}).
 		SetContext(ctx).
 		Post(endpoint)
 
@@ -187,6 +197,8 @@ func (c *Call) IntraTransfer(ctx context.Context, request model.IntraTransferReq
 		Interface(model.LogStrRequest, "empty").Msg("request")
 	defer fL.Info().Msg("done...")
 
+	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+
 	response := struct {
 		Data model.IntraTransferResponse `json:"data"`
 	}{}
@@ -195,7 +207,10 @@ func (c *Call) IntraTransfer(ctx context.Context, request model.IntraTransferReq
 		SetAuthToken(c.bearerToken).
 		SetBody(request).
 		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
+		SetHeaders(map[string]string{
+			"Signature":              signature,
+			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
+		}).
 		SetContext(ctx).
 		Post(endpoint)
 

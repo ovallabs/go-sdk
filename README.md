@@ -90,11 +90,17 @@ To run this project, you will need to add the following environment variables to
 
 `BEARER_TOKEN`
 
+**Also, we have a system in place to track API requests via the SDK. For every context you pass in the communication with our APIs, we require that you add a `requestID` of type uuid.UUID string to the context.
+This must be passed in the context like below:**
 ````
-Note: You can also set the `api_RequestIDContextKey` as the key for the request-id for the current context passed.
-This is expected to be a valid uuid.UUID string.
+{
 
-This will be contained in our response payload, on the `X-REQUEST-ID` header.
+    ctx := context.WithValue(context.Background(), "api_RequestIDContextKey", requestID),
+
+}
+
+Note:In our payload response to your API calls, we now have an header field like this: `X-Request-Id: 71fb13a7-595f-49b8-bdd3-2eb7dcf476c1'
+`
 ````
 
 
