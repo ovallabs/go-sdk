@@ -245,7 +245,7 @@ type (
 		Amount              float64   `json:"amount,omitempty" validate:"required_if=FeeType amount"`
 		Percentage          float64   `json:"percentage,omitempty" validate:"required_if=FeeType percentage"`
 		YieldOfferingID     uuid.UUID `json:"yield_offering_id" validate:"required"`
-		Reason              string    `json:"reason"`
+		Reason              string    `json:"reason" validate:"required"`
 	}
 
 	// FeeType feeType string
@@ -536,6 +536,6 @@ type (
 		Amount              float64   `json:"amount,omitempty" validate:"required_if=FeeType amount"`
 		Percentage          float64   `json:"percentage,omitempty" validate:"required_if=FeeType percentage"`
 		YieldOfferingID     uuid.UUID `json:"yield_offering_id" validate:"required"`
-		Reason              string    `json:"reason"`
+		Reason              string    `json:"reason" validate:"required"`
 	}
 )
