@@ -104,7 +104,7 @@ func (c *Call) FiatWithdrawal(ctx context.Context, request model.WithdrawalReque
 }
 
 // CryptoWithdrawal makes an API request to withdrawal to a specified crypto wallet address
-func (c Call) CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error) {
+func (c *Call) CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error) {
 	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, withdrawalAPIVersion, "/crypto")
 
 	fL := c.logger.With().Str("func", "CryptoWithdrawal").Str("endpoint", endpoint).Logger()

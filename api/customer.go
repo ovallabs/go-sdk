@@ -177,7 +177,7 @@ func (c *Call) GetCustomerByID(ctx context.Context, request model.GetCustomerByI
 }
 
 // GetCustomerBalance to get customer balances
-func (c Call) GetCustomerBalance(ctx context.Context, request model.GetCustomerBalanceRequest) (model.CustomerBalanceResponse, error) {
+func (c *Call) GetCustomerBalance(ctx context.Context, request model.GetCustomerBalanceRequest) (model.CustomerBalanceResponse, error) {
 	endpoint := fmt.Sprintf("%s%s%s?customer_id=%s&yield_offering_id=%s", c.baseURL, customerAPIVersion, "/balance", request.CustomerID, request.YieldOfferingID)
 
 	fL := c.logger.With().Str("func", "GetCustomerBalance").Str("endpoint", endpoint).Logger()
@@ -217,7 +217,7 @@ func (c Call) GetCustomerBalance(ctx context.Context, request model.GetCustomerB
 }
 
 // GetCustomerBalances to get customer balances from different yield offering
-func (c Call) GetCustomerBalances(ctx context.Context, customerID uuid.UUID) (model.CustomerBalancesResponse, error) {
+func (c *Call) GetCustomerBalances(ctx context.Context, customerID uuid.UUID) (model.CustomerBalancesResponse, error) {
 	endpoint := fmt.Sprintf("%s%s%s/%s", c.baseURL, customerAPIVersion, "/balances", customerID)
 
 	fL := c.logger.With().Str("func", "GetCustomerBalances").Str("endpoint", endpoint).Logger()
@@ -256,7 +256,7 @@ func (c Call) GetCustomerBalances(ctx context.Context, customerID uuid.UUID) (mo
 }
 
 // DeleteCustomer to delete a customer record by customer id
-func (c Call) DeleteCustomer(ctx context.Context, customerID uuid.UUID) error {
+func (c *Call) DeleteCustomer(ctx context.Context, customerID uuid.UUID) error {
 	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, customerAPIVersion, customerID)
 
 	fL := c.logger.With().Str("func", "DeleteCustomer").Str("endpoint", endpoint).Logger()
