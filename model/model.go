@@ -228,10 +228,24 @@ type (
 
 	// BankAccountRequest attribute payload to create bank account
 	BankAccountRequest struct {
-		CustomerID  uuid.UUID `json:"customer_id"`
-		BVN         string    `json:"bvn"`
-		Reference   string    `json:"reference"`
-		PhoneNumber string    `json:"phone_number"`
+		CustomerID uuid.UUID `json:"customer_id"`
+		Currency   string    `json:"currency"`
+		Reference  string    `json:"reference"`
+
+		BVN         *string `json:"bvn,omitempty"`
+		PhoneNumber *string `json:"phone_number,omitempty"`
+
+		DocumentType      *string `json:"document_type,omitempty"`
+		Number            *string `json:"document_number,omitempty"`
+		IssuedCountryCode *string `json:"issued_country_code,omitempty"`
+		IssuedBy          *string `json:"issued_by,omitempty"`
+		IssuedDate        *string `json:"issued_date,omitempty"`
+		Country           *string `json:"country,omitempty"`
+		ZipCode           *string `json:"zip_code,omitempty"`
+		City              *string `json:"city,omitempty"`
+		Street            *string `json:"street,omitempty"`
+		State             *string `json:"state,omitempty"`
+		DateOfBirth       *string `json:"date_of_birth,omitempty"`
 	}
 
 	// FeeWithdrawalRequest attribute payload for fee withdrawal
@@ -518,11 +532,32 @@ type (
 
 	// BankAccountResponse response payload to create bank account
 	BankAccountResponse struct {
-		CustomerID    uuid.UUID `json:"customer_id"`
-		AccountNumber string    `json:"account_number"`
-		AccountName   string    `json:"account_name"`
-		BankName      string    `json:"bank_name"`
-		BankCode      string    `json:"bank_code"`
+		ID                uuid.UUID           `json:"id"`
+		CustomerID        uuid.UUID           `json:"customer_id"`
+		BusinessID        uuid.UUID           `json:"business_id"`
+		AccountID         string              `json:"account_id"`
+		AccountDetails    TransferInstruction `json:"account_details"`
+		BusinessReference string              `json:"reference"`
+		Currency          string              `json:"currency"`
+		CreatedAt         time.Time           `json:"created_at"`
+		UpdatedTime       *time.Time          `json:"updated_at"`
+	}
+
+	// TransferInstruction for transfer instruction details
+	TransferInstruction struct {
+		IBAN               string `json:"iban"`
+		SortCode           string `json:"sort_code"`
+		Notes              string `json:"notes"`
+		BankPhone          string `json:"bank_phone"`
+		Reference          string `json:"reference"`
+		SwiftCode          string `json:"swift_code"`
+		BankAddress        string `json:"bank_address"`
+		AccountName        string `json:"account_name"`
+		AccountNumber      string `json:"account_number"`
+		BankName           string `json:"bank_name"`
+		BankCode           string `json:"bank_code"`
+		RoutingNumber      string `json:"routing_number"`
+		BeneficiaryAddress string `json:"beneficiary_address"`
 	}
 
 	// FeeWithdrawal object for fee withdrawal

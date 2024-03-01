@@ -15,7 +15,7 @@ const (
 )
 
 // GetWallet makes an API request using Call to get customer wallet
-func (c Call) GetWallet(ctx context.Context, request model.WalletRequest) (model.Wallet, error) {
+func (c *Call) GetWallet(ctx context.Context, request model.WalletRequest) (model.Wallet, error) {
 	endpoint := fmt.Sprintf("%s%s?customer_id=%s&network=%s&asset=%s", c.baseURL, walletAPIVersion, request.CustomerID, request.Network, request.Asset)
 
 	fL := c.logger.With().Str("func", "GetWallet").Str("endpoint", endpoint).Logger()
@@ -54,7 +54,7 @@ func (c Call) GetWallet(ctx context.Context, request model.WalletRequest) (model
 }
 
 // GetWallets makes an API request using Call to get all customers wallets
-func (c Call) GetWallets(ctx context.Context, customerID string) ([]*model.Wallet, error) {
+func (c *Call) GetWallets(ctx context.Context, customerID string) ([]*model.Wallet, error) {
 	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, walletAPIVersion, customerID)
 
 	fL := c.logger.With().Str("func", "GetWallets").Str("endpoint", endpoint).Logger()
@@ -93,7 +93,7 @@ func (c Call) GetWallets(ctx context.Context, customerID string) ([]*model.Walle
 }
 
 // GetSupportedAssets makes an API request using Call to get all supported assets
-func (c Call) GetSupportedAssets(ctx context.Context) ([]*model.SupportedAsset, error) {
+func (c *Call) GetSupportedAssets(ctx context.Context) ([]*model.SupportedAsset, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, assetAPIVersion)
 
 	fL := c.logger.With().Str("func", "GetSupportedAssets").Str("endpoint", endpoint).Logger()

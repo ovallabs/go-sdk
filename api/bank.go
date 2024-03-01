@@ -17,7 +17,7 @@ const (
 )
 
 // ResolveBankAccount makes an API request using Call to resolve bank account
-func (c Call) ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetailResponse, error) {
+func (c *Call) ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetailResponse, error) {
 	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, bankEndpoint, "/resolve-account")
 
 	fL := c.logger.With().Str("func", "ResolveBankAccount").Str("endpoint", endpoint).Logger()
@@ -58,7 +58,7 @@ func (c Call) ResolveBankAccount(ctx context.Context, request model.AccountResol
 }
 
 // GetBanks makes an API request using Call to get list of banks
-func (c Call) GetBanks(ctx context.Context) ([]model.BankCodeResponse, error) {
+func (c *Call) GetBanks(ctx context.Context) ([]model.BankCodeResponse, error) {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, bankEndpoint)
 
 	fL := c.logger.With().Str("func", "GetBanks").Str("endpoint", endpoint).Logger()
