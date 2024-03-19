@@ -60,7 +60,7 @@ type RemoteCalls interface {
 	GenerateBankAccount(ctx context.Context, request model.BankAccountRequest) (model.BankAccountResponse, error)
 	GetBankAccount(ctx context.Context, customerID uuid.UUID) (model.BankAccountResponse, error)
 
-	// Run in sandbox mode
+	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
 }
 
