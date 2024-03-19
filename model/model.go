@@ -54,6 +54,16 @@ const (
 )
 
 type (
+	// Money struct
+	Money struct {
+		// Currency is string value of the currency
+		Currency string `json:"currency"`
+		// Symbol is string value of the currency
+		Symbol string ` json:"symbol" gorm:"-"`
+		// Amount is the value of the amount
+		Amount float64 `json:"amount"`
+	}
+
 	// CreateCustomerRequest attributes payload to create new API customer
 	CreateCustomerRequest struct {
 		Name             string      `json:"name"`
@@ -572,5 +582,76 @@ type (
 		Percentage          float64   `json:"percentage,omitempty" validate:"required_if=FeeType percentage"`
 		YieldOfferingID     uuid.UUID `json:"yield_offering_id" validate:"required"`
 		Reason              string    `json:"reason" validate:"required"`
+	}
+
+	// PayoutResponse get payout by ID response
+	PayoutResponse struct {
+		Items      PayoutDetails   `json:"items"`
+		Attributes []PayoutAccount `json:"attributes"`
+	}
+
+	// PayoutDetails for payout response
+	PayoutDetails struct {
+		ID           uuid.UUID `json:"id"`
+		BusinessID   uuid.UUID `json:"business_id"`
+		Status       string    `json:"status"`
+		Count        int       `json:"count"`
+		Currency     string    `json:"currency"`
+		TotalAmount  int       `json:"total_amount"`
+		Fee          Money     `json:"fee"`
+		Remarks      string    `json:"remarks"`
+		CancelReason *string   `json:"cancel_reason"`
+		CompletedAt  *string   `json:"completed_at"`
+		CreatedAt    time.Time `json:"created_at"`
+		UpdatedAt    time.Time `json:"updated_at"`
+	}
+
+	// AccountDetails  object for payout response
+	AccountDetails struct {
+		City          string `json:"city"`
+		Country       string `json:"country"`
+		BankCode      string `json:"bank_code"`
+		BankName      string `json:"bank_name"`
+		District      string `json:"district"`
+		SwiftCode     string `json:"swift_code"`
+		BankBranch    string `json:"bank_branch"`
+		IsWithinUS    string `json:"is_within_us"`
+		PostalCode    string `json:"postal_code"`
+		AccountName   string `json:"account_name"`
+		BankAddress   string `json:"bank_address"`
+		AccountNumber string `json:"account_number"`
+		RoutingNumber string `json:"routing_number"`
+	}
+
+	// PayoutAccount  object for payout response
+	PayoutAccount struct {
+		ID           uuid.UUID      `json:"id"`
+		BusinessID   uuid.UUID      `json:"business_id"`
+		BulkPayoutID uuid.UUID      `json:"bulk_payout_id"`
+		Name         string         `json:"name"`
+		Details      AccountDetails `json:"details"`
+		Amount       Money          `json:"amount"`
+		Status       string         `json:"status"`
+		LookupInfo   string         `json:"lookup_info"`
+		Remarks      string         `json:"remarks"`
+		CompletedAt  *string        `json:"completed_at"`
+		CreatedAt    time.Time      `json:"created_at"`
+		UpdatedAt    time.Time      `json:"updated_at"`
+	}
+
+	// InitiatePayoutRequest schema
+	InitiatePayoutRequest struct {
+		Currency string                  `json:"currency"`
+		Remarks  string                  `json:"remarks"`
+		Accounts []InitiatePayoutAccount `json:"accounts"`
+	}
+
+	// InitiatePayoutAccount schema
+	InitiatePayoutAccount struct {
+		Amount        float64 `json:"amount"`
+		AccountName   string  `json:"account_name"`
+		AccountNumber string  `json:"account_number"`
+		BankCode      string  `json:"bank_code"`
+		Remarks       string  `json:"remarks"`
 	}
 )
