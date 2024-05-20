@@ -47,6 +47,11 @@ const (
 	// FeeTypeAmount represent FeeType in amount
 	FeeTypeAmount FeeType = "amount"
 
+	// CustomerTypeIndividual represent CustomerType individual
+	CustomerTypeIndividual CustomerType = "individual"
+	// CustomerTypeBusiness represent CustomerType business
+	CustomerTypeBusiness CustomerType = "business"
+
 	// RequestIDContextKey contact that holds the RequestID context key for
 	RequestIDContextKey Key = "api_RequestIDContextKey"
 	// RequestIDHeaderKey a constant for the request id header key
@@ -54,6 +59,9 @@ const (
 )
 
 type (
+	// CustomerType string representation of the customer type
+	CustomerType string
+
 	// Money struct
 	Money struct {
 		// Currency is string value of the currency
@@ -66,11 +74,12 @@ type (
 
 	// CreateCustomerRequest attributes payload to create new API customer
 	CreateCustomerRequest struct {
-		Name             string      `json:"name"`
-		Email            string      `json:"email"`
-		Reference        string      `json:"reference"`
-		MobileNumber     string      `json:"mobile_number"`
-		YieldOfferingIDs []uuid.UUID `json:"yield_offering_ids"`
+		Name             string       `json:"name"`
+		Email            string       `json:"email"`
+		Reference        string       `json:"reference"`
+		MobileNumber     string       `json:"mobile_number"`
+		Type             CustomerType `json:"type"`
+		YieldOfferingIDs []uuid.UUID  `json:"yield_offering_ids"`
 	}
 
 	// UpdateCustomerRequest attributes payload to update API customer
