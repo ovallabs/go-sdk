@@ -311,12 +311,14 @@ type (
 
 	// PersonalDetails recipient's personal details
 	PersonalDetails struct {
-		Name       string `json:"name"`
-		Country    string `json:"country"`
-		City       string `json:"city"`
-		Address    string `json:"address"`
-		District   string `json:"district"`
-		PostalCode string `json:"postalCode"`
+		Name        string `json:"name"`
+		Country     string `json:"country"`
+		City        string `json:"city"`
+		Address     string `json:"address"`
+		District    string `json:"district"`
+		PostalCode  string `json:"postalCode"`
+		Email       string `json:"email"`
+		PhoneNumber string `json:"phone_number"`
 	}
 
 	// IntermediaryBank recipient's intermediary bank
@@ -504,13 +506,13 @@ type (
 		Detail       []*CustomerBalanceResponse `json:"detail"`
 	}
 
-	// Page object
-	Page struct {
+	// PageInfo object
+	PageInfo struct {
 		Page            int64 `json:"page"`
 		Size            int64 `json:"size"`
-		HasNextPage     bool  `json:"hasNextPage"`
-		HasPreviousPage bool  `json:"hasPreviousPage"`
-		TotalCount      int64 `json:"totalCount"`
+		HasNextPage     bool  `json:"has_next_age"`
+		HasPreviousPage bool  `json:"has_previous_age"`
+		TotalCount      int64 `json:"total_count"`
 	}
 
 	// TransactionResponse object
@@ -518,7 +520,7 @@ type (
 		Items struct {
 			Transactions []*Transaction `json:"transactions"`
 		} `json:"items"`
-		Page Page `json:"page"`
+		Page PageInfo `json:"page"`
 	}
 
 	// AccountResolveRequest request payload to resolve account
@@ -662,5 +664,64 @@ type (
 		AccountNumber string  `json:"account_number"`
 		BankCode      string  `json:"bank_code"`
 		Remarks       string  `json:"remarks"`
+	}
+
+	// CancelPayoutRequest request schema for cancel payout
+	CancelPayoutRequest struct {
+		BulkPayoutID string `json:"payout_id"`
+		Reason       string `json:"reason"`
+	}
+
+	// BulkPayoutConfig schema for payout config
+	BulkPayoutConfig struct {
+		Provider                 string  `json:"provider"`
+		MinAmountPerPayout       float64 `json:"min_amount_per_payout"`
+		MinCountOfPayout         int     `json:"min_count_of_payout"`
+		MaxAmountPerPayout       float64 `json:"max_amount_per_payout"`
+		MaxCountOfPayout         int     `json:"max_count_of_payout"`
+		DoNameLookup             bool    `json:"do_name_lookup"`
+		NamePercentageMatch      int     `json:"name_percentage_match"`
+		FeePercentage            float64 `json:"fee_percentage"`
+		FeeFlat                  float64 `json:"fee_flat"`
+		FeeCap                   float64 `json:"fee_cap"`
+		MaxPayoutPerDayPerPerson int64   `json:"max_payout_per_day_per_person"`
+		AllowRecurring           bool    `json:"allow_recurring"`
+	}
+
+	// WalletDetails schema for wallet details
+	WalletDetails struct {
+		WalletTag     *string `json:"wallet_tag"`
+		AssetType     string  `json:"asset_type"`
+		WalletAddress string  `json:"wallet_address"`
+		Network       string  `json:"network"`
+	}
+
+	// TransferBeneficiaryDetails  request schema for update payout
+	TransferBeneficiaryDetails struct {
+		BankDetails         *BankDetails      `json:"bank_details"`
+		IntermediaryBank    *IntermediaryBank `json:"intermediary_bank"`
+		PersonalDetails     *PersonalDetails  `json:"personal_details"`
+		WalletDetails       *WalletDetails    `json:"wallet_details"`
+		FundsTransferMethod map[string]string `json:"funds_transfer_method"`
+	}
+
+	// Page schema for pagination request
+	Page struct {
+		Number            *int   `json:"number"`
+		Size              *int   `json:"size"`
+		SortBy            string `json:"sort_by"`
+		SortDirectionDesc *bool  `json:"sort_direction_desc"`
+	}
+
+	// DateBetween schema for date range
+	DateBetween struct {
+		From string `json:"from"`
+		To   string `json:"to"`
+	}
+
+	// AllPayoutsResponse schema for all payouts response
+	AllPayoutsResponse struct {
+		Items []PayoutDetails `json:"items"`
+		Page  PageInfo        `json:"page"`
 	}
 )
