@@ -32,6 +32,12 @@ const (
 	// LogStrResponse log string key
 	LogStrResponse = "response"
 
+	// LogStrParams log string key
+	LogStrParams = "parameters"
+
+	// LogStrForm
+	LogStrForm = "form"
+
 	// LogErrorCode log error_code
 	LogErrorCode = "error_code"
 
