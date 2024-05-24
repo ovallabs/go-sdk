@@ -669,4 +669,12 @@ type (
 		BankCode      string  `json:"bank_code"`
 		Remarks       string  `json:"remarks"`
 	}
+
+	// GenericResponse response wrapper
+	GenericResponse struct {
+		Code    int         `json:"status"`
+		Data    interface{} `json:"data"`
+		Message *string     `json:"message"`
+		Error   *ErrorData  `json:"error"`
+	}
 )

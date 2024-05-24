@@ -18,24 +18,17 @@ import (
 
 func Test_makeRequest(t *testing.T) {
 	tests := map[string]struct {
-		requestPath      string
-		expectedResponse interface{}
-		errorResponse    model.ErrorResponse
-		expectedErr      error
-		handlerFunc      http.HandlerFunc
+		requestPath    string
+		expectedResult interface{}
+		expectedErr    error
+		handlerFunc    http.HandlerFunc
 	}{
-		"Success response with params GET request": {
+		"Success struct response with params GET request": {
 			requestPath: "/name",
-			expectedResponse: struct {
-				Data struct {
-					Name string `json:"name"`
-				} `json:"data"`
+			expectedResult: struct {
+				Name string `json:"name"`
 			}{
-				Data: struct {
-					Name string `json:"name"`
-				}{
-					Name: "John Doe",
-				},
+				Name: "John Doe",
 			},
 			expectedErr: nil,
 			handlerFunc: func(w http.ResponseWriter, r *http.Request) {
@@ -44,11 +37,7 @@ func Test_makeRequest(t *testing.T) {
 				query := r.URL.Query()
 				firstName := query.Get("first_name")
 				lastName := query.Get("last_name")
-				body, err := json.Marshal(struct {
-					Data struct {
-						Name string `json:"name"`
-					} `json:"data"`
-				}{
+				body, err := json.Marshal(model.GenericResponse{
 					Data: struct {
 						Name string `json:"name"`
 					}{
@@ -64,18 +53,12 @@ func Test_makeRequest(t *testing.T) {
 				assert.NoError(t, err)
 			},
 		},
-		"Success response with request body POST request": {
+		"Success struct response with request body POST request": {
 			requestPath: "/register",
-			expectedResponse: struct {
-				Data struct {
-					Message string `json:"message"`
-				} `json:"data"`
+			expectedResult: struct {
+				Message string `json:"message"`
 			}{
-				Data: struct {
-					Message string `json:"message"`
-				}{
-					Message: "User registered successfully!",
-				},
+				Message: "User registered successfully!",
 			},
 			expectedErr: nil,
 			handlerFunc: func(w http.ResponseWriter, r *http.Request) {
@@ -90,11 +73,7 @@ func Test_makeRequest(t *testing.T) {
 				err := json.NewDecoder(r.Body).Decode(&s)
 				assert.NoError(t, err)
 
-				body, err := json.Marshal(struct {
-					Data struct {
-						Message string `json:"message"`
-					} `json:"data"`
-				}{
+				body, err := json.Marshal(model.GenericResponse{
 					Data: struct {
 						Message string `json:"message"`
 					}{
@@ -108,16 +87,41 @@ func Test_makeRequest(t *testing.T) {
 				assert.NoError(t, err)
 			},
 		},
+		"Success boolean response with request body PUT request": {
+			requestPath:    "/update",
+			expectedResult: true,
+			expectedErr:    nil,
+			handlerFunc: func(w http.ResponseWriter, r *http.Request) {
+				assert.Equal(t, http.MethodPut, r.Method)
+				assert.Equal(t, "/update", r.URL.Path)
+
+				s := struct {
+					FirstName string `json:"first_name"`
+					LastName  string `json:"last_name"`
+				}{}
+
+				err := json.NewDecoder(r.Body).Decode(&s)
+				assert.NoError(t, err)
+
+				body, err := json.Marshal(model.GenericResponse{
+					Data: true,
+				})
+				assert.NoError(t, err)
+
+				w.WriteHeader(http.StatusOK)
+				_, err = w.Write(body)
+				assert.NoError(t, err)
+			},
+		},
 		"Failed with error response": {
 			requestPath: "/error",
-			errorResponse: model.ErrorResponse{
-				Message: "something went wrong",
-			},
-			expectedErr: errors.New("something went wrong"),
+			expectedErr: errors.New("unauthorized"),
 			handlerFunc: func(w http.ResponseWriter, r *http.Request) {
 				assert.Equal(t, "/error", r.URL.Path)
-				body, err := json.Marshal(model.ErrorResponse{
-					Message: "something went wrong",
+				body, err := json.Marshal(model.GenericResponse{
+					Error: &model.ErrorData{
+						Details: "unauthorized",
+					},
 				})
 				assert.NoError(t, err)
 
@@ -139,23 +143,19 @@ func Test_makeRequest(t *testing.T) {
 				logger:  zerolog.Nop(),
 			}
 			if tt.requestPath == "/name" {
-				var responseBody struct {
-					Data struct {
-						Name string `json:"name"`
-					} `json:"data"`
+				var response struct {
+					Name string `json:"name"`
 				}
 				params := map[string]interface{}{
 					"first_name": "John",
 					"last_name":  "Doe",
 				}
-				err := c.makeRequest(ctx, "/name", http.MethodGet, params, nil, nil, &responseBody)
-				assert.Equal(t, tt.expectedResponse, responseBody)
+				err := c.makeRequest(ctx, "/name", http.MethodGet, params, nil, nil, &response)
+				assert.Equal(t, tt.expectedResult, response)
 				assert.Equal(t, tt.expectedErr, err)
 			} else if tt.requestPath == "/register" {
-				var responseBody struct {
-					Data struct {
-						Message string `json:"message"`
-					} `json:"data"`
+				var response struct {
+					Message string `json:"message"`
 				}
 				request := struct {
 					FirstName string `json:"first_name"`
@@ -164,12 +164,24 @@ func Test_makeRequest(t *testing.T) {
 					FirstName: "John",
 					LastName:  "Doe",
 				}
-				err := c.makeRequest(ctx, "/register", http.MethodPost, nil, nil, request, &responseBody)
-				assert.Equal(t, tt.expectedResponse, responseBody)
+				err := c.makeRequest(ctx, "/register", http.MethodPost, nil, nil, request, &response)
+				assert.Equal(t, tt.expectedResult, response)
+				assert.Equal(t, tt.expectedErr, err)
+			} else if tt.requestPath == "/update" {
+				var response bool
+				request := struct {
+					FirstName string `json:"first_name"`
+					LastName  string `json:"last_name"`
+				}{
+					FirstName: "John",
+					LastName:  "Doe",
+				}
+				err := c.makeRequest(ctx, "/update", http.MethodPut, nil, nil, request, &response)
+				assert.Equal(t, tt.expectedResult, response)
 				assert.Equal(t, tt.expectedErr, err)
 			} else if tt.requestPath == "/error" {
-				var responseBody struct{} // not needed anyway
-				err := c.makeRequest(ctx, "/error", http.MethodGet, nil, nil, nil, &responseBody)
+				var response struct{} // not needed anyway
+				err := c.makeRequest(ctx, "/error", http.MethodGet, nil, nil, nil, &response)
 				assert.Equal(t, tt.expectedErr, err)
 			}
 		})
