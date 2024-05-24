@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -20,16 +21,14 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, params, for
 	log.Info().Msg("starting...")
 
 	var (
-		err    error
-		res    *resty.Response
-		errRes model.ErrorResponse
+		err           error
+		res           *resty.Response
+		errorResponse model.ErrorResponse
 	)
 
 	client := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetResult(&responseBody).
-		SetError(&errRes).
 		SetContext(ctx)
 
 	if requestBody != nil {
@@ -82,9 +81,21 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, params, for
 		return err
 	}
 
-	if errRes != (model.ErrorResponse{}) {
-		err = errors.New(errRes.Message)
-		log.Err(err).Msg("error while making request")
+	if res.StatusCode() >= 200 && res.StatusCode() < 300 {
+		result := string(res.Body())
+		err = json.Unmarshal([]byte(result), responseBody)
+		if err != nil {
+			log.Err(err).Msg("error decoding response")
+		}
+	} else if res.StatusCode() >= 400 {
+		result := string(res.Body())
+		err = json.Unmarshal([]byte(result), &errorResponse)
+		if err != nil {
+			log.Err(err).Msg("error decoding response")
+			return err
+		}
+		err = errors.New(errorResponse.Message)
+		log.Err(err).Msg("error occurred while processing request")
 		return err
 	}
 
