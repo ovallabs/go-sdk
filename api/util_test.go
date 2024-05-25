@@ -48,6 +48,7 @@ func Test_makeRequest(t *testing.T) {
 				})
 				assert.NoError(t, err)
 
+				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusOK)
 				_, err = w.Write(body)
 				assert.NoError(t, err)
@@ -82,6 +83,7 @@ func Test_makeRequest(t *testing.T) {
 				})
 				assert.NoError(t, err)
 
+				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusOK)
 				_, err = w.Write(body)
 				assert.NoError(t, err)
@@ -108,6 +110,7 @@ func Test_makeRequest(t *testing.T) {
 				})
 				assert.NoError(t, err)
 
+				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusOK)
 				_, err = w.Write(body)
 				assert.NoError(t, err)
@@ -125,6 +128,7 @@ func Test_makeRequest(t *testing.T) {
 				})
 				assert.NoError(t, err)
 
+				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusUnauthorized)
 				_, err = w.Write(body)
 				assert.NoError(t, err)

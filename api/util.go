@@ -2,14 +2,13 @@ package api
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"os"
-	"reflect"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/mitchellh/mapstructure"
 
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
@@ -24,12 +23,14 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, params, for
 	var (
 		err             error
 		res             *resty.Response
-		genericResponse model.GenericResponse
+		genericResponse = model.GenericResponse{}
 	)
 
 	client := c.client.R().
 		SetAuthToken(c.bearerToken).
 		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
+		SetResult(&genericResponse).
+		SetError(&genericResponse).
 		SetContext(ctx)
 
 	if requestBody != nil {
@@ -82,46 +83,30 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, params, for
 		return err
 	}
 
-	if res.StatusCode() >= 200 && res.StatusCode() < 300 {
-		result := string(res.Body())
-		err = json.Unmarshal([]byte(result), &genericResponse)
-		if err != nil {
-			log.Err(err).Msg("error decoding response")
-			return err
-		}
-		if data, ok := genericResponse.Data.(map[string]interface{}); !ok {
-			err := func(v1, v2 interface{}) error {
-				value := reflect.ValueOf(v1)
-				if value.Kind() != reflect.Ptr {
-					return errors.New("responseData must be a pointer")
-				}
-				value = value.Elem()
-				if value.Kind() != reflect.TypeOf(v2).Kind() {
-					return errors.New("responseData does not match returned data")
-				}
-				value.Set(reflect.ValueOf(v2))
-				return nil
-			}(responseData, genericResponse.Data)
-			if err != nil {
-				log.Err(err).Msg(err.Error())
-				return err
-			}
-		} else {
-			jsonData, _ := json.Marshal(data)
-			_ = json.Unmarshal(jsonData, &responseData)
-		}
-	} else if res.StatusCode() >= 400 {
-		result := string(res.Body())
-		err = json.Unmarshal([]byte(result), &genericResponse)
-		if err != nil {
-			log.Err(err).Msg("error decoding response")
-			return err
-		}
+	if genericResponse.Error != nil {
 		err = errors.New(genericResponse.Error.Details)
-		log.Err(err).Msg("error occurred while processing request")
+		log.Err(err).Msg("error while making request")
 		return err
 	}
 
-	log.Info().Interface(model.LogStrResponse, responseData).Msg("response")
-	return nil
+	log.Info().Interface(model.LogStrResponse, genericResponse.Data).Msg("response")
+	return mapstruct(genericResponse.Data, responseData)
+}
+
+// mapstruct map api call result to the expected interface
+func mapstruct(data, v interface{}) error {
+	config := &mapstructure.DecoderConfig{
+		Result:           v,
+		TagName:          "json",
+		WeaklyTypedInput: true,
+	}
+
+	decoder, err := mapstructure.NewDecoder(config)
+	if err != nil {
+		return err
+	}
+
+	err = decoder.Decode(data)
+
+	return err
 }
