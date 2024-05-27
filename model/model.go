@@ -32,6 +32,12 @@ const (
 	// LogStrResponse log string key
 	LogStrResponse = "response"
 
+	// LogStrParams log string key
+	LogStrParams = "parameters"
+
+	// LogStrForm
+	LogStrForm = "form"
+
 	// LogErrorCode log error_code
 	LogErrorCode = "error_code"
 
@@ -662,5 +668,13 @@ type (
 		AccountNumber string  `json:"account_number"`
 		BankCode      string  `json:"bank_code"`
 		Remarks       string  `json:"remarks"`
+	}
+
+	// GenericResponse response wrapper
+	GenericResponse struct {
+		Code    int         `json:"status"`
+		Data    interface{} `json:"data"`
+		Message *string     `json:"message"`
+		Error   *ErrorData  `json:"error"`
 	}
 )

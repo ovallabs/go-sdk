@@ -15,47 +15,16 @@ const customerAPIVersion = "v1/customer"
 
 // CreateCustomer makes an API request using Call to create a customer
 func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerRequest) (model.Customer, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, customerAPIVersion)
+	var (
+		err       error
+		response  model.Customer
+		path      = customerAPIVersion
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
 
-	fL := c.logger.With().Str("func", "CreateCustomer").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-
-	response := struct {
-		Data model.Customer `json:"data"`
-	}{}
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
-		}).
-		SetContext(ctx).
-		Post(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.Customer{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.Customer{}, model.ErrNetworkError
-		}
-		return model.Customer{}, model.ParseError(errRes.Error.Details)
-	}
-
-	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
-	return response.Data, nil
+	return response, err
 }
 
 // UpdateCustomer makes an API request using Call to update a customer
