@@ -154,7 +154,7 @@ func Test_makeRequest(t *testing.T) {
 					"first_name": "John",
 					"last_name":  "Doe",
 				}
-				err := c.makeRequest(ctx, "/name", http.MethodGet, params, nil, nil, &response)
+				err := c.makeRequest(ctx, "/name", http.MethodGet, nil, params, nil, nil, &response)
 				assert.Equal(t, tt.expectedResult, response)
 				assert.Equal(t, tt.expectedErr, err)
 			} else if tt.requestPath == "/register" {
@@ -168,7 +168,7 @@ func Test_makeRequest(t *testing.T) {
 					FirstName: "John",
 					LastName:  "Doe",
 				}
-				err := c.makeRequest(ctx, "/register", http.MethodPost, nil, nil, request, &response)
+				err := c.makeRequest(ctx, "/register", http.MethodPost, nil, nil, nil, request, &response)
 				assert.Equal(t, tt.expectedResult, response)
 				assert.Equal(t, tt.expectedErr, err)
 			} else if tt.requestPath == "/update" {
@@ -180,12 +180,12 @@ func Test_makeRequest(t *testing.T) {
 					FirstName: "John",
 					LastName:  "Doe",
 				}
-				err := c.makeRequest(ctx, "/update", http.MethodPut, nil, nil, request, &response)
+				err := c.makeRequest(ctx, "/update", http.MethodPut, nil, nil, nil, request, &response)
 				assert.Equal(t, tt.expectedResult, response)
 				assert.Equal(t, tt.expectedErr, err)
 			} else if tt.requestPath == "/error" {
 				var response struct{} // not needed anyway
-				err := c.makeRequest(ctx, "/error", http.MethodGet, nil, nil, nil, &response)
+				err := c.makeRequest(ctx, "/error", http.MethodGet, nil, nil, nil, nil, &response)
 				assert.Equal(t, tt.expectedErr, err)
 			}
 		})

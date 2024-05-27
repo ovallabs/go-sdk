@@ -22,7 +22,7 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
 	)
 
-	err = c.makeRequest(ctx, path, http.MethodPost, signature, nil, nil, request, &response)
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
 	return response, err
 }

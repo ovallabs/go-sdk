@@ -14,7 +14,7 @@ import (
 	"github.com/ovalfi/go-sdk/model"
 )
 
-func (c *Call) makeRequest(ctx context.Context, path, method, signature string, params, formData map[string]interface{}, requestBody, responseData interface{}) error {
+func (c *Call) makeRequest(ctx context.Context, path, method string, signature *string, params, formData map[string]interface{}, requestBody, responseData interface{}) error {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, path)
 
 	log := c.logger.With().Str("method", method).Str("endpoint", endpoint).Logger()
@@ -33,8 +33,8 @@ func (c *Call) makeRequest(ctx context.Context, path, method, signature string, 
 		SetError(&genericResponse).
 		SetContext(ctx)
 
-	if signature != "" {
-		client = client.SetHeader("Signature", signature)
+	if signature != nil {
+		client = client.SetHeader("Signature", *signature)
 	}
 
 	if requestBody != nil {
