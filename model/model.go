@@ -32,6 +32,12 @@ const (
 	// LogStrResponse log string key
 	LogStrResponse = "response"
 
+	// LogStrParams log string key
+	LogStrParams = "parameters"
+
+	// LogStrForm
+	LogStrForm = "form"
+
 	// LogErrorCode log error_code
 	LogErrorCode = "error_code"
 
@@ -666,7 +672,15 @@ type (
 		Remarks       string  `json:"remarks"`
 	}
 
-	// CancelPayoutRequest request schema for cancel payout
+	// GenericResponse response wrapper
+	GenericResponse struct {
+		Code    int         `json:"status"`
+		Data    interface{} `json:"data"`
+		Message *string     `json:"message"`
+		Error   *ErrorData  `json:"error"`
+	}
+  
+  // CancelPayoutRequest request schema for cancel payout
 	CancelPayoutRequest struct {
 		BulkPayoutID string `json:"payout_id"`
 		Reason       string `json:"reason"`
@@ -723,5 +737,5 @@ type (
 	AllPayoutsResponse struct {
 		Items []PayoutDetails `json:"items"`
 		Page  PageInfo        `json:"page"`
-	}
+  }
 )
