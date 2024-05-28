@@ -4,8 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"mime"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/mitchellh/mapstructure"
@@ -54,7 +56,9 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 		formDataConv := make(map[string]string)
 		for k, v := range formData {
 			if file, ok := v.(*os.File); ok {
-				client.SetFileReader(k, file.Name(), file)
+				name := file.Name()
+				contentType := mime.TypeByExtension(filepath.Ext(name))
+				client.SetMultipartField(k, name, contentType, file)
 			} else {
 				formDataConv[k] = v.(string)
 			}
