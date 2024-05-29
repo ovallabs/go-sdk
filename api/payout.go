@@ -73,12 +73,7 @@ func (c *Call) GetAllPayouts(ctx context.Context, status, search string, dateBet
 		params["search"] = search
 	}
 	if dateBetween != (model.DateBetween{}) {
-		if dateBetween.From != "" {
-			params["from"] = dateBetween.From
-		}
-		if dateBetween.To != "" {
-			params["to"] = dateBetween.To
-		}
+		helpers.FillParamsWithDateInterval(params, dateBetween)
 	}
 	if page != (model.Page{}) {
 		helpers.FillParamsWithPage(params, page)

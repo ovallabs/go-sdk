@@ -5,9 +5,8 @@ import (
 	"context"
 	"crypto/sha256"
 	"fmt"
-	"strconv"
-
 	"github.com/ovalfi/go-sdk/model"
+	"strconv"
 )
 
 // GetSignatureFromReferenceAndPubKey returns the string equivalent of a SHA256 hash on reference and public key
@@ -55,5 +54,15 @@ func FillParamsWithPage(params map[string]interface{}, page model.Page) {
 	}
 	if page.SortDirectionDesc != nil {
 		params["sort_direction_desc"] = strconv.FormatBool(*page.SortDirectionDesc)
+	}
+}
+
+// FillParamsWithDateInterval fill parameters map with date interval
+func FillParamsWithDateInterval(params map[string]interface{}, dateBetween model.DateBetween) {
+	if dateBetween.From != "" {
+		params["from"] = dateBetween.From
+	}
+	if dateBetween.To != "" {
+		params["to"] = dateBetween.To
 	}
 }
