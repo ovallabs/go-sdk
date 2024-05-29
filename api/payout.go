@@ -102,29 +102,27 @@ func (c *Call) GetAllPayouts(ctx context.Context, status, search string, dateBet
 }
 
 // CancelPayout makes request to Torus to cancel payout
-func (c *Call) CancelPayout(ctx context.Context, request model.CancelPayoutRequest) (bool, error) {
+func (c *Call) CancelPayout(ctx context.Context, request model.CancelPayoutRequest) error {
 	var (
-		err      error
-		response bool
-		path     = fmt.Sprintf("%s/cancel", payoutAPIVersion)
+		err  error
+		path = fmt.Sprintf("%s/cancel", payoutAPIVersion)
 	)
 
-	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, &response)
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, nil)
 
-	return response, err
+	return err
 }
 
 // UpdatePayoutAccount makes request to Torus to update payout account by its ID
-func (c *Call) UpdatePayoutAccount(ctx context.Context, payoutID string, request model.TransferBeneficiaryDetails) (bool, error) {
+func (c *Call) UpdatePayoutAccount(ctx context.Context, payoutID string, request model.TransferBeneficiaryDetails) error {
 	var (
-		err      error
-		response bool
-		path     = fmt.Sprintf("%s/accounts/%s", payoutAPIVersion, payoutID)
+		err  error
+		path = fmt.Sprintf("%s/accounts/%s", payoutAPIVersion, payoutID)
 	)
 
-	err = c.makeRequest(ctx, path, http.MethodPut, nil, nil, nil, request, &response)
+	err = c.makeRequest(ctx, path, http.MethodPut, nil, nil, nil, request, nil)
 
-	return response, err
+	return err
 }
 
 // GetPayoutConfig makes request to Torus to get payout config

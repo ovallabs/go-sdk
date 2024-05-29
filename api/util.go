@@ -101,7 +101,13 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 	}
 
 	log.Info().Interface(model.LogStrResponse, genericResponse.Data).Msg("response")
-	return mapstruct(genericResponse.Data, responseData)
+	if responseData != nil {
+		err = mapstruct(genericResponse.Data, responseData)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // mapstruct map api call result to the expected interface
