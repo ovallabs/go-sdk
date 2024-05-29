@@ -3,8 +3,8 @@ package example
 
 import (
 	"github.com/google/uuid"
-	"github.com/ovalfi/go-sdk/helpers"
 
+	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
 
