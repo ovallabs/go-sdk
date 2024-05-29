@@ -117,7 +117,7 @@ func mapstruct(data, v interface{}) error {
 		TagName:          "json",
 		WeaklyTypedInput: true,
 		DecodeHook: mapstructure.ComposeDecodeHookFunc(
-			stringToTimeHookFunc(),
+			stringToTimeHookFunc(time.RFC3339Nano),
 			stringToUUIDHookFunc(),
 		),
 	}
@@ -150,7 +150,7 @@ func stringToUUIDHookFunc() mapstructure.DecodeHookFunc {
 }
 
 // stringToTimeHookFunc type conversion for string to time.Time
-func stringToTimeHookFunc() mapstructure.DecodeHookFunc {
+func stringToTimeHookFunc(layout string) mapstructure.DecodeHookFunc {
 	return func(
 		f reflect.Type,
 		t reflect.Type,
@@ -164,6 +164,6 @@ func stringToTimeHookFunc() mapstructure.DecodeHookFunc {
 			return data, nil
 		}
 
-		return time.Parse(time.RFC3339, str)
+		return time.Parse(layout, str)
 	}
 }
