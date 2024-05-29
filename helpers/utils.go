@@ -5,8 +5,9 @@ import (
 	"context"
 	"crypto/sha256"
 	"fmt"
-	"github.com/ovalfi/go-sdk/model"
 	"strconv"
+
+	"github.com/ovalfi/go-sdk/model"
 )
 
 // GetSignatureFromReferenceAndPubKey returns the string equivalent of a SHA256 hash on reference and public key

@@ -3,10 +3,11 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/ovalfi/go-sdk/helpers"
-	"github.com/ovalfi/go-sdk/model"
 	"net/http"
 	"os"
+
+	"github.com/ovalfi/go-sdk/helpers"
+	"github.com/ovalfi/go-sdk/model"
 )
 
 const payoutAPIVersion = "v1/payouts"
