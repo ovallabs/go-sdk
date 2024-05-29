@@ -3,11 +3,10 @@ package api
 import (
 	"context"
 	"fmt"
+	"github.com/ovalfi/go-sdk/helpers"
+	"github.com/ovalfi/go-sdk/model"
 	"net/http"
 	"os"
-	"strconv"
-
-	"github.com/ovalfi/go-sdk/model"
 )
 
 const payoutAPIVersion = "v1/payouts"
@@ -82,18 +81,7 @@ func (c *Call) GetAllPayouts(ctx context.Context, status, search string, dateBet
 		}
 	}
 	if page != (model.Page{}) {
-		if page.Number != nil {
-			params["number"] = strconv.Itoa(*page.Number)
-		}
-		if page.Size != nil {
-			params["size"] = strconv.Itoa(*page.Size)
-		}
-		if page.SortBy != "" {
-			params["sort_by"] = page.SortBy
-		}
-		if page.SortDirectionDesc != nil {
-			params["sort_direction_desc"] = strconv.FormatBool(*page.SortDirectionDesc)
-		}
+		helpers.FillParamsWithPage(params, page)
 	}
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
