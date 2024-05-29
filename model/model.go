@@ -23,8 +23,8 @@ const (
 	// BearerToken sample sandbox environment bearer token
 	BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
 
-	//BearerToken = "eyJidXNpbmVzc0lEIjoiOTIzYjJkZjUtNGE4OS00Y2ViLWIxNDgtYzJlNWFjNTJkMDRlIiwidXNlcklEIjoiMjQ4YmFhNDMtYzQ0Yi00ZjYwLWI2MWQtY2VlZjYwOThjNzg1Iiwia2V5IjoidXBwcHBwIn0="
-	//BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoicGVudGEifQ=="
+	//PublicKey   = "To2Psprkn41u3dJvPb1NnIOftdU="
+	//BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiaW1pbSJ9"
 
 	// LogStrRequest log string key
 	LogStrRequest = "request"
@@ -62,6 +62,12 @@ const (
 	RequestIDContextKey Key = "api_RequestIDContextKey"
 	// RequestIDHeaderKey a constant for the request id header key
 	RequestIDHeaderKey string = "X-REQUEST-ID"
+
+	// SinglePayout represent single payout type
+	SinglePayout PayoutType = "single"
+
+	// MultiplePayout represent multiple payout type
+	MultiplePayout PayoutType = "multiple"
 )
 
 type (
@@ -289,6 +295,9 @@ type (
 
 	// FeeType feeType string
 	FeeType string
+
+	// PayoutType payoutType string
+	PayoutType string
 )
 
 type (
@@ -609,18 +618,18 @@ type (
 
 	// PayoutDetails for payout response
 	PayoutDetails struct {
-		ID           uuid.UUID `json:"id"`
-		BusinessID   uuid.UUID `json:"business_id"`
-		Status       string    `json:"status"`
-		Count        int       `json:"count"`
-		Currency     string    `json:"currency"`
-		TotalAmount  int       `json:"total_amount"`
-		Fee          Money     `json:"fee"`
-		Remarks      string    `json:"remarks"`
-		CancelReason *string   `json:"cancel_reason"`
-		CompletedAt  *string   `json:"completed_at"`
-		CreatedAt    time.Time `json:"created_at"`
-		UpdatedAt    time.Time `json:"updated_at"`
+		ID           uuid.UUID  `json:"id"`
+		BusinessID   uuid.UUID  `json:"business_id"`
+		Status       string     `json:"status"`
+		Count        int        `json:"count"`
+		Currency     string     `json:"currency"`
+		TotalAmount  int        `json:"total_amount"`
+		Fee          Money      `json:"fee"`
+		Remarks      string     `json:"remarks"`
+		CancelReason *string    `json:"cancel_reason"`
+		CompletedAt  *time.Time `json:"completed_at"`
+		CreatedAt    time.Time  `json:"created_at"`
+		UpdatedAt    time.Time  `json:"updated_at"`
 	}
 
 	// AccountDetails  object for payout response
@@ -656,11 +665,21 @@ type (
 		UpdatedAt    time.Time      `json:"updated_at"`
 	}
 
-	// InitiatePayoutRequest schema
-	InitiatePayoutRequest struct {
-		Currency string                  `json:"currency"`
-		Remarks  string                  `json:"remarks"`
-		Accounts []InitiatePayoutAccount `json:"accounts"`
+	// InitiateBulkPayoutRequest schema
+	InitiateBulkPayoutRequest struct {
+		Currency        string                       `json:"currency"`
+		Remarks         string                       `json:"remarks"`
+		Accounts        []BulkPayoutRecipientAccount `json:"accounts"`
+		BeneficiaryType PayoutType                   `json:"beneficiary_type"`
+		BeneficiaryID   *string                      `json:"beneficiary_id"`
+		Amount          *float64                     `json:"amount"`
+	}
+
+	// BulkPayoutRecipientAccount schema
+	BulkPayoutRecipientAccount struct {
+		Amount      float64                    `json:"amount"`
+		Destination TransferBeneficiaryDetails `json:"destination"`
+		Remarks     string                     `json:"remarks"`
 	}
 
 	// InitiatePayoutAccount schema
@@ -679,8 +698,8 @@ type (
 		Message *string     `json:"message"`
 		Error   *ErrorData  `json:"error"`
 	}
-  
-  // CancelPayoutRequest request schema for cancel payout
+
+	// CancelPayoutRequest request schema for cancel payout
 	CancelPayoutRequest struct {
 		BulkPayoutID string `json:"payout_id"`
 		Reason       string `json:"reason"`
@@ -737,5 +756,5 @@ type (
 	AllPayoutsResponse struct {
 		Items []PayoutDetails `json:"items"`
 		Page  PageInfo        `json:"page"`
-  }
+	}
 )

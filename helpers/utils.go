@@ -25,3 +25,18 @@ func GetRequestID(ctx context.Context) string {
 
 	return ""
 }
+
+// GetPointerString get string pointer
+func GetPointerString(s string) *string {
+	return &s
+}
+
+// GetPointerInt get int pointer
+func GetPointerInt(i int) *int {
+	return &i
+}
+
+// GetPointerFloat64 get float64 pointer
+func GetPointerFloat64(f float64) *float64 {
+	return &f
+}

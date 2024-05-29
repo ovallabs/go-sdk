@@ -4,11 +4,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/go-resty/resty/v2"
+	"github.com/google/uuid"
+	"github.com/mitchellh/mapstructure"
+	"mime"
 	"net/http"
 	"os"
-
-	"github.com/go-resty/resty/v2"
-	"github.com/mitchellh/mapstructure"
+	"path/filepath"
+	"reflect"
+	"time"
 
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
@@ -54,7 +58,9 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 		formDataConv := make(map[string]string)
 		for k, v := range formData {
 			if file, ok := v.(*os.File); ok {
-				client.SetFileReader(k, file.Name(), file)
+				name := file.Name()
+				contentType := mime.TypeByExtension(filepath.Ext(name))
+				client.SetMultipartField(k, name, contentType, file)
 			} else {
 				formDataConv[k] = v.(string)
 			}
@@ -103,6 +109,10 @@ func mapstruct(data, v interface{}) error {
 		Result:           v,
 		TagName:          "json",
 		WeaklyTypedInput: true,
+		DecodeHook: mapstructure.ComposeDecodeHookFunc(
+			stringToTimeHookFunc(),
+			stringToUUIDHookFunc(),
+		),
 	}
 
 	decoder, err := mapstructure.NewDecoder(config)
@@ -113,4 +123,40 @@ func mapstruct(data, v interface{}) error {
 	err = decoder.Decode(data)
 
 	return err
+}
+
+// stringToUUIDHookFunc type conversion for string to uuid.UUID
+func stringToUUIDHookFunc() mapstructure.DecodeHookFunc {
+	return func(
+		f reflect.Type,
+		t reflect.Type,
+		data interface{}) (interface{}, error) {
+		if f.Kind() == reflect.String && t == reflect.TypeOf(uuid.UUID{}) {
+			str, ok := data.(string)
+			if !ok {
+				return data, nil
+			}
+			return uuid.Parse(str)
+		}
+		return data, nil
+	}
+}
+
+// stringToTimeHookFunc type conversion for string to time.Time
+func stringToTimeHookFunc() mapstructure.DecodeHookFunc {
+	return func(
+		f reflect.Type,
+		t reflect.Type,
+		data interface{}) (interface{}, error) {
+		if f.Kind() != reflect.String || t != reflect.TypeOf(time.Time{}) {
+			return data, nil
+		}
+
+		str, ok := data.(string)
+		if !ok {
+			return data, nil
+		}
+
+		return time.Parse(time.RFC3339, str)
+	}
 }
