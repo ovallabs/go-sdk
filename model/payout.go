@@ -83,23 +83,14 @@ type (
 		Reason       string `json:"reason"`
 	}
 
-	// InitiatePayoutAccount schema
-	InitiatePayoutAccount struct {
-		Amount        float64 `json:"amount"`
-		AccountName   string  `json:"account_name"`
-		AccountNumber string  `json:"account_number"`
-		BankCode      string  `json:"bank_code"`
-		Remarks       string  `json:"remarks"`
-	}
-
 	// InitiateBulkPayoutRequest schema
 	InitiateBulkPayoutRequest struct {
 		Currency        string                       `json:"currency"`
-		Remarks         string                       `json:"remarks"`
-		Accounts        []BulkPayoutRecipientAccount `json:"accounts"`
+		Remarks         string                       `json:"remarks,omitempty"`
+		Accounts        []BulkPayoutRecipientAccount `json:"accounts,omitempty"`
 		BeneficiaryType PayoutType                   `json:"beneficiary_type"`
-		BeneficiaryID   *string                      `json:"beneficiary_id"`
-		Amount          *float64                     `json:"amount"`
+		BeneficiaryID   *string                      `json:"beneficiary_id,omitempty"`
+		Amount          *float64                     `json:"amount,omitempty"`
 	}
 
 	// BulkPayoutRecipientAccount schema

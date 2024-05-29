@@ -628,18 +628,18 @@ type (
 
 	// WalletDetails schema for wallet details
 	WalletDetails struct {
-		WalletTag     *string `json:"wallet_tag"`
-		AssetType     string  `json:"asset_type"`
+		WalletTag     *string `json:"wallet_tag,omitempty"`
+		AssetType     string  `json:"asset_type,omitempty"`
 		WalletAddress string  `json:"wallet_address"`
 		Network       string  `json:"network"`
 	}
 
 	// TransferBeneficiaryDetails  request schema for update payout
 	TransferBeneficiaryDetails struct {
-		BankDetails         *BankDetails      `json:"bank_details"`
-		IntermediaryBank    *IntermediaryBank `json:"intermediary_bank"`
-		PersonalDetails     *PersonalDetails  `json:"personal_details"`
-		WalletDetails       *WalletDetails    `json:"wallet_details"`
+		BankDetails         *BankDetails      `json:"bank_details,omitempty"`
+		IntermediaryBank    *IntermediaryBank `json:"intermediary_bank,omitempty"`
+		PersonalDetails     *PersonalDetails  `json:"personal_details,omitempty"`
+		WalletDetails       *WalletDetails    `json:"wallet_details,omitempty"`
 		FundsTransferMethod map[string]string `json:"funds_transfer_method"`
 	}
 
