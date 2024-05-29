@@ -18,7 +18,7 @@ type (
 	// PayoutType payoutType string
 	PayoutType string
 
-	// PayoutAccount  object for payout response
+	// PayoutAccount  schema for payout account
 	PayoutAccount struct {
 		ID           uuid.UUID      `json:"id"`
 		BusinessID   uuid.UUID      `json:"business_id"`
@@ -50,7 +50,7 @@ type (
 		AllowRecurring           bool    `json:"allow_recurring"`
 	}
 
-	// PayoutDetails for payout response
+	// PayoutDetails schema for payout details
 	PayoutDetails struct {
 		ID           uuid.UUID  `json:"id"`
 		BusinessID   uuid.UUID  `json:"business_id"`
@@ -66,7 +66,7 @@ type (
 		UpdatedAt    time.Time  `json:"updated_at"`
 	}
 
-	// PayoutResponse get payout by ID response
+	// PayoutResponse schema for payout response
 	PayoutResponse struct {
 		Items      PayoutDetails   `json:"items"`
 		Attributes []PayoutAccount `json:"attributes"`
@@ -78,13 +78,13 @@ type (
 		Page  PageInfo        `json:"page"`
 	}
 
-	// CancelPayoutRequest request schema for cancel payout
+	// CancelPayoutRequest schema for cancel payout request
 	CancelPayoutRequest struct {
 		BulkPayoutID string `json:"payout_id"`
 		Reason       string `json:"reason"`
 	}
 
-	// InitiateBulkPayoutRequest schema
+	// InitiateBulkPayoutRequest schema for payout request
 	InitiateBulkPayoutRequest struct {
 		Currency        string                       `json:"currency"`
 		Remarks         string                       `json:"remarks,omitempty"`
@@ -94,7 +94,7 @@ type (
 		Amount          *float64                     `json:"amount,omitempty"`
 	}
 
-	// BulkPayoutRecipientAccount schema
+	// BulkPayoutRecipientAccount schema for payout recipient account
 	BulkPayoutRecipientAccount struct {
 		Amount      float64                    `json:"amount"`
 		Destination TransferBeneficiaryDetails `json:"destination"`
