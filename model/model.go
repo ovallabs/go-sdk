@@ -23,8 +23,8 @@ const (
 	// BearerToken sample sandbox environment bearer token
 	BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
 
-	//PublicKey   = "To2Psprkn41u3dJvPb1NnIOftdU="
-	//BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiaW1pbSJ9"
+	//PublicKey   = "NgtLGNQxXGZMKp1mA5fblJ8_DRc="
+	//BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiemFjaCJ9"
 
 	// LogStrRequest log string key
 	LogStrRequest = "request"
@@ -53,11 +53,6 @@ const (
 	// FeeTypeAmount represent FeeType in amount
 	FeeTypeAmount FeeType = "amount"
 
-	// CustomerTypeIndividual represent CustomerType individual
-	CustomerTypeIndividual CustomerType = "individual"
-	// CustomerTypeBusiness represent CustomerType business
-	CustomerTypeBusiness CustomerType = "business"
-
 	// RequestIDContextKey contact that holds the RequestID context key for
 	RequestIDContextKey Key = "api_RequestIDContextKey"
 	// RequestIDHeaderKey a constant for the request id header key
@@ -65,9 +60,6 @@ const (
 )
 
 type (
-	// CustomerType string representation of the customer type
-	CustomerType string
-
 	// Money struct
 	Money struct {
 		// Currency is string value of the currency
@@ -76,37 +68,6 @@ type (
 		Symbol string ` json:"symbol" gorm:"-"`
 		// Amount is the value of the amount
 		Amount float64 `json:"amount"`
-	}
-
-	// CreateCustomerRequest attributes payload to create new API customer
-	CreateCustomerRequest struct {
-		Name             string       `json:"name"`
-		Email            string       `json:"email"`
-		Reference        string       `json:"reference"`
-		MobileNumber     string       `json:"mobile_number"`
-		Type             CustomerType `json:"type"`
-		YieldOfferingIDs []uuid.UUID  `json:"yield_offering_ids"`
-	}
-
-	// UpdateCustomerRequest attributes payload to update API customer
-	UpdateCustomerRequest struct {
-		CustomerID       string      `json:"customer_id"`
-		Name             string      `json:"name"`
-		Email            string      `json:"email"`
-		Reference        string      `json:"reference"`
-		MobileNumber     string      `json:"mobile_number"`
-		YieldOfferingIDs []uuid.UUID `json:"yield_offering_ids"`
-	}
-
-	// GetCustomerByIDRequest attributes payload to update API customer
-	GetCustomerByIDRequest struct {
-		CustomerID string `json:"customer_id"`
-	}
-
-	// GetCustomerBalanceRequest attributes payload to get customer balance
-	GetCustomerBalanceRequest struct {
-		CustomerID      uuid.UUID `json:"customer_id"`
-		YieldOfferingID uuid.UUID `json:"yield_offering_id"`
 	}
 
 	// CreateYieldOfferingProfilesRequest payload for API yield offerings
@@ -352,19 +313,6 @@ type (
 		BatchDate       string      `json:"batchDate"`
 	}
 
-	// Customer data object
-	Customer struct {
-		ID               string      `json:"id"`
-		Name             string      `json:"customer_name"`
-		MobileNumber     string      `json:"mobile_number"`
-		Email            string      `json:"email"`
-		Channel          string      `json:"channel"`
-		Reference        string      `json:"reference"`
-		YieldOfferingIDs []uuid.UUID `json:"api_yield_offering_ids"`
-		UpdatedAt        *time.Time  `json:"updated_at"`
-		CreatedAt        string      `json:"created_at"`
-	}
-
 	// CustomerInfo data object for additional customer details
 	CustomerInfo struct {
 		Customer
@@ -495,21 +443,6 @@ type (
 		Asset    string   `json:"asset"`
 		LogoURL  string   `json:"logo_url"`
 		Networks []string `json:"networks"`
-	}
-
-	// CustomerBalanceResponse object
-	CustomerBalanceResponse struct {
-		YieldOfferingID uuid.UUID `json:"yield_offering_id"`
-		Name            string    `json:"name"`
-		Currency        string    `json:"currency"`
-		Amount          float64   `json:"balance"`
-	}
-
-	// CustomerBalancesResponse object
-	CustomerBalancesResponse struct {
-		CustomerID   uuid.UUID                  `json:"customer_id"`
-		TotalBalance float64                    `json:"total_balance"`
-		Detail       []*CustomerBalanceResponse `json:"detail"`
 	}
 
 	// PageInfo object
