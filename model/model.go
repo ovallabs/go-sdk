@@ -153,39 +153,6 @@ type (
 		Page            *int       `json:"page"`
 	}
 
-	// InitiateTransferRequest attributes payload to initiate a new API transfer
-	InitiateTransferRequest struct {
-		CustomerID  string              `json:"customer_id"`
-		Amount      float64             `json:"amount"`
-		Currency    string              `json:"currency"`
-		Destination TransferDestination `json:"destination"`
-		Note        string              `json:"note"`
-		Reason      string              `json:"reason"`
-		Reference   string              `json:"reference"`
-	}
-
-	// GetExchangeRateRequest attributes payload to get exchange rates
-	GetExchangeRateRequest struct {
-		Amount              float64 `json:"amount"`
-		SourceCurrency      string  `json:"sourceCurrency"`
-		DestinationCurrency string  `json:"destinationCurrency"`
-	}
-
-	// ExchangeRateDetails attributes payload to get exchange rates
-	ExchangeRateDetails struct {
-		ExchangeRate     float64 `json:"exchange_rate"`
-		FeeFlat          float64 `json:"flat_fee"`
-		FeePercentage    float64 `json:"fee_percentage"`
-		FeeAmount        float64 `json:"fee_amount"`
-		AmountReceivable float64 `json:"amount_receivable"`
-	}
-
-	// TransferDestination holds recipient's bank and personal info
-	TransferDestination struct {
-		BankDetails     BankDetails     `json:"bank_details"`
-		PersonalDetails PersonalDetails `json:"personal_details"`
-	}
-
 	// InitiateWithdrawalRequest attributes payload to initiate a new API withdrawal
 	InitiateWithdrawalRequest struct {
 		BusinessID string  `json:"business_id"`
@@ -317,14 +284,12 @@ type (
 
 	// PersonalDetails recipient's personal details
 	PersonalDetails struct {
-		Name        string `json:"name"`
-		Country     string `json:"country"`
-		City        string `json:"city"`
-		Address     string `json:"address"`
-		District    string `json:"district"`
-		PostalCode  string `json:"postalCode"`
-		Email       string `json:"email"`
-		PhoneNumber string `json:"phone_number"`
+		Name       string `json:"name"`
+		Country    string `json:"country"`
+		City       string `json:"city"`
+		Address    string `json:"address"`
+		District   string `json:"district"`
+		PostalCode string `json:"postalCode"`
 	}
 
 	// IntermediaryBank recipient's intermediary bank
@@ -449,14 +414,6 @@ type (
 		BatchDate       *string    `json:"batch_date"`
 		Status          string     `json:"status"`
 		CancelReason    *string    `json:"cancel_reason"`
-	}
-
-	// Transfer data object
-	Transfer struct {
-		ID uuid.UUID `json:"id"`
-		InitiateTransferRequest
-		CreatedAt time.Time `json:"created_at"`
-		Status    string    `json:"status"`
 	}
 
 	// Withdrawal data object
