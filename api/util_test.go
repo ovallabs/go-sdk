@@ -8,8 +8,10 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/google/uuid"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 
@@ -190,4 +192,42 @@ func Test_makeRequest(t *testing.T) {
 			}
 		})
 	}
+}
+
+func Test_mapstructUUIDHook(t *testing.T) {
+	id := "123e4567-e89b-12d3-a456-426614174000"
+	name := "John Doe"
+	data := map[string]interface{}{
+		"id":   id,
+		"name": name,
+	}
+	type User struct {
+		ID   uuid.UUID `json:"id"`
+		Name string    `json:"name"`
+	}
+	var user User
+	err := mapstruct(data, &user)
+	assert.NoError(t, err)
+	assert.Equal(t, uuid.MustParse(id), user.ID)
+	assert.Equal(t, name, user.Name)
+}
+
+func Test_mapstructTimeHook(t *testing.T) {
+	createdAt := time.Now()
+	name := "John Doe"
+	data := map[string]interface{}{
+		"name":       name,
+		"created_at": createdAt.Format(time.RFC3339Nano),
+	}
+	type User struct {
+		Name      string    `json:"name"`
+		CreatedAt time.Time `json:"created_at"`
+	}
+	var user User
+	err := mapstruct(data, &user)
+	assert.NoError(t, err)
+	if !createdAt.Equal(user.CreatedAt) {
+		t.Errorf("Expected: %v, \nActual: %v", createdAt, user.CreatedAt)
+	}
+	assert.Equal(t, name, user.Name)
 }

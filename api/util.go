@@ -4,10 +4,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"mime"
 	"net/http"
 	"os"
+	"path/filepath"
+	"reflect"
+	"time"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/google/uuid"
 	"github.com/mitchellh/mapstructure"
 
 	"github.com/ovalfi/go-sdk/helpers"
@@ -54,7 +59,9 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 		formDataConv := make(map[string]string)
 		for k, v := range formData {
 			if file, ok := v.(*os.File); ok {
-				client.SetFileReader(k, file.Name(), file)
+				name := file.Name()
+				contentType := mime.TypeByExtension(filepath.Ext(name))
+				client.SetMultipartField(k, name, contentType, file)
 			} else {
 				formDataConv[k] = v.(string)
 			}
@@ -94,7 +101,13 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 	}
 
 	log.Info().Interface(model.LogStrResponse, genericResponse.Data).Msg("response")
-	return mapstruct(genericResponse.Data, responseData)
+	if responseData != nil {
+		err = mapstruct(genericResponse.Data, responseData)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // mapstruct map api call result to the expected interface
@@ -103,6 +116,10 @@ func mapstruct(data, v interface{}) error {
 		Result:           v,
 		TagName:          "json",
 		WeaklyTypedInput: true,
+		DecodeHook: mapstructure.ComposeDecodeHookFunc(
+			stringToTimeHookFunc(time.RFC3339Nano),
+			stringToUUIDHookFunc(),
+		),
 	}
 
 	decoder, err := mapstructure.NewDecoder(config)
@@ -113,4 +130,40 @@ func mapstruct(data, v interface{}) error {
 	err = decoder.Decode(data)
 
 	return err
+}
+
+// stringToUUIDHookFunc type conversion for string to uuid.UUID
+func stringToUUIDHookFunc() mapstructure.DecodeHookFunc {
+	return func(
+		f reflect.Type,
+		t reflect.Type,
+		data interface{}) (interface{}, error) {
+		if f.Kind() == reflect.String && t == reflect.TypeOf(uuid.UUID{}) {
+			str, ok := data.(string)
+			if !ok {
+				return data, nil
+			}
+			return uuid.Parse(str)
+		}
+		return data, nil
+	}
+}
+
+// stringToTimeHookFunc type conversion for string to time.Time
+func stringToTimeHookFunc(layout string) mapstructure.DecodeHookFunc {
+	return func(
+		f reflect.Type,
+		t reflect.Type,
+		data interface{}) (interface{}, error) {
+		if f.Kind() != reflect.String || t != reflect.TypeOf(time.Time{}) {
+			return data, nil
+		}
+
+		str, ok := data.(string)
+		if !ok {
+			return data, nil
+		}
+
+		return time.Parse(layout, str)
+	}
 }

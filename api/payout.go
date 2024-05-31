@@ -3,82 +3,142 @@ package api
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"os"
+
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
-	"github.com/rs/zerolog/log"
-	"net/http"
 )
+
+const payoutAPIVersion = "v1/payouts"
 
 // GetPayoutByID makes a request to Torus to get the payout by its ID.
 func (c *Call) GetPayoutByID(ctx context.Context, payoutID string) (model.PayoutResponse, error) {
-	endpoint := fmt.Sprintf("%s/payouts/%s", c.baseURL, payoutID)
+	var (
+		err      error
+		response model.PayoutResponse
+		path     = fmt.Sprintf("%s/%s", payoutAPIVersion, payoutID)
+	)
 
-	fL := c.logger.With().Str("func", "GetPayoutByID").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, payoutID).Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
 
-	errorRes := model.ErrorResponse{}
-	response := struct {
-		Data model.PayoutResponse `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetHeader("request_id", helpers.GetRequestID(ctx)).
-		SetAuthToken(c.bearerToken).
-		SetContext(ctx).
-		SetResult(&response).
-		SetError(&errorRes).
-		Get(endpoint)
-
-	if err != nil {
-		log.Err(err).Msg("something went wrong with this request")
-		return model.PayoutResponse{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		log.Err(err).Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msgf(" %+v", errorRes)
-		return model.PayoutResponse{}, err
-	}
-
-	log.Info().Interface(model.LogStrResponse, response).Msg("response returned")
-
-	return response.Data, err
+	return response, err
 }
 
 // InitiateDirectBulkPayout makes a request to Torus to initiate a bulk payout
-func (c *Call) InitiateDirectBulkPayout(ctx context.Context, request model.InitiatePayoutRequest) (model.PayoutDetails, error) {
-	endpoint := fmt.Sprintf("%s/payouts", c.baseURL)
+func (c *Call) InitiateDirectBulkPayout(ctx context.Context, request model.InitiateBulkPayoutRequest) (model.PayoutDetails, error) {
+	var (
+		err      error
+		response model.PayoutDetails
+		path     = payoutAPIVersion
+	)
 
-	fL := c.logger.With().Str("func", "InitiateDirectBulkPayout").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, &response)
 
-	errorRes := model.ErrorResponse{}
-	response := struct {
-		Data model.PayoutDetails `json:"data"`
-	}{}
+	return response, err
+}
 
-	res, err := c.client.R().
-		SetHeader("request_id", helpers.GetRequestID(ctx)).
-		SetAuthToken(c.bearerToken).
-		SetContext(ctx).
-		SetBody(request).
-		SetResult(&response).
-		SetError(&errorRes).
-		Post(endpoint)
+// InitiatePayout makes a request to Torus to initiate a bulk payout
+func (c *Call) InitiatePayout(ctx context.Context, currency, payoutType, beneficiaryType, remarks string, document *os.File) (model.PayoutDetails, error) {
+	var (
+		err      error
+		response model.PayoutDetails
+		formData = make(map[string]interface{})
+		path     = fmt.Sprintf("%s/upload", payoutAPIVersion)
+	)
 
-	if err != nil {
-		log.Err(err).Msg("something went wrong with this request")
-		return model.PayoutDetails{}, err
+	formData["currency"] = currency
+	formData["payout_type"] = payoutType
+	formData["beneficiary_type"] = beneficiaryType
+	formData["remarks"] = remarks
+	formData["document"] = document
+
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, formData, nil, &response)
+
+	return response, err
+}
+
+// GetAllPayouts makes request to Torus to get all payouts
+func (c *Call) GetAllPayouts(ctx context.Context, status, search string, dateBetween model.DateBetween, page model.Page) (model.AllPayoutsResponse, error) {
+	var (
+		err      error
+		response model.AllPayoutsResponse
+		params   = make(map[string]interface{})
+		path     = payoutAPIVersion
+	)
+
+	if status != "" {
+		params["status"] = status
+	}
+	if search != "" {
+		params["search"] = search
+	}
+	if dateBetween != (model.DateBetween{}) {
+		helpers.FillParamsWithDateInterval(params, dateBetween)
+	}
+	if page != (model.Page{}) {
+		helpers.FillParamsWithPage(params, page)
 	}
 
-	if res.StatusCode() != http.StatusCreated {
-		log.Err(err).Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msgf(" %+v", errorRes)
-		return model.PayoutDetails{}, model.ErrNetworkError
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
+
+	return response, err
+}
+
+// CancelPayout makes request to Torus to cancel payout
+func (c *Call) CancelPayout(ctx context.Context, request model.CancelPayoutRequest) error {
+	var (
+		err  error
+		path = fmt.Sprintf("%s/cancel", payoutAPIVersion)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, nil)
+
+	return err
+}
+
+// UpdatePayoutAccount makes request to Torus to update payout account by its ID
+func (c *Call) UpdatePayoutAccount(ctx context.Context, payoutID string, request model.TransferBeneficiaryDetails) error {
+	var (
+		err  error
+		path = fmt.Sprintf("%s/accounts/%s", payoutAPIVersion, payoutID)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPut, nil, nil, nil, request, nil)
+
+	return err
+}
+
+// GetPayoutConfig makes request to Torus to get payout config
+func (c *Call) GetPayoutConfig(ctx context.Context, currency string) (model.BulkPayoutConfig, error) {
+	var (
+		err      error
+		response model.BulkPayoutConfig
+		path     = fmt.Sprintf("%s/config/%s", payoutAPIVersion, currency)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
+
+	return response, err
+}
+
+// GetPayoutDocumentTemplate makes request to Torus to get payout document template
+func (c *Call) GetPayoutDocumentTemplate(ctx context.Context, currency, docType string) (string, error) {
+	var (
+		err      error
+		response string
+		params   = make(map[string]interface{})
+		path     = fmt.Sprintf("%s/template", payoutAPIVersion)
+	)
+
+	if currency != "" {
+		params["currency"] = currency
+	}
+	if docType != "" {
+		params["type"] = docType
 	}
 
-	log.Info().Interface(model.LogStrResponse, response).Msg("response returned")
-	return response.Data, err
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
+
+	return response, err
 }

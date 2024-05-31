@@ -4,6 +4,7 @@ package example
 import (
 	"github.com/google/uuid"
 
+	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
 
@@ -105,5 +106,20 @@ var (
 		CustomerID: "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd",
 		Reference:  "ref123",
 		Amount:     210,
+	}
+
+	// NewInitiateBulkPayoutRequest sample bulk payout request
+	NewInitiateBulkPayoutRequest = model.InitiateBulkPayoutRequest{
+		Currency:        "NGN",
+		Remarks:         "Some remarks",
+		BeneficiaryType: model.SinglePayout,
+		BeneficiaryID:   helpers.GetPointerString("57ef5467-5c19-4b1d-a8c1-5cb1f34bc587"),
+		Amount:          helpers.GetPointerFloat64(1000),
+	}
+
+	// NewCancelPayoutRequest sample cancel payout request
+	NewCancelPayoutRequest = model.CancelPayoutRequest{
+		BulkPayoutID: "ef467f44-ed91-4875-8861-c2a5c7e4232d",
+		Reason:       "Some reason",
 	}
 )

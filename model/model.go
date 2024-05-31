@@ -23,8 +23,8 @@ const (
 	// BearerToken sample sandbox environment bearer token
 	BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
 
-	//BearerToken = "eyJidXNpbmVzc0lEIjoiOTIzYjJkZjUtNGE4OS00Y2ViLWIxNDgtYzJlNWFjNTJkMDRlIiwidXNlcklEIjoiMjQ4YmFhNDMtYzQ0Yi00ZjYwLWI2MWQtY2VlZjYwOThjNzg1Iiwia2V5IjoidXBwcHBwIn0="
-	//BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoicGVudGEifQ=="
+	//PublicKey   = "To2Psprkn41u3dJvPb1NnIOftdU="
+	//BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiaW1pbSJ9"
 
 	// LogStrRequest log string key
 	LogStrRequest = "request"
@@ -317,12 +317,14 @@ type (
 
 	// PersonalDetails recipient's personal details
 	PersonalDetails struct {
-		Name       string `json:"name"`
-		Country    string `json:"country"`
-		City       string `json:"city"`
-		Address    string `json:"address"`
-		District   string `json:"district"`
-		PostalCode string `json:"postalCode"`
+		Name        string `json:"name"`
+		Country     string `json:"country"`
+		City        string `json:"city"`
+		Address     string `json:"address"`
+		District    string `json:"district"`
+		PostalCode  string `json:"postalCode"`
+		Email       string `json:"email"`
+		PhoneNumber string `json:"phone_number"`
 	}
 
 	// IntermediaryBank recipient's intermediary bank
@@ -510,13 +512,13 @@ type (
 		Detail       []*CustomerBalanceResponse `json:"detail"`
 	}
 
-	// Page object
-	Page struct {
+	// PageInfo object
+	PageInfo struct {
 		Page            int64 `json:"page"`
 		Size            int64 `json:"size"`
-		HasNextPage     bool  `json:"hasNextPage"`
-		HasPreviousPage bool  `json:"hasPreviousPage"`
-		TotalCount      int64 `json:"totalCount"`
+		HasNextPage     bool  `json:"has_next_age"`
+		HasPreviousPage bool  `json:"has_previous_age"`
+		TotalCount      int64 `json:"total_count"`
 	}
 
 	// TransactionResponse object
@@ -524,7 +526,7 @@ type (
 		Items struct {
 			Transactions []*Transaction `json:"transactions"`
 		} `json:"items"`
-		Page Page `json:"page"`
+		Page PageInfo `json:"page"`
 	}
 
 	// AccountResolveRequest request payload to resolve account
@@ -599,28 +601,6 @@ type (
 		Reason              string    `json:"reason" validate:"required"`
 	}
 
-	// PayoutResponse get payout by ID response
-	PayoutResponse struct {
-		Items      PayoutDetails   `json:"items"`
-		Attributes []PayoutAccount `json:"attributes"`
-	}
-
-	// PayoutDetails for payout response
-	PayoutDetails struct {
-		ID           uuid.UUID `json:"id"`
-		BusinessID   uuid.UUID `json:"business_id"`
-		Status       string    `json:"status"`
-		Count        int       `json:"count"`
-		Currency     string    `json:"currency"`
-		TotalAmount  int       `json:"total_amount"`
-		Fee          Money     `json:"fee"`
-		Remarks      string    `json:"remarks"`
-		CancelReason *string   `json:"cancel_reason"`
-		CompletedAt  *string   `json:"completed_at"`
-		CreatedAt    time.Time `json:"created_at"`
-		UpdatedAt    time.Time `json:"updated_at"`
-	}
-
 	// AccountDetails  object for payout response
 	AccountDetails struct {
 		City          string `json:"city"`
@@ -638,43 +618,42 @@ type (
 		RoutingNumber string `json:"routing_number"`
 	}
 
-	// PayoutAccount  object for payout response
-	PayoutAccount struct {
-		ID           uuid.UUID      `json:"id"`
-		BusinessID   uuid.UUID      `json:"business_id"`
-		BulkPayoutID uuid.UUID      `json:"bulk_payout_id"`
-		Name         string         `json:"name"`
-		Details      AccountDetails `json:"details"`
-		Amount       Money          `json:"amount"`
-		Status       string         `json:"status"`
-		LookupInfo   string         `json:"lookup_info"`
-		Remarks      string         `json:"remarks"`
-		CompletedAt  *string        `json:"completed_at"`
-		CreatedAt    time.Time      `json:"created_at"`
-		UpdatedAt    time.Time      `json:"updated_at"`
-	}
-
-	// InitiatePayoutRequest schema
-	InitiatePayoutRequest struct {
-		Currency string                  `json:"currency"`
-		Remarks  string                  `json:"remarks"`
-		Accounts []InitiatePayoutAccount `json:"accounts"`
-	}
-
-	// InitiatePayoutAccount schema
-	InitiatePayoutAccount struct {
-		Amount        float64 `json:"amount"`
-		AccountName   string  `json:"account_name"`
-		AccountNumber string  `json:"account_number"`
-		BankCode      string  `json:"bank_code"`
-		Remarks       string  `json:"remarks"`
-	}
-
 	// GenericResponse response wrapper
 	GenericResponse struct {
 		Code    int         `json:"status"`
 		Data    interface{} `json:"data"`
 		Message *string     `json:"message"`
 		Error   *ErrorData  `json:"error"`
+	}
+
+	// WalletDetails schema for wallet details
+	WalletDetails struct {
+		WalletTag     *string `json:"wallet_tag,omitempty"`
+		AssetType     string  `json:"asset_type,omitempty"`
+		WalletAddress string  `json:"wallet_address"`
+		Network       string  `json:"network"`
+	}
+
+	// TransferBeneficiaryDetails  request schema for update payout
+	TransferBeneficiaryDetails struct {
+		BankDetails         *BankDetails      `json:"bank_details,omitempty"`
+		IntermediaryBank    *IntermediaryBank `json:"intermediary_bank,omitempty"`
+		PersonalDetails     *PersonalDetails  `json:"personal_details,omitempty"`
+		WalletDetails       *WalletDetails    `json:"wallet_details,omitempty"`
+		FundsTransferMethod map[string]string `json:"funds_transfer_method"`
+	}
+
+	// Page schema for pagination request
+	Page struct {
+		Number            *int   `json:"number"`
+		Size              *int   `json:"size"`
+		SortBy            string `json:"sort_by"`
+		SortDirectionDesc *bool  `json:"sort_direction_desc"`
+	}
+
+	// DateBetween schema for date range
+	DateBetween struct {
+		From string `json:"from"`
+		To   string `json:"to"`
 	}
 )

@@ -3,6 +3,7 @@ package api
 
 import (
 	"context"
+	"os"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
@@ -59,6 +60,16 @@ type RemoteCalls interface {
 	ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetailResponse, error)
 	GenerateBankAccount(ctx context.Context, request model.BankAccountRequest) (model.BankAccountResponse, error)
 	GetBankAccount(ctx context.Context, customerID uuid.UUID) (model.BankAccountResponse, error)
+
+	// Payout APIs
+	GetPayoutByID(ctx context.Context, payoutID string) (model.PayoutResponse, error)
+	InitiateDirectBulkPayout(ctx context.Context, request model.InitiateBulkPayoutRequest) (model.PayoutDetails, error)
+	InitiatePayout(ctx context.Context, currency, payoutType, beneficiaryType, remarks string, document *os.File) (model.PayoutDetails, error)
+	GetAllPayouts(ctx context.Context, status, search string, dateBetween model.DateBetween, page model.Page) (model.AllPayoutsResponse, error)
+	CancelPayout(ctx context.Context, request model.CancelPayoutRequest) error
+	UpdatePayoutAccount(ctx context.Context, payoutID string, request model.TransferBeneficiaryDetails) error
+	GetPayoutConfig(ctx context.Context, currency string) (model.BulkPayoutConfig, error)
+	GetPayoutDocumentTemplate(ctx context.Context, currency, docType string) (string, error)
 
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()

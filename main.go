@@ -19,6 +19,64 @@ func main() {
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
 	//ctx := context.Background()
 
+	//doc, err := apiCalls.GetPayoutDocumentTemplate(ctx, "USD", "banks")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Document template: %+v\n", doc)
+
+	//payoutDetails, err := apiCalls.InitiateDirectBulkPayout(ctx, example.NewInitiateBulkPayoutRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Payout details: %+v\n", payoutDetails)
+
+	//file, err := os.Open("/Users/z/Downloads/Document_Oval.xlsx")
+	//if err != nil {
+	//	fmt.Println(err)
+	//	return
+	//}
+	//defer file.Close()
+	//payoutDetails, err := apiCalls.InitiatePayout(ctx, "USD", "banks", string(model.MultiplePayout), "Some remarks", file)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Payout details: %+v\n", payoutDetails)
+
+	//payouts, err := apiCalls.GetAllPayouts(ctx, "pending", "", model.DateBetween{}, model.Page{
+	//	Number: helpers.GetPointerInt(1),
+	//	Size:   helpers.GetPointerInt(5),
+	//})
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Payouts: %+v\n", payouts)
+
+	//config, err := apiCalls.GetPayoutConfig(ctx, "USD")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Payout config: %+v\n", config)
+
+	//payout, err := apiCalls.GetPayoutByID(ctx, "ef467f44-ed91-4875-8861-c2a5c7e4232d")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Payout: %+v\n", payout)
+
+	//isCancelled, err := apiCalls.CancelPayout(ctx, example.NewCancelPayoutRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Has payout been cancelled: %+v\n", isCancelled)
+
 	/*newCustomer, err := apiCalls.CreateCustomer(ctx, example.NewCreateCustomerRequest)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
