@@ -46,6 +46,7 @@ type RemoteCalls interface {
 	InitiateTerminalTransfer(ctx context.Context, request model.InitiateTerminalTransferRequest) (model.TerminalTransfer, error)
 	GetTerminalTransfers(ctx context.Context, status, sourceCurrency, destinationCurrency string, dateBetween model.DateBetween, page model.Page) (model.AllTransfersResponse, error)
 	GetTerminalTransferByID(ctx context.Context, transferID string) (model.TerminalTransfer, error)
+	GetSettlementByID(ctx context.Context, settlementID string) (model.Settlement, error)
 
 	// Withdrawal APIs
 	InitiateWithdrawal(ctx context.Context, request model.InitiateWithdrawalRequest) (model.Withdrawal, error)
