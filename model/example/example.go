@@ -122,4 +122,11 @@ var (
 		BulkPayoutID: "ef467f44-ed91-4875-8861-c2a5c7e4232d",
 		Reason:       "Some reason",
 	}
+
+	// NewInitiateCurrencySwapRequest sample initiate currency swap request
+	NewInitiateCurrencySwapRequest = model.InitiateCurrencySwapRequest{
+		FromCurrency: "USD",
+		ToCurrency:   "NGN",
+		Amount:       1000,
+	}
 )

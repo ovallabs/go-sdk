@@ -71,6 +71,11 @@ type RemoteCalls interface {
 	GetPayoutConfig(ctx context.Context, currency string) (model.BulkPayoutConfig, error)
 	GetPayoutDocumentTemplate(ctx context.Context, currency, docType string) (string, error)
 
+	// Currency Swap APIs
+	InitiateCurrencySwap(ctx context.Context, request model.InitiateCurrencySwapRequest) (model.CurrencySwap, error)
+	GetCurrencySwaps(ctx context.Context, status, from, to string, dateBetween model.DateBetween, page model.Page) (model.AllSwapsResponse, error)
+	GetCurrencySwapByID(ctx context.Context, currencySwapID string) (model.CurrencySwap, error)
+
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
 }
