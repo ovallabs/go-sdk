@@ -42,6 +42,10 @@ func GetPointerFloat64(f float64) *float64 {
 	return &f
 }
 
+func GetPointerBool(b bool) *bool {
+	return &b
+}
+
 // FillParamsWithPage fill parameters map with page options
 func FillParamsWithPage(params map[string]interface{}, page model.Page) {
 	if page.Number != nil {

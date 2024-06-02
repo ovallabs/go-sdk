@@ -56,10 +56,15 @@ type RemoteCalls interface {
 	GetTransactions(ctx context.Context, request *model.TransactionRequest) (model.TransactionResponse, error)
 
 	// Payment APIs
-	GetBanks(ctx context.Context) ([]model.BankCodeResponse, error)
-	ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetailResponse, error)
-	GenerateBankAccount(ctx context.Context, request model.BankAccountRequest) (model.BankAccountResponse, error)
-	GetBankAccount(ctx context.Context, customerID uuid.UUID) (model.BankAccountResponse, error)
+	GetBanks(ctx context.Context) ([]model.BankCode, error)
+	ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetails, error)
+	GenerateBankAccount(ctx context.Context, request model.GenerateBankAccountRequest) (model.BankAccount, error)
+	GetBankAccount(ctx context.Context, customerID, currency string) (model.BankAccount, error)
+	GetAccountOpeningRequests(ctx context.Context, customerID, status, currency string, opened *bool, page model.Page) (model.AllAccountOpeningRequests, error)
+	GetAccountOpeningRequestByID(ctx context.Context, accountID string) (model.AccountOpeningRequest, error)
+
+	// Deposit Account APIs
+	GetDepositAccount(ctx context.Context, currency string) (model.AccountDetails, error)
 
 	// Payout APIs
 	GetPayoutByID(ctx context.Context, payoutID string) (model.PayoutResponse, error)

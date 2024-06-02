@@ -122,4 +122,13 @@ var (
 		BulkPayoutID: "ef467f44-ed91-4875-8861-c2a5c7e4232d",
 		Reason:       "Some reason",
 	}
+
+	// NewGenerateBankAccountRequest sample generate bank account request
+	NewGenerateBankAccountRequest = model.GenerateBankAccountRequest{
+		CustomerID:  "c4b9197f-009e-4019-b0dd-0cab6e9e3189",
+		Currency:    "NGN",
+		Reference:   "ref123",
+		BVN:         helpers.GetPointerString("22000000000"),
+		PhoneNumber: helpers.GetPointerString("2348109023376"),
+	}
 )
