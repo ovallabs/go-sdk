@@ -3,8 +3,9 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/ovalfi/go-sdk/model"
 	"net/http"
+
+	"github.com/ovalfi/go-sdk/model"
 )
 
 const depositAccountAPIVersion = "v1/deposit-accounts"
