@@ -18,13 +18,13 @@ const (
 	BaseURL = "https://sandbox-api.ovalfi-app.com/api/"
 
 	// PublicKey sample sandbox environment signature
-	PublicKey = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
+	//PublicKey = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
 
 	// BearerToken sample sandbox environment bearer token
-	BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
+	//BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
 
-	//PublicKey   = "To2Psprkn41u3dJvPb1NnIOftdU="
-	//BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiaW1pbSJ9"
+	PublicKey   = "6UCepOuO2ULaL7upafQMe3NPIeX0uNjyXZEKAw=="
+	BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiYWJjZGVmMTIzNDU2In0="
 
 	// LogStrRequest log string key
 	LogStrRequest = "request"
@@ -335,23 +335,6 @@ type (
 		SwiftCode   string `json:"swiftCode"`
 	}
 
-	// Transaction data object for customer transactions
-	Transaction struct {
-		ID              string      `json:"id"`
-		BusinessID      string      `json:"businessID"`
-		CustomerID      string      `json:"customerID"`
-		YieldOfferingID string      `json:"yieldOfferingID"`
-		Type            string      `json:"type"`
-		Amount          float64     `json:"amount"`
-		Currency        string      `json:"currency"`
-		Reference       string      `json:"reference"`
-		Status          string      `json:"status"`
-		Destination     Destination `json:"destination"`
-		CompletedAt     string      `json:"completedAt"`
-		CreatedAt       string      `json:"createdAt"`
-		BatchDate       string      `json:"batchDate"`
-	}
-
 	// Customer data object
 	Customer struct {
 		ID               string      `json:"id"`
@@ -519,14 +502,6 @@ type (
 		HasNextPage     bool  `json:"has_next_age"`
 		HasPreviousPage bool  `json:"has_previous_age"`
 		TotalCount      int64 `json:"total_count"`
-	}
-
-	// TransactionResponse object
-	TransactionResponse struct {
-		Items struct {
-			Transactions []*Transaction `json:"transactions"`
-		} `json:"items"`
-		Page PageInfo `json:"page"`
 	}
 
 	// AccountResolveRequest request payload to resolve account
