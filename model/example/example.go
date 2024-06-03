@@ -69,7 +69,7 @@ var (
 
 	// NewInitiateTransferRequest sample transfer request
 	NewInitiateTransferRequest = model.InitiateTransferRequest{
-		CustomerID: "6cef5231-fc1e-45b3-a9ae-4d204245b0ae",
+		CustomerID: "c4b9197f-009e-4019-b0dd-0cab6e9e3189",
 		Amount:     20000,
 		Currency:   "NGN",
 		Destination: model.TransferDestination{
@@ -89,7 +89,7 @@ var (
 			},
 		},
 		Reason:    "Some reason",
-		Reference: "ref124",
+		Reference: "12345678",
 	}
 
 	//NewInitiateWithdrawalRequest newInitiateWithdrawalRequest model
