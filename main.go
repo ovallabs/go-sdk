@@ -334,29 +334,12 @@ func main() {
 	//}
 	//fmt.Println("Account: ", account)
 
-	//accountRequests, err := apiCalls.GetAccountOpeningRequests(ctx, "c4b9197f-009e-4019-b0dd-0cab6e9e3189", "", "NGN", helpers.GetPointerBool(true), model.Page{
-	//	Number: helpers.GetPointerInt(1),
-	//	Size:   helpers.GetPointerInt(5),
-	//})
+	//err := apiCalls.MockDeposit(ctx, example.NewMockCustomerDepositRequest)
 	//if err != nil {
 	//	fmt.Printf("Error: %v\n", err)
 	//	return
 	//}
-	//fmt.Println("Account requests: ", accountRequests)
-
-	//accountRequest, err := apiCalls.GetAccountOpeningRequestByID(ctx, "a4037afe-1693-4ea4-8606-dbfff12f3fde")
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Println("Account request: ", accountRequest)
-
-	//account, err := apiCalls.GetDepositAccount(ctx, "NGN")
-	//if err != nil {
-	//	fmt.Printf("Error: %v\n", err)
-	//	return
-	//}
-	//fmt.Println("Account: ", account)
+	//fmt.Println("Deposit successful")
 
 	//feeWithdrawal, err := apiCalls.FeeWithdrawal(context.Background(), model.FeeWithdrawalRequest{
 	//	CustomerID:          uuid.MustParse("4a31a43b-7c54-4578-a020-87d1d2b0f6f5"),

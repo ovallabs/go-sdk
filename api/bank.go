@@ -67,3 +67,15 @@ func (c *Call) GetBankAccount(ctx context.Context, customerID, currency string) 
 
 	return response, err
 }
+
+// MockDeposit makes request to Torus to mock customer deposit
+func (c *Call) MockDeposit(ctx context.Context, request model.MockCustomerDepositRequest) error {
+	var (
+		err  error
+		path = "v1/payments/mock"
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, nil)
+
+	return err
+}

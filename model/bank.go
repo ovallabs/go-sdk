@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type (
@@ -55,25 +54,10 @@ type (
 		AccountNumber string `json:"account_number"`
 	}
 
-	// AccountOpeningRequest schema for account opening request
-	AccountOpeningRequest struct {
-		ID         uuid.UUID       `json:"id"`
-		CustomerID uuid.UUID       `json:"customer_id"`
-		BusinessID uuid.UUID       `json:"business_id"`
-		Status     string          `json:"status"`
-		Reason     *string         `json:"reason"`
-		Currency   string          `json:"currency"`
-		Reference  string          `json:"reference"`
-		Opened     bool            `json:"opened"`
-		Details    *postgres.Jsonb `json:"details"`
-		ApprovedAt *time.Time      `json:"approved_at"`
-		CreatedAt  time.Time       `json:"created_at"`
-		UpdatedAt  *time.Time      `json:"updated_at"`
-	}
-
-	// AllAccountOpeningRequests schema for all account opening request
-	AllAccountOpeningRequests struct {
-		Items []AccountOpeningRequest `json:"items"`
-		Page  PageInfo                `json:"page"`
+	// MockCustomerDepositRequest schema for customer mock deposit request
+	MockCustomerDepositRequest struct {
+		CustomerID string  `json:"customer_id"`
+		Amount     float64 `json:"amount"`
+		Currency   string  `json:"currency"`
 	}
 )
