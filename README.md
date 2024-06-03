@@ -100,7 +100,6 @@ This must be passed in the context like below:**
 }
 
 Note:In our payload response to your API calls, we now have an header field like this: `X-Request-Id: 71fb13a7-595f-49b8-bdd3-2eb7dcf476c1'
-`
 ````
 
 
@@ -199,9 +198,15 @@ func main() {
 ## :compass: Roadmap
 
 * [x] Customer APIs
-* [x] Yield Offering APIs
+* [x] Payout APIs
+* [x] Transfer APIs
+* [x] Payment APIs
+* [x] Currency Swap APIs
+* [ ] Yield Offering APIs
 * [ ] Deposit APIs
 * [ ] Withdrawal APIs
+* [ ] Wallet APIs
+* [ ] Transaction APIs
 
 
 <!-- Issues -->
