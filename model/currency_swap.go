@@ -20,9 +20,9 @@ type (
 		BusinessID   uuid.UUID  `json:"business_id"`
 		FromAmount   Money      `json:"from"`
 		ToAmount     Money      `json:"to"`
-		ExchangeRate float64    `json:"exchangeRate" api:"rate"`
+		ExchangeRate float64    `json:"rate"`
 		Markup       Money      `json:"markup"`
-		Status       string     `json:"status" api:"status"`
+		Status       string     `json:"status"`
 		FeeAmount    Money      `json:"fee"`
 		CompletedAt  *time.Time `json:"completed_at"`
 		CreatedAt    time.Time  `json:"created_at"`
