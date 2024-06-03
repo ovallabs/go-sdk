@@ -18,13 +18,13 @@ const (
 	BaseURL = "https://sandbox-api.ovalfi-app.com/api/"
 
 	// PublicKey sample sandbox environment signature
-	PublicKey = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
+	//PublicKey = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
 
 	// BearerToken sample sandbox environment bearer token
-	BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
+	//BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
 
-	//PublicKey   = "To2Psprkn41u3dJvPb1NnIOftdU="
-	//BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiaW1pbSJ9"
+	PublicKey   = "6UCepOuO2ULaL7upafQMe3NPIeX0uNjyXZEKAw=="
+	BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiYWJjZGVmMTIzNDU2In0="
 
 	// LogStrRequest log string key
 	LogStrRequest = "request"
@@ -299,40 +299,41 @@ type (
 		IntermediaryBank IntermediaryBank `json:"intermediaryBank"`
 	}
 
-	// BankDetails recipient's bank details
+	// BankDetails schema for bank details
 	BankDetails struct {
-		AccountNumber string `json:"accountNumber"`
-		AccountName   string `json:"accountName"`
-		RoutingNumber string `json:"routingNumber"`
-		SwiftCode     string `json:"swiftCode"`
-		BankName      string `json:"bankName"`
-		BankBranch    string `json:"bankBranch"`
+		AccountNumber string `json:"account_number"`
+		AccountName   string `json:"account_name"`
+		RoutingNumber string `json:"routing_number,omitempty"`
+		SwiftCode     string `json:"swift_code,omitempty"`
+		BankName      string `json:"bank_name"`
+		BankCode      string `json:"bank_code,omitempty"`
+		BankBranch    string `json:"bank_branch,omitempty"`
 		Country       string `json:"country"`
-		City          string `json:"city"`
-		BankAddress   string `json:"bankAddress"`
-		District      string `json:"district"`
-		PostalCode    string `json:"postalCode"`
-		IsWithinUS    string `json:"isWithinUS"`
+		City          string `json:"city,omitempty"`
+		BankAddress   string `json:"bank_address,omitempty"`
+		District      string `json:"district,omitempty"`
+		PostalCode    string `json:"postal_code,omitempty"`
+		IsWithinUS    string `json:"is_within_us"`
 	}
 
-	// PersonalDetails recipient's personal details
+	// PersonalDetails schema for personal details
 	PersonalDetails struct {
 		Name        string `json:"name"`
 		Country     string `json:"country"`
 		City        string `json:"city"`
 		Address     string `json:"address"`
-		District    string `json:"district"`
-		PostalCode  string `json:"postalCode"`
-		Email       string `json:"email"`
-		PhoneNumber string `json:"phone_number"`
+		District    string `json:"district,omitempty"`
+		PostalCode  string `json:"postal_code,omitempty"`
+		Email       string `json:"email,omitempty"`
+		PhoneNumber string `json:"phone_number,omitempty"`
 	}
 
-	// IntermediaryBank recipient's intermediary bank
+	// IntermediaryBank schema for intermediary bank
 	IntermediaryBank struct {
-		BankName    string `json:"bankName"`
-		BankAddress string `json:"bankAddress"`
-		Reference   string `json:"reference"`
-		SwiftCode   string `json:"swiftCode"`
+		BankName    string `json:"bank_name,omitempty"`
+		BankAddress string `json:"bank_address,omitempty"`
+		Reference   string `json:"reference,omitempty"`
+		SwiftCode   string `json:"swift_code"`
 	}
 
 	// Transaction data object for customer transactions

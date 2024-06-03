@@ -122,4 +122,16 @@ var (
 		BulkPayoutID: "ef467f44-ed91-4875-8861-c2a5c7e4232d",
 		Reason:       "Some reason",
 	}
+
+	NewCreateBeneficiaryRequest = model.CreateBeneficiaryRequest{
+		BankDetails: model.BankDetails{
+			AccountNumber: "0762866445",
+			AccountName:   "ADEDAYO OLAOLUWA OMOTOSO",
+			BankName:      "Access Bank",
+			BankCode:      "044",
+			Country:       "Nigeria",
+			IsWithinUS:    "no",
+		},
+		Currency: "NGN",
+	}
 )

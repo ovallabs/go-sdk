@@ -71,6 +71,11 @@ type RemoteCalls interface {
 	GetPayoutConfig(ctx context.Context, currency string) (model.BulkPayoutConfig, error)
 	GetPayoutDocumentTemplate(ctx context.Context, currency, docType string) (string, error)
 
+	// Beneficiary APIs
+	CreateBeneficiary(ctx context.Context, request model.CreateBeneficiaryRequest) (model.TransferBeneficiary, error)
+	GetBeneficiaries(ctx context.Context, currency string, page model.Page) (model.AllBeneficiariesResponse, error)
+	GetBeneficiaryByID(ctx context.Context, beneficiaryID string) (model.TransferBeneficiary, error)
+
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
 }

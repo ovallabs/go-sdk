@@ -19,6 +19,30 @@ func main() {
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
 	//ctx := context.Background()
 
+	//beneficiary, err := apiCalls.CreateBeneficiary(ctx, example.NewCreateBeneficiaryRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Beneficiary: %+v\n", beneficiary)
+
+	//beneficiaries, err := apiCalls.GetBeneficiaries(ctx, "NGN", model.Page{
+	//	Number: helpers.GetPointerInt(1),
+	//	Size:   helpers.GetPointerInt(5),
+	//})
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Beneficiaries: %+v\n", beneficiaries)
+
+	//beneficiary, err := apiCalls.GetBeneficiaryByID(ctx, "c4158d8c-87a0-4f1b-b559-1aa2defd8495")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Beneficiary: %+v\n", beneficiary)
+
 	//doc, err := apiCalls.GetPayoutDocumentTemplate(ctx, "USD", "banks")
 	//if err != nil {
 	//	fmt.Printf("Error: %v\n", err)
