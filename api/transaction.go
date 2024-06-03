@@ -3,10 +3,11 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/ovalfi/go-sdk/helpers"
-	"github.com/ovalfi/go-sdk/model"
 	"net/http"
 	"strconv"
+
+	"github.com/ovalfi/go-sdk/helpers"
+	"github.com/ovalfi/go-sdk/model"
 )
 
 const transactionAPIVersion = "v1/transaction"
