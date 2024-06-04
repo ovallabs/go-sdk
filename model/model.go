@@ -18,13 +18,13 @@ const (
 	BaseURL = "https://sandbox-api.ovalfi-app.com/api/"
 
 	// PublicKey sample sandbox environment signature
-	PublicKey = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
+	//PublicKey = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
 
 	// BearerToken sample sandbox environment bearer token
-	BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
+	//BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
 
-	//PublicKey   = "NgtLGNQxXGZMKp1mA5fblJ8_DRc="
-	//BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiemFjaCJ9"
+	PublicKey   = "6UCepOuO2ULaL7upafQMe3NPIeX0uNjyXZEKAw=="
+	BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiYWJjZGVmMTIzNDU2In0="
 
 	// LogStrRequest log string key
 	LogStrRequest = "request"
@@ -112,39 +112,6 @@ type (
 		YieldOfferingID *uuid.UUID `json:"yield_offering_id"`
 		Size            *int       `json:"size"`
 		Page            *int       `json:"page"`
-	}
-
-	// InitiateTransferRequest attributes payload to initiate a new API transfer
-	InitiateTransferRequest struct {
-		CustomerID  string              `json:"customer_id"`
-		Amount      float64             `json:"amount"`
-		Currency    string              `json:"currency"`
-		Destination TransferDestination `json:"destination"`
-		Note        string              `json:"note"`
-		Reason      string              `json:"reason"`
-		Reference   string              `json:"reference"`
-	}
-
-	// GetExchangeRateRequest attributes payload to get exchange rates
-	GetExchangeRateRequest struct {
-		Amount              float64 `json:"amount"`
-		SourceCurrency      string  `json:"sourceCurrency"`
-		DestinationCurrency string  `json:"destinationCurrency"`
-	}
-
-	// ExchangeRateDetails attributes payload to get exchange rates
-	ExchangeRateDetails struct {
-		ExchangeRate     float64 `json:"exchange_rate"`
-		FeeFlat          float64 `json:"flat_fee"`
-		FeePercentage    float64 `json:"fee_percentage"`
-		FeeAmount        float64 `json:"fee_amount"`
-		AmountReceivable float64 `json:"amount_receivable"`
-	}
-
-	// TransferDestination holds recipient's bank and personal info
-	TransferDestination struct {
-		BankDetails     BankDetails     `json:"bank_details"`
-		PersonalDetails PersonalDetails `json:"personal_details"`
 	}
 
 	// InitiateWithdrawalRequest attributes payload to initiate a new API withdrawal
@@ -260,32 +227,31 @@ type (
 		IntermediaryBank IntermediaryBank `json:"intermediaryBank"`
 	}
 
-	// BankDetails recipient's bank details
+	// BankDetails schema for bank details
 	BankDetails struct {
-		AccountNumber string `json:"accountNumber"`
-		AccountName   string `json:"accountName"`
-		RoutingNumber string `json:"routingNumber"`
-		SwiftCode     string `json:"swiftCode"`
-		BankName      string `json:"bankName"`
-		BankBranch    string `json:"bankBranch"`
+		AccountNumber string `json:"account_number"`
+		AccountName   string `json:"account_name"`
+		RoutingNumber string `json:"routing_number,omitempty"`
+		SwiftCode     string `json:"swift_code,omitempty"`
+		BankName      string `json:"bank_name"`
+		BankBranch    string `json:"bank_branch,omitempty"`
 		Country       string `json:"country"`
-		City          string `json:"city"`
-		BankAddress   string `json:"bankAddress"`
-		District      string `json:"district"`
-		PostalCode    string `json:"postalCode"`
-		IsWithinUS    string `json:"isWithinUS"`
+		City          string `json:"city,omitempty"`
+		BankAddress   string `json:"bank_address,omitempty"`
+		District      string `json:"district,omitempty"`
+		PostalCode    string `json:"postal_code,omitempty"`
+		IsWithinUS    string `json:"is_within_us"`
 	}
 
-	// PersonalDetails recipient's personal details
+	// PersonalDetails schema for personal details
 	PersonalDetails struct {
 		Name        string `json:"name"`
 		Country     string `json:"country"`
 		City        string `json:"city"`
 		Address     string `json:"address"`
-		District    string `json:"district"`
-		PostalCode  string `json:"postalCode"`
-		Email       string `json:"email"`
-		PhoneNumber string `json:"phone_number"`
+		District    string `json:"district,omitempty"`
+		PostalCode  string `json:"postal_code,omitempty"`
+		PhoneNumber string `json:"phone_number,omitempty"`
 	}
 
 	// IntermediaryBank recipient's intermediary bank
@@ -397,14 +363,6 @@ type (
 		BatchDate       *string    `json:"batch_date"`
 		Status          string     `json:"status"`
 		CancelReason    *string    `json:"cancel_reason"`
-	}
-
-	// Transfer data object
-	Transfer struct {
-		ID uuid.UUID `json:"id"`
-		InitiateTransferRequest
-		CreatedAt time.Time `json:"created_at"`
-		Status    string    `json:"status"`
 	}
 
 	// Withdrawal data object
