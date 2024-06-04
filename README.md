@@ -202,11 +202,8 @@ func main() {
 * [x] Transfer APIs
 * [x] Payment APIs
 * [x] Currency Swap APIs
-* [ ] Yield Offering APIs
-* [ ] Deposit APIs
-* [ ] Withdrawal APIs
-* [ ] Wallet APIs
-* [ ] Transaction APIs
+* [x] Transaction APIs
+* [x] Beneficiary APIs
 
 
 <!-- Issues -->
