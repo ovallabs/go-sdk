@@ -240,23 +240,6 @@ type (
 		SwiftCode   string `json:"swiftCode"`
 	}
 
-	// Transaction data object for customer transactions
-	Transaction struct {
-		ID              string      `json:"id"`
-		BusinessID      string      `json:"businessID"`
-		CustomerID      string      `json:"customerID"`
-		YieldOfferingID string      `json:"yieldOfferingID"`
-		Type            string      `json:"type"`
-		Amount          float64     `json:"amount"`
-		Currency        string      `json:"currency"`
-		Reference       string      `json:"reference"`
-		Status          string      `json:"status"`
-		Destination     Destination `json:"destination"`
-		CompletedAt     string      `json:"completedAt"`
-		CreatedAt       string      `json:"createdAt"`
-		BatchDate       string      `json:"batchDate"`
-	}
-
 	// CustomerInfo data object for additional customer details
 	CustomerInfo struct {
 		Customer
@@ -390,12 +373,11 @@ type (
 		TotalCount      int64 `json:"total_count"`
 	}
 
-	// TransactionResponse object
-	TransactionResponse struct {
-		Items struct {
-			Transactions []*Transaction `json:"transactions"`
-		} `json:"items"`
-		Page PageInfo `json:"page"`
+	// AccountDetailResponse response payload to resolve account
+	AccountDetailResponse struct {
+		AccountName   string `json:"account_name"`
+		AccountNumber string `json:"account_number"`
+		BankCode      string `json:"bank_code"`
 	}
 
 	// IntraTransferResponse response payload for intra transfer

@@ -60,7 +60,10 @@ type RemoteCalls interface {
 	GetSupportedAssets(ctx context.Context) ([]*model.SupportedAsset, error)
 
 	// Transaction APIs
-	GetTransactions(ctx context.Context, request *model.TransactionRequest) (model.TransactionResponse, error)
+	GetTransactions(ctx context.Context, customerID, yieldOfferingID, status, reference, batchDate string, amount *float64, dateBetween *model.DateBetween, page *model.Page) (model.AllTransactionsResponse, error)
+	CancelTransaction(ctx context.Context, transactionID, transactionType, reason string) error
+	CancelBatchTransaction(ctx context.Context, batchDate, transactionType, currency, reason string) error
+	GetBalances(ctx context.Context) (map[string]float64, error)
 
 	// Payment APIs
 	GetBanks(ctx context.Context) ([]model.BankCode, error)
