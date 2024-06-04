@@ -18,13 +18,13 @@ const (
 	BaseURL = "https://sandbox-api.ovalfi-app.com/api/"
 
 	// PublicKey sample sandbox environment signature
-	//PublicKey = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
+	PublicKey = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
 
 	// BearerToken sample sandbox environment bearer token
-	//BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
+	BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"
 
-	PublicKey   = "6UCepOuO2ULaL7upafQMe3NPIeX0uNjyXZEKAw=="
-	BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiYWJjZGVmMTIzNDU2In0="
+	//PublicKey   = "6UCepOuO2ULaL7upafQMe3NPIeX0uNjyXZEKAw=="
+	//BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiYWJjZGVmMTIzNDU2In0="
 
 	// LogStrRequest log string key
 	LogStrRequest = "request"
@@ -53,11 +53,6 @@ const (
 	// FeeTypeAmount represent FeeType in amount
 	FeeTypeAmount FeeType = "amount"
 
-	// CustomerTypeIndividual represent CustomerType individual
-	CustomerTypeIndividual CustomerType = "individual"
-	// CustomerTypeBusiness represent CustomerType business
-	CustomerTypeBusiness CustomerType = "business"
-
 	// RequestIDContextKey contact that holds the RequestID context key for
 	RequestIDContextKey Key = "api_RequestIDContextKey"
 	// RequestIDHeaderKey a constant for the request id header key
@@ -65,9 +60,6 @@ const (
 )
 
 type (
-	// CustomerType string representation of the customer type
-	CustomerType string
-
 	// Money struct
 	Money struct {
 		// Currency is string value of the currency
@@ -76,37 +68,6 @@ type (
 		Symbol string ` json:"symbol" gorm:"-"`
 		// Amount is the value of the amount
 		Amount float64 `json:"amount"`
-	}
-
-	// CreateCustomerRequest attributes payload to create new API customer
-	CreateCustomerRequest struct {
-		Name             string       `json:"name"`
-		Email            string       `json:"email"`
-		Reference        string       `json:"reference"`
-		MobileNumber     string       `json:"mobile_number"`
-		Type             CustomerType `json:"type"`
-		YieldOfferingIDs []uuid.UUID  `json:"yield_offering_ids"`
-	}
-
-	// UpdateCustomerRequest attributes payload to update API customer
-	UpdateCustomerRequest struct {
-		CustomerID       string      `json:"customer_id"`
-		Name             string      `json:"name"`
-		Email            string      `json:"email"`
-		Reference        string      `json:"reference"`
-		MobileNumber     string      `json:"mobile_number"`
-		YieldOfferingIDs []uuid.UUID `json:"yield_offering_ids"`
-	}
-
-	// GetCustomerByIDRequest attributes payload to update API customer
-	GetCustomerByIDRequest struct {
-		CustomerID string `json:"customer_id"`
-	}
-
-	// GetCustomerBalanceRequest attributes payload to get customer balance
-	GetCustomerBalanceRequest struct {
-		CustomerID      uuid.UUID `json:"customer_id"`
-		YieldOfferingID uuid.UUID `json:"yield_offering_id"`
 	}
 
 	// CreateYieldOfferingProfilesRequest payload for API yield offerings
@@ -151,39 +112,6 @@ type (
 		YieldOfferingID *uuid.UUID `json:"yield_offering_id"`
 		Size            *int       `json:"size"`
 		Page            *int       `json:"page"`
-	}
-
-	// InitiateTransferRequest attributes payload to initiate a new API transfer
-	InitiateTransferRequest struct {
-		CustomerID  string              `json:"customer_id"`
-		Amount      float64             `json:"amount"`
-		Currency    string              `json:"currency"`
-		Destination TransferDestination `json:"destination"`
-		Note        string              `json:"note"`
-		Reason      string              `json:"reason"`
-		Reference   string              `json:"reference"`
-	}
-
-	// GetExchangeRateRequest attributes payload to get exchange rates
-	GetExchangeRateRequest struct {
-		Amount              float64 `json:"amount"`
-		SourceCurrency      string  `json:"sourceCurrency"`
-		DestinationCurrency string  `json:"destinationCurrency"`
-	}
-
-	// ExchangeRateDetails attributes payload to get exchange rates
-	ExchangeRateDetails struct {
-		ExchangeRate     float64 `json:"exchange_rate"`
-		FeeFlat          float64 `json:"flat_fee"`
-		FeePercentage    float64 `json:"fee_percentage"`
-		FeeAmount        float64 `json:"fee_amount"`
-		AmountReceivable float64 `json:"amount_receivable"`
-	}
-
-	// TransferDestination holds recipient's bank and personal info
-	TransferDestination struct {
-		BankDetails     BankDetails     `json:"bank_details"`
-		PersonalDetails PersonalDetails `json:"personal_details"`
 	}
 
 	// InitiateWithdrawalRequest attributes payload to initiate a new API withdrawal
@@ -251,28 +179,6 @@ type (
 		WalletDetail    *WalletDetail `json:"wallet_detail"`
 	}
 
-	// BankAccountRequest attribute payload to create bank account
-	BankAccountRequest struct {
-		CustomerID uuid.UUID `json:"customer_id"`
-		Currency   string    `json:"currency"`
-		Reference  string    `json:"reference"`
-
-		BVN         *string `json:"bvn,omitempty"`
-		PhoneNumber *string `json:"phone_number,omitempty"`
-
-		DocumentType      *string `json:"document_type,omitempty"`
-		Number            *string `json:"document_number,omitempty"`
-		IssuedCountryCode *string `json:"issued_country_code,omitempty"`
-		IssuedBy          *string `json:"issued_by,omitempty"`
-		IssuedDate        *string `json:"issued_date,omitempty"`
-		Country           *string `json:"country,omitempty"`
-		ZipCode           *string `json:"zip_code,omitempty"`
-		City              *string `json:"city,omitempty"`
-		Street            *string `json:"street,omitempty"`
-		State             *string `json:"state,omitempty"`
-		DateOfBirth       *string `json:"date_of_birth,omitempty"`
-	}
-
 	// FeeWithdrawalRequest attribute payload for fee withdrawal
 	FeeWithdrawalRequest struct {
 		ID                  uuid.UUID `json:"id"`
@@ -299,32 +205,31 @@ type (
 		IntermediaryBank IntermediaryBank `json:"intermediaryBank"`
 	}
 
-	// BankDetails recipient's bank details
+	// BankDetails schema for bank details
 	BankDetails struct {
-		AccountNumber string `json:"accountNumber"`
-		AccountName   string `json:"accountName"`
-		RoutingNumber string `json:"routingNumber"`
-		SwiftCode     string `json:"swiftCode"`
-		BankName      string `json:"bankName"`
-		BankBranch    string `json:"bankBranch"`
+		AccountNumber string `json:"account_number"`
+		AccountName   string `json:"account_name"`
+		RoutingNumber string `json:"routing_number,omitempty"`
+		SwiftCode     string `json:"swift_code,omitempty"`
+		BankName      string `json:"bank_name"`
+		BankBranch    string `json:"bank_branch,omitempty"`
 		Country       string `json:"country"`
-		City          string `json:"city"`
-		BankAddress   string `json:"bankAddress"`
-		District      string `json:"district"`
-		PostalCode    string `json:"postalCode"`
-		IsWithinUS    string `json:"isWithinUS"`
+		City          string `json:"city,omitempty"`
+		BankAddress   string `json:"bank_address,omitempty"`
+		District      string `json:"district,omitempty"`
+		PostalCode    string `json:"postal_code,omitempty"`
+		IsWithinUS    string `json:"is_within_us"`
 	}
 
-	// PersonalDetails recipient's personal details
+	// PersonalDetails schema for personal details
 	PersonalDetails struct {
 		Name        string `json:"name"`
 		Country     string `json:"country"`
 		City        string `json:"city"`
 		Address     string `json:"address"`
-		District    string `json:"district"`
-		PostalCode  string `json:"postalCode"`
-		Email       string `json:"email"`
-		PhoneNumber string `json:"phone_number"`
+		District    string `json:"district,omitempty"`
+		PostalCode  string `json:"postal_code,omitempty"`
+		PhoneNumber string `json:"phone_number,omitempty"`
 	}
 
 	// IntermediaryBank recipient's intermediary bank
@@ -333,19 +238,6 @@ type (
 		BankAddress string `json:"bankAddress"`
 		Reference   string `json:"reference"`
 		SwiftCode   string `json:"swiftCode"`
-	}
-
-	// Customer data object
-	Customer struct {
-		ID               string      `json:"id"`
-		Name             string      `json:"customer_name"`
-		MobileNumber     string      `json:"mobile_number"`
-		Email            string      `json:"email"`
-		Channel          string      `json:"channel"`
-		Reference        string      `json:"reference"`
-		YieldOfferingIDs []uuid.UUID `json:"api_yield_offering_ids"`
-		UpdatedAt        *time.Time  `json:"updated_at"`
-		CreatedAt        string      `json:"created_at"`
 	}
 
 	// CustomerInfo data object for additional customer details
@@ -434,14 +326,6 @@ type (
 		CancelReason    *string    `json:"cancel_reason"`
 	}
 
-	// Transfer data object
-	Transfer struct {
-		ID uuid.UUID `json:"id"`
-		InitiateTransferRequest
-		CreatedAt time.Time `json:"created_at"`
-		Status    string    `json:"status"`
-	}
-
 	// Withdrawal data object
 	Withdrawal struct {
 		ID                 string      `json:"id"`
@@ -480,21 +364,6 @@ type (
 		Networks []string `json:"networks"`
 	}
 
-	// CustomerBalanceResponse object
-	CustomerBalanceResponse struct {
-		YieldOfferingID uuid.UUID `json:"yield_offering_id"`
-		Name            string    `json:"name"`
-		Currency        string    `json:"currency"`
-		Amount          float64   `json:"balance"`
-	}
-
-	// CustomerBalancesResponse object
-	CustomerBalancesResponse struct {
-		CustomerID   uuid.UUID                  `json:"customer_id"`
-		TotalBalance float64                    `json:"total_balance"`
-		Detail       []*CustomerBalanceResponse `json:"detail"`
-	}
-
 	// PageInfo object
 	PageInfo struct {
 		Page            int64 `json:"page"`
@@ -504,23 +373,11 @@ type (
 		TotalCount      int64 `json:"total_count"`
 	}
 
-	// AccountResolveRequest request payload to resolve account
-	AccountResolveRequest struct {
-		BankCode      string `json:"bank_code" validate:"required"`
-		AccountNumber string `json:"account_number" validate:"required"`
-	}
-
 	// AccountDetailResponse response payload to resolve account
 	AccountDetailResponse struct {
 		AccountName   string `json:"account_name"`
 		AccountNumber string `json:"account_number"`
 		BankCode      string `json:"bank_code"`
-	}
-
-	// BankCodeResponse response payload to get list of banks
-	BankCodeResponse struct {
-		BankName string `json:"name"`
-		Code     string `json:"code"`
 	}
 
 	// IntraTransferResponse response payload for intra transfer
@@ -530,19 +387,6 @@ type (
 		Amount    float64       `json:"amount"`
 		Sender    TransferParty `json:"sender"`
 		Receiver  TransferParty `json:"receiver"`
-	}
-
-	// BankAccountResponse response payload to create bank account
-	BankAccountResponse struct {
-		ID                uuid.UUID           `json:"id"`
-		CustomerID        uuid.UUID           `json:"customer_id"`
-		BusinessID        uuid.UUID           `json:"business_id"`
-		AccountID         string              `json:"account_id"`
-		AccountDetails    TransferInstruction `json:"account_details"`
-		BusinessReference string              `json:"reference"`
-		Currency          string              `json:"currency"`
-		CreatedAt         time.Time           `json:"created_at"`
-		UpdatedTime       *time.Time          `json:"updated_at"`
 	}
 
 	// TransferInstruction for transfer instruction details
@@ -576,7 +420,7 @@ type (
 		Reason              string    `json:"reason" validate:"required"`
 	}
 
-	// AccountDetails  object for payout response
+	// AccountDetails  schema for account details
 	AccountDetails struct {
 		City          string `json:"city"`
 		Country       string `json:"country"`

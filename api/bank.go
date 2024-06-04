@@ -5,177 +5,77 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/google/uuid"
-
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
 
-const (
-	bankEndpoint        = "v1/payments/banks"
-	bankAccountEndpoint = "v1/payments/banks/account"
-)
+const bankAPIVersion = "v1/payments/banks"
 
-// ResolveBankAccount makes an API request using Call to resolve bank account
-func (c *Call) ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetailResponse, error) {
-	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, bankEndpoint, "/resolve-account")
+// ResolveBankAccount makes a request to Torus to resolve bank account
+func (c *Call) ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetails, error) {
+	var (
+		err      error
+		response model.AccountDetails
+		path     = fmt.Sprintf("%s/resolve-account", bankAPIVersion)
+	)
 
-	fL := c.logger.With().Str("func", "ResolveBankAccount").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface("request", request).
-		Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, &response)
 
-	response := struct {
-		Data model.AccountDetailResponse `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Post(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.AccountDetailResponse{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.AccountDetailResponse{}, model.ErrNetworkError
-		}
-		return model.AccountDetailResponse{}, model.ParseError(errRes.Error.Details)
-	}
-
-	return response.Data, nil
+	return response, err
 }
 
-// GetBanks makes an API request using Call to get list of banks
-func (c *Call) GetBanks(ctx context.Context) ([]model.BankCodeResponse, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, bankEndpoint)
+// GetBanks makes request to Torus to get list of banks
+func (c *Call) GetBanks(ctx context.Context) ([]model.BankCode, error) {
+	var (
+		err      error
+		response []model.BankCode
+		path     = bankAPIVersion
+	)
 
-	fL := c.logger.With().Str("func", "GetBanks").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
 
-	response := struct {
-		Data []model.BankCodeResponse `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Get(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return response.Data, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return []model.BankCodeResponse{}, model.ErrNetworkError
-		}
-		return []model.BankCodeResponse{}, model.ParseError(errRes.Error.Details)
-	}
-
-	return response.Data, nil
+	return response, err
 }
 
-// GenerateBankAccount makes an API request to generate bank account
-func (c *Call) GenerateBankAccount(ctx context.Context, request model.BankAccountRequest) (model.BankAccountResponse, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, bankAccountEndpoint)
+// GenerateBankAccount makes request to Torus to generate bank account
+func (c *Call) GenerateBankAccount(ctx context.Context, request model.GenerateBankAccountRequest) (model.BankAccount, error) {
+	var (
+		err       error
+		response  model.BankAccount
+		path      = fmt.Sprintf("%s/account", bankAPIVersion)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
 
-	fL := c.logger.With().Str("func", "GenerateBankAccount").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface("request", request).
-		Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-
-	response := struct {
-		Data model.BankAccountResponse `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
-		}).
-		SetContext(ctx).
-		Post(endpoint)
-
-	if err != nil {
-		return model.BankAccountResponse{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.BankAccountResponse{}, model.ErrNetworkError
-		}
-		return model.BankAccountResponse{}, model.ParseError(errRes.Error.Details)
-	}
-
-	return response.Data, nil
+	return response, err
 }
 
-// GetBankAccount makes an API request to get bank account
-func (c *Call) GetBankAccount(ctx context.Context, customerID uuid.UUID) (model.BankAccountResponse, error) {
-	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, bankAccountEndpoint, customerID)
-
-	fL := c.logger.With().Str("func", "GetBankAccount").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface("request", customerID.String()).
-		Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
-
-	response := struct {
-		Data model.BankAccountResponse `json:"data"`
-	}{}
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Get(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.BankAccountResponse{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.BankAccountResponse{}, model.ErrNetworkError
+// GetBankAccount makes request to Torus to get bank account
+func (c *Call) GetBankAccount(ctx context.Context, customerID, currency string) (model.BankAccount, error) {
+	var (
+		err      error
+		response model.BankAccount
+		params   = map[string]interface{}{
+			"customer_id": customerID,
+			"currency":    currency,
 		}
-		return model.BankAccountResponse{}, model.ParseError(errRes.Error.Details)
-	}
+		path = fmt.Sprintf("%s/account", bankAPIVersion)
+	)
 
-	return response.Data, nil
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
+
+	return response, err
+}
+
+// MockDeposit makes request to Torus to mock customer deposit
+func (c *Call) MockDeposit(ctx context.Context, request model.MockCustomerDepositRequest) error {
+	var (
+		err  error
+		path = "v1/payments/mock"
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, nil)
+
+	return err
 }
