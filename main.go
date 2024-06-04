@@ -26,7 +26,7 @@ func main() {
 	//}
 	//fmt.Println("Transfer response: ", transferResponse)
 
-	//getTransfersResponse, err := apiCalls.GetTerminalTransfers(ctx, "", "USD", "NGN", model.DateBetween{}, model.Page{
+	//getTransfersResponse, err := apiCalls.GetTerminalTransfers(ctx, "", "USD", "NGN", nil, &model.Page{
 	//	Number: helpers.GetPointerInt(1),
 	//	Size:   helpers.GetPointerInt(5),
 	//})

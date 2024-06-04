@@ -110,7 +110,7 @@ func (c *Call) InitiateTerminalTransfer(ctx context.Context, request model.Initi
 }
 
 // GetTerminalTransfers makes request to Torus to get all terminal transfers
-func (c *Call) GetTerminalTransfers(ctx context.Context, status, sourceCurrency, destinationCurrency string, dateBetween model.DateBetween, page model.Page) (model.AllTransfersResponse, error) {
+func (c *Call) GetTerminalTransfers(ctx context.Context, status, sourceCurrency, destinationCurrency string, dateBetween *model.DateBetween, page *model.Page) (model.AllTransfersResponse, error) {
 	var (
 		err      error
 		response model.AllTransfersResponse
@@ -127,11 +127,11 @@ func (c *Call) GetTerminalTransfers(ctx context.Context, status, sourceCurrency,
 	if destinationCurrency != "" {
 		params["destination_currency"] = destinationCurrency
 	}
-	if dateBetween != (model.DateBetween{}) {
-		helpers.FillParamsWithDateInterval(params, dateBetween)
+	if dateBetween != nil {
+		helpers.FillParamsWithDateInterval(params, *dateBetween)
 	}
-	if page != (model.Page{}) {
-		helpers.FillParamsWithPage(params, page)
+	if page != nil {
+		helpers.FillParamsWithPage(params, *page)
 	}
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
