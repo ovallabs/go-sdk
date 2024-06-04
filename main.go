@@ -367,23 +367,20 @@ func main() {
 	}
 	fmt.Println("details", details)*/
 
-	/*banks, err := apiCalls.GetBanks(context.Background())
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("banks", banks)*/
-
-	/*account, err := apiCalls.ResolveBankAccount(context.Background(), model.AccountResolveRequest{
-		BankCode:      "057",
-		AccountNumber: "2209276822",
+	/*details, err := apiCalls.InitiateTransfer(context.Background(), model.InitiateTransferRequest{
+		CustomerID:  "9f40fb69-64e3-4d23-853a-0243af155427",
+		Amount:      3000,
+		Currency:    "USD",
+		Destination: model.TransferDestination{},
+		Note:        "",
+		Reason:      "",
+		Reference:   "",
 	})
-
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
-	fmt.Println("account", account)*/
+	fmt.Println("details", details)*/
 
 	/*withdrawal, err := apiCalls.FiatWithdrawal(ctx, model.WithdrawalRequest{
 		CustomerID:      uuid.MustParse("9f40fb69-64e3-4d23-853a-0243af155427"),
@@ -401,24 +398,44 @@ func main() {
 		return
 	}
 	fmt.Println("withdrawal", withdrawal)*/
-	/*account, err := apiCalls.GenerateBankAccount(context.Background(), model.BankAccountRequest{
-		CustomerID:  uuid.MustParse("163c4dbb-7032-4ee7-8ab1-75b6cc01726f"),
-		BVN:         "22481815830",
-		Reference:   "ref5679",
-		PhoneNumber: "2349090909091",
-	})
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("account", account)
+	//account, err := apiCalls.GenerateBankAccount(ctx, example.NewGenerateBankAccountRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Account: ", account)
 
-	bank, err := apiCalls.GetBankAccount(ctx, uuid.MustParse("163c4dbb-7032-4ee7-8ab1-75b6cc01726f"))
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("bank", bank)*/
+	//account, err := apiCalls.GetBankAccount(ctx, "c4b9197f-009e-4019-b0dd-0cab6e9e3189", "NGN")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Account: ", account)
+
+	//banks, err := apiCalls.GetBanks(ctx)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Banks", banks)
+
+	//account, err := apiCalls.ResolveBankAccount(ctx, model.AccountResolveRequest{
+	//	BankCode:      "044",
+	//	AccountNumber: "9036678078",
+	//})
+	//
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Account: ", account)
+
+	//err := apiCalls.MockDeposit(ctx, example.NewMockCustomerDepositRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Deposit successful")
 
 	//feeWithdrawal, err := apiCalls.FeeWithdrawal(context.Background(), model.FeeWithdrawalRequest{
 	//	CustomerID:          uuid.MustParse("4a31a43b-7c54-4578-a020-87d1d2b0f6f5"),

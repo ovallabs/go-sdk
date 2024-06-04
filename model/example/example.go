@@ -126,4 +126,20 @@ var (
 		ToCurrency:   "NGN",
 		Amount:       1000,
 	}
+
+	// NewGenerateBankAccountRequest sample generate bank account request
+	NewGenerateBankAccountRequest = model.GenerateBankAccountRequest{
+		CustomerID:  "c4b9197f-009e-4019-b0dd-0cab6e9e3189",
+		Currency:    "NGN",
+		Reference:   "ref123",
+		BVN:         helpers.GetPointerString("22000000000"),
+		PhoneNumber: helpers.GetPointerString("2348109023376"),
+	}
+
+	// NewMockCustomerDepositRequest sample mock customer deposit request
+	NewMockCustomerDepositRequest = model.MockCustomerDepositRequest{
+		CustomerID: "c4b9197f-009e-4019-b0dd-0cab6e9e3189",
+		Currency:   "NGN",
+		Amount:     809000,
+	}
 )
