@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"net/url"
 	"strconv"
 
 	"github.com/ovalfi/go-sdk/helpers"
@@ -13,76 +12,84 @@ import (
 
 const transactionAPIVersion = "v1/transaction"
 
-// GetTransactions makes an API request using Call to get transactions
-func (c *Call) GetTransactions(ctx context.Context, request *model.TransactionRequest) (model.TransactionResponse, error) {
-	params := url.Values{}
-	if request.CustomerID != nil {
-		cID := *request.CustomerID
-		params.Set("customer_id", cID.String())
+// GetTransactions makes request to Torus to get all transactions
+func (c *Call) GetTransactions(ctx context.Context, customerID, yieldOfferingID, status, reference, batchDate string, amount *float64, dateBetween *model.DateBetween, page *model.Page) (model.AllTransactionsResponse, error) {
+	var (
+		err      error
+		response model.AllTransactionsResponse
+		params   = make(map[string]interface{})
+		path     = transactionAPIVersion
+	)
+
+	if customerID != "" {
+		params["customer_id"] = customerID
+	}
+	if yieldOfferingID != "" {
+		params["yield_offering_id"] = yieldOfferingID
+	}
+	if status != "" {
+		params["status"] = status
+	}
+	if reference != "" {
+		params["reference"] = reference
+	}
+	if batchDate != "" {
+		params["batch_date"] = batchDate
+	}
+	if amount != nil {
+		params["amount"] = strconv.FormatFloat(*amount, 'f', -1, 64)
+	}
+	if dateBetween != nil {
+		helpers.FillParamsWithDateInterval(params, *dateBetween)
+	}
+	if page != nil {
+		helpers.FillParamsWithPage(params, *page)
 	}
 
-	if request.YieldOfferingID != nil {
-		yID := *request.YieldOfferingID
-		params.Set("yield_offering_id", yID.String())
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
+
+	return response, err
+}
+
+// CancelTransaction makes request to Torus to cancel transaction
+func (c *Call) CancelTransaction(ctx context.Context, transactionID, transactionType, reason string) error {
+	var (
+		err    error
+		params = map[string]interface{}{"type": transactionType, "reason": reason}
+		path   = fmt.Sprintf("%s/%s", transactionAPIVersion, transactionID)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodDelete, nil, params, nil, nil, nil)
+
+	return err
+}
+
+// CancelBatchTransaction makes request to Torus to cancel batch transaction
+func (c *Call) CancelBatchTransaction(ctx context.Context, batchDate, transactionType, currency, reason string) error {
+	var (
+		err    error
+		params = map[string]interface{}{"type": transactionType, "reason": reason}
+		path   = fmt.Sprintf("v1/batch/%s", batchDate)
+	)
+
+	if currency != "" {
+		params["currency"] = currency
 	}
 
-	if request.Reference != nil {
-		params.Set("reference", *request.Reference)
-	}
+	err = c.makeRequest(ctx, path, http.MethodDelete, nil, params, nil, nil, nil)
 
-	if request.BatchDate != nil {
-		params.Set("batch_date", *request.BatchDate)
-	}
+	return err
+}
 
-	if request.Size != nil {
-		size := strconv.Itoa(*request.Size)
-		params.Set("size", size)
-	}
+// GetBalances makes request to Torus to get business balances
+func (c *Call) GetBalances(ctx context.Context) (map[string]float64, error) {
+	var (
+		err      error
+		response map[string]float64
+		path     = "v1/balances"
+	)
 
-	if request.Page != nil {
-		page := strconv.Itoa(*request.Page)
-		params.Set("page", page)
-	}
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
 
-	var endpoint string
-	if request == nil {
-		endpoint = fmt.Sprintf("%s%s", c.baseURL, transactionAPIVersion)
-	} else {
-		endpoint = fmt.Sprintf("%s%s?%s", c.baseURL, transactionAPIVersion, params.Encode())
-	}
-
-	fL := c.logger.With().Str("func", "GetTransactions").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
-
-	response := struct {
-		Data model.TransactionResponse `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetResult(&response).
-		SetContext(ctx).
-		Get(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.TransactionResponse{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.TransactionResponse{}, model.ErrNetworkError
-		}
-		return model.TransactionResponse{}, model.ParseError(errRes.Error.Details)
-	}
-
-	return response.Data, nil
+	return response, err
 }
