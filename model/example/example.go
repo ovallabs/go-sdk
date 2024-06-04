@@ -119,4 +119,11 @@ var (
 		Note:                helpers.GetPointerString("Some note"),
 		Reason:              "Some reason",
 	}
+
+	// NewInitiateCurrencySwapRequest sample initiate currency swap request
+	NewInitiateCurrencySwapRequest = model.InitiateCurrencySwapRequest{
+		FromCurrency: "USD",
+		ToCurrency:   "NGN",
+		Amount:       1000,
+	}
 )
