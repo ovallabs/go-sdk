@@ -26,7 +26,7 @@ func main() {
 	//}
 	//fmt.Printf("Beneficiary: %+v\n", beneficiary)
 
-	//beneficiaries, err := apiCalls.GetBeneficiaries(ctx, "NGN", model.Page{
+	//beneficiaries, err := apiCalls.GetBeneficiaries(ctx, "NGN", &model.Page{
 	//	Number: helpers.GetPointerInt(1),
 	//	Size:   helpers.GetPointerInt(5),
 	//})

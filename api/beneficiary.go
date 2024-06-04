@@ -25,7 +25,7 @@ func (c *Call) CreateBeneficiary(ctx context.Context, request model.CreateBenefi
 }
 
 // GetBeneficiaries makes request to Torus to get all beneficiaries
-func (c *Call) GetBeneficiaries(ctx context.Context, currency string, page model.Page) (model.AllBeneficiariesResponse, error) {
+func (c *Call) GetBeneficiaries(ctx context.Context, currency string, page *model.Page) (model.AllBeneficiariesResponse, error) {
 	var (
 		err      error
 		response model.AllBeneficiariesResponse
@@ -36,8 +36,8 @@ func (c *Call) GetBeneficiaries(ctx context.Context, currency string, page model
 	if currency != "" {
 		params["destination_currency"] = currency
 	}
-	if page != (model.Page{}) {
-		helpers.FillParamsWithPage(params, page)
+	if page != nil {
+		helpers.FillParamsWithPage(params, *page)
 	}
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
