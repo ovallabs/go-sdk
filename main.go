@@ -19,6 +19,106 @@ func main() {
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
 	//ctx := context.Background()
 
+	//currencySwap, err := apiCalls.InitiateCurrencySwap(ctx, example.NewInitiateCurrencySwapRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Currency swap: %+v\n", currencySwap)
+
+	//swaps, err := apiCalls.GetCurrencySwaps(ctx, "completed", "USD", "NGN", nil, &model.Page{
+	//	Number: helpers.GetPointerInt(1),
+	//	Size:   helpers.GetPointerInt(5),
+	//})
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Swaps: %+v\n", swaps)
+
+	//swap, err := apiCalls.GetCurrencySwapByID(ctx, "687cf078-c553-47be-b99c-708a6abc9a44")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Swap: %+v\n", swap)
+
+	//transferResponse, err := apiCalls.InitiateTerminalTransfer(ctx, example.NewInitiateTerminalTransferRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfer response: ", transferResponse)
+
+	//getTransfersResponse, err := apiCalls.GetTerminalTransfers(ctx, "", "USD", "NGN", nil, &model.Page{
+	//	Number: helpers.GetPointerInt(1),
+	//	Size:   helpers.GetPointerInt(5),
+	//})
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfers: ", getTransfersResponse)
+
+	//transfer, err := apiCalls.GetTerminalTransferByID(ctx, "50a16aaa-1360-4423-a02e-6469c902ff17")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfer: ", transfer)
+
+	//transferResponse, err := apiCalls.InitiateTransfer(ctx, example.NewInitiateTransferRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfer response: ", transferResponse)
+
+	//rate, err := apiCalls.GetExchangeRates(ctx, 1000000, "NGN", "USD")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Rate: ", rate)
+
+	//transfer, err := apiCalls.GetTransferByID(ctx, "7239478d-a6b7-40ee-85de-8b0a317c3771")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfer: ", transfer)
+
+	//err := apiCalls.DeleteTransfer(ctx, "7239478d-a6b7-40ee-85de-8b0a317c3771", "Some reason")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfer has been successfully deleted")
+
+	//beneficiary, err := apiCalls.CreateBeneficiary(ctx, example.NewCreateBeneficiaryRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Beneficiary: %+v\n", beneficiary)
+
+	//beneficiaries, err := apiCalls.GetBeneficiaries(ctx, "NGN", &model.Page{
+	//	Number: helpers.GetPointerInt(1),
+	//	Size:   helpers.GetPointerInt(5),
+	//})
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Beneficiaries: %+v\n", beneficiaries)
+
+	//beneficiary, err := apiCalls.GetBeneficiaryByID(ctx, "c4158d8c-87a0-4f1b-b559-1aa2defd8495")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Beneficiary: %+v\n", beneficiary)
+
 	//doc, err := apiCalls.GetPayoutDocumentTemplate(ctx, "USD", "banks")
 	//if err != nil {
 	//	fmt.Printf("Error: %v\n", err)
@@ -77,13 +177,12 @@ func main() {
 	//}
 	//fmt.Printf("Has payout been cancelled: %+v\n", isCancelled)
 
-	/*newCustomer, err := apiCalls.CreateCustomer(ctx, example.NewCreateCustomerRequest)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Printf("new customer: %+v\n", newCustomer)*/
-	//"id": "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd"
+	//customer, err := apiCalls.CreateCustomer(ctx, example.NewCreateCustomerRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Customer: %+v\n", customer)
 
 	/*updatedCustomer, err := apiCalls.UpdateCustomer(ctx, example.NewUpdateCustomerRequest)
 	if err != nil {
@@ -92,19 +191,40 @@ func main() {
 	}
 	fmt.Printf("new customer: %+v\n", updatedCustomer)*/
 
-	/*retrievedCustomer, err := apiCalls.GetCustomerByID(context.Background(), example.NewGetCustomerByIDRequest)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Printf("new customer: %+v\n", retrievedCustomer)*/
+	//customer, err := apiCalls.GetCustomerByID(ctx, "2d0378b6-a707-41ec-8636-6b3900ef60fd")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Customer: %+v\n", customer)
 
-	/*retrievedCustomers, err := apiCalls.GetAllCustomers(ctx)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Printf("new customer: %+v\n", retrievedCustomers)*/
+	//customers, err := apiCalls.GetAllCustomers(ctx)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Customers: %+v\n", customers)
+
+	//balance, err := apiCalls.GetCustomerBalance(ctx, "625473e1-1dbf-446c-b86d-005d5eae0919", "21c48a42-d840-4f66-bdb0-c7510a038bd4")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Balance: %+v\n", balance)
+
+	//balances, err := apiCalls.GetCustomerBalances(ctx, "625473e1-1dbf-446c-b86d-005d5eae0919")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Balances: %+v\n", balances)
+
+	//err := apiCalls.DeleteCustomer(ctx, "6cef5231-fc1e-45b3-a9ae-4d204245b0ae")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Customer deleted successfully")
 
 	/*portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
 	if err != nil {
@@ -241,18 +361,38 @@ func main() {
 		return
 	}
 	fmt.Println("intra-transfer", intraTransfer)*/
-	/*cID := uuid.MustParse("5e37dc39-5b70-492a-a5ad-46c75d06111e")
-	size := 1
-	transaction, err := apiCalls.GetTransactions(ctx, &model.TransactionRequest{CustomerID: &cID, Size: &size})
-	//cID := uuid.MustParse("5e37dc39-5b70-492a-a5ad-46c75d06111e")
-	//size := 1
-	/*ref := "07b1057f-e85e-441e-ac4f-d1a498617762"
-	transaction, err := apiCalls.GetTransactions(context.Background(), &model.TransactionRequest{Reference: &ref})
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("transaction", *transaction.Items.Transactions[0])*/
+	//transactions, err := apiCalls.GetTransactions(ctx,
+	//	"c4b9197f-009e-4019-b0dd-0cab6e9e3189",
+	//	"",
+	//	"initiated",
+	//	"",
+	//	"",
+	//	nil,
+	//	nil,
+	//	&model.Page{
+	//		Number: helpers.GetPointerInt(1),
+	//		Size:   helpers.GetPointerInt(5),
+	//	})
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transactions: ", transactions)
+
+	//err := apiCalls.CancelTransaction(ctx, "e1a4b9a0-0c10-4842-809e-3acc8bca33b6", "transfer", "Some reason")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transaction successfully cancelled")
+
+	//balances, err := apiCalls.GetBalances(ctx)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Balances: ", balances)
+
 	/*deposit, err := apiCalls.GetDepositID(ctx, uuid.MustParse("9c6c34d9-49b1-47c6-88f6-98ca0163c597"))
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
@@ -286,24 +426,6 @@ func main() {
 	}
 	fmt.Println("details", details)*/
 
-	/*banks, err := apiCalls.GetBanks(context.Background())
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("banks", banks)*/
-
-	/*account, err := apiCalls.ResolveBankAccount(context.Background(), model.AccountResolveRequest{
-		BankCode:      "057",
-		AccountNumber: "2209276822",
-	})
-
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("account", account)*/
-
 	/*withdrawal, err := apiCalls.FiatWithdrawal(ctx, model.WithdrawalRequest{
 		CustomerID:      uuid.MustParse("9f40fb69-64e3-4d23-853a-0243af155427"),
 		Reference:       "polkj",
@@ -320,24 +442,44 @@ func main() {
 		return
 	}
 	fmt.Println("withdrawal", withdrawal)*/
-	/*account, err := apiCalls.GenerateBankAccount(context.Background(), model.BankAccountRequest{
-		CustomerID:  uuid.MustParse("163c4dbb-7032-4ee7-8ab1-75b6cc01726f"),
-		BVN:         "22481815830",
-		Reference:   "ref5679",
-		PhoneNumber: "2349090909091",
-	})
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("account", account)
+	//account, err := apiCalls.GenerateBankAccount(ctx, example.NewGenerateBankAccountRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Account: ", account)
 
-	bank, err := apiCalls.GetBankAccount(ctx, uuid.MustParse("163c4dbb-7032-4ee7-8ab1-75b6cc01726f"))
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("bank", bank)*/
+	//account, err := apiCalls.GetBankAccount(ctx, "c4b9197f-009e-4019-b0dd-0cab6e9e3189", "NGN")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Account: ", account)
+
+	//banks, err := apiCalls.GetBanks(ctx)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Banks", banks)
+
+	//account, err := apiCalls.ResolveBankAccount(ctx, model.AccountResolveRequest{
+	//	BankCode:      "044",
+	//	AccountNumber: "9036678078",
+	//})
+	//
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Account: ", account)
+
+	//err := apiCalls.MockDeposit(ctx, example.NewMockCustomerDepositRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Deposit successful")
 
 	//feeWithdrawal, err := apiCalls.FeeWithdrawal(context.Background(), model.FeeWithdrawalRequest{
 	//	CustomerID:          uuid.MustParse("4a31a43b-7c54-4578-a020-87d1d2b0f6f5"),
@@ -361,6 +503,6 @@ func main() {
 	//	fmt.Printf("Error: %v\n\n", err)
 	//	return
 	//} else {
-	//	fmt.Printf("Succesfuly deleted")
+	//	fmt.Printf("Successfully deleted")
 	//}
 }
