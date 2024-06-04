@@ -26,7 +26,7 @@ func main() {
 	//}
 	//fmt.Printf("Currency swap: %+v\n", currencySwap)
 
-	//swaps, err := apiCalls.GetCurrencySwaps(ctx, "completed", "USD", "NGN", model.DateBetween{}, model.Page{
+	//swaps, err := apiCalls.GetCurrencySwaps(ctx, "completed", "USD", "NGN", nil, &model.Page{
 	//	Number: helpers.GetPointerInt(1),
 	//	Size:   helpers.GetPointerInt(5),
 	//})

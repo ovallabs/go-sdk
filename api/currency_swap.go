@@ -25,7 +25,7 @@ func (c *Call) InitiateCurrencySwap(ctx context.Context, request model.InitiateC
 }
 
 // GetCurrencySwaps makes a request to Torus to get all currency swaps
-func (c *Call) GetCurrencySwaps(ctx context.Context, status, from, to string, dateBetween model.DateBetween, page model.Page) (model.AllSwapsResponse, error) {
+func (c *Call) GetCurrencySwaps(ctx context.Context, status, from, to string, dateBetween *model.DateBetween, page *model.Page) (model.AllSwapsResponse, error) {
 	var (
 		err      error
 		response model.AllSwapsResponse
@@ -42,11 +42,11 @@ func (c *Call) GetCurrencySwaps(ctx context.Context, status, from, to string, da
 	if from != "" {
 		params["from_currency"] = from
 	}
-	if dateBetween != (model.DateBetween{}) {
-		helpers.FillParamsWithDateInterval(params, dateBetween)
+	if dateBetween != nil {
+		helpers.FillParamsWithDateInterval(params, *dateBetween)
 	}
-	if page != (model.Page{}) {
-		helpers.FillParamsWithPage(params, page)
+	if page != nil {
+		helpers.FillParamsWithPage(params, *page)
 	}
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
