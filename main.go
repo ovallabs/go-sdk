@@ -250,8 +250,8 @@ func main() {
 	//	"",
 	//	"",
 	//	nil,
-	//	model.DateBetween{},
-	//	model.Page{
+	//	nil,
+	//	&model.Page{
 	//		Number: helpers.GetPointerInt(1),
 	//		Size:   helpers.GetPointerInt(5),
 	//	})

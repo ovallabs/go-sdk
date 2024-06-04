@@ -13,7 +13,7 @@ import (
 const transactionAPIVersion = "v1/transaction"
 
 // GetTransactions makes request to Torus to get all transactions
-func (c *Call) GetTransactions(ctx context.Context, customerID, yieldOfferingID, status, reference, batchDate string, amount *float64, dateBetween model.DateBetween, page model.Page) (model.AllTransactionsResponse, error) {
+func (c *Call) GetTransactions(ctx context.Context, customerID, yieldOfferingID, status, reference, batchDate string, amount *float64, dateBetween *model.DateBetween, page *model.Page) (model.AllTransactionsResponse, error) {
 	var (
 		err      error
 		response model.AllTransactionsResponse
@@ -39,11 +39,11 @@ func (c *Call) GetTransactions(ctx context.Context, customerID, yieldOfferingID,
 	if amount != nil {
 		params["amount"] = strconv.FormatFloat(*amount, 'f', -1, 64)
 	}
-	if dateBetween != (model.DateBetween{}) {
-		helpers.FillParamsWithDateInterval(params, dateBetween)
+	if dateBetween != nil {
+		helpers.FillParamsWithDateInterval(params, *dateBetween)
 	}
-	if page != (model.Page{}) {
-		helpers.FillParamsWithPage(params, page)
+	if page != nil {
+		helpers.FillParamsWithPage(params, *page)
 	}
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
