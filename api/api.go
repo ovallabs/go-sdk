@@ -87,6 +87,11 @@ type RemoteCalls interface {
 	GetCurrencySwaps(ctx context.Context, status, from, to string, dateBetween *model.DateBetween, page *model.Page) (model.AllSwapsResponse, error)
 	GetCurrencySwapByID(ctx context.Context, currencySwapID string) (model.CurrencySwap, error)
 
+	// Beneficiary APIs
+	CreateBeneficiary(ctx context.Context, request model.CreateBeneficiaryRequest) (model.TransferBeneficiary, error)
+	GetBeneficiaries(ctx context.Context, currency string, page *model.Page) (model.AllBeneficiariesResponse, error)
+	GetBeneficiaryByID(ctx context.Context, beneficiaryID string) (model.TransferBeneficiary, error)
+
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
 }

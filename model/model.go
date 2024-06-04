@@ -212,6 +212,7 @@ type (
 		RoutingNumber string `json:"routing_number,omitempty"`
 		SwiftCode     string `json:"swift_code,omitempty"`
 		BankName      string `json:"bank_name"`
+		BankCode      string `json:"bank_code,omitempty"`
 		BankBranch    string `json:"bank_branch,omitempty"`
 		Country       string `json:"country"`
 		City          string `json:"city,omitempty"`
@@ -229,15 +230,16 @@ type (
 		Address     string `json:"address"`
 		District    string `json:"district,omitempty"`
 		PostalCode  string `json:"postal_code,omitempty"`
+		Email       string `json:"email,omitempty"`
 		PhoneNumber string `json:"phone_number,omitempty"`
 	}
 
-	// IntermediaryBank recipient's intermediary bank
+	// IntermediaryBank schema for intermediary bank
 	IntermediaryBank struct {
-		BankName    string `json:"bankName"`
-		BankAddress string `json:"bankAddress"`
-		Reference   string `json:"reference"`
-		SwiftCode   string `json:"swiftCode"`
+		BankName    string `json:"bank_name,omitempty"`
+		BankAddress string `json:"bank_address,omitempty"`
+		Reference   string `json:"reference,omitempty"`
+		SwiftCode   string `json:"swift_code"`
 	}
 
 	// CustomerInfo data object for additional customer details

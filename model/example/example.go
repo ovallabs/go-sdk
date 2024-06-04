@@ -142,4 +142,16 @@ var (
 		Currency:   "NGN",
 		Amount:     809000,
 	}
+
+	NewCreateBeneficiaryRequest = model.CreateBeneficiaryRequest{
+		BankDetails: model.BankDetails{
+			AccountNumber: "0762866445",
+			AccountName:   "ADEDAYO OLAOLUWA OMOTOSO",
+			BankName:      "Access Bank",
+			BankCode:      "044",
+			Country:       "Nigeria",
+			IsWithinUS:    "no",
+		},
+		Currency: "NGN",
+	}
 )

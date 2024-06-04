@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-	"fmt"
 	"os"
 
 	"github.com/go-resty/resty/v2"
@@ -19,7 +17,7 @@ func main() {
 	defer logger.Info().Msg("stopped")
 	apiCalls := api.New(&logger, client, model.PublicKey, model.BearerToken, model.BaseURL)
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
-	ctx := context.Background()
+	//ctx := context.Background()
 
 	//currencySwap, err := apiCalls.InitiateCurrencySwap(ctx, example.NewInitiateCurrencySwapRequest)
 	//if err != nil {
@@ -96,6 +94,30 @@ func main() {
 	//	return
 	//}
 	//fmt.Println("Transfer has been successfully deleted")
+
+	//beneficiary, err := apiCalls.CreateBeneficiary(ctx, example.NewCreateBeneficiaryRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Beneficiary: %+v\n", beneficiary)
+
+	//beneficiaries, err := apiCalls.GetBeneficiaries(ctx, "NGN", &model.Page{
+	//	Number: helpers.GetPointerInt(1),
+	//	Size:   helpers.GetPointerInt(5),
+	//})
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Beneficiaries: %+v\n", beneficiaries)
+
+	//beneficiary, err := apiCalls.GetBeneficiaryByID(ctx, "c4158d8c-87a0-4f1b-b559-1aa2defd8495")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Beneficiary: %+v\n", beneficiary)
 
 	//doc, err := apiCalls.GetPayoutDocumentTemplate(ctx, "USD", "banks")
 	//if err != nil {
@@ -364,12 +386,12 @@ func main() {
 	//}
 	//fmt.Println("Transaction successfully cancelled")
 
-	balances, err := apiCalls.GetBalances(ctx)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Println("Balances: ", balances)
+	//balances, err := apiCalls.GetBalances(ctx)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Balances: ", balances)
 
 	/*deposit, err := apiCalls.GetDepositID(ctx, uuid.MustParse("9c6c34d9-49b1-47c6-88f6-98ca0163c597"))
 	if err != nil {
