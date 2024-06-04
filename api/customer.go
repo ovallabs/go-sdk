@@ -5,15 +5,13 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/google/uuid"
-
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
 
 const customerAPIVersion = "v1/customer"
 
-// CreateCustomer makes an API request using Call to create a customer
+// CreateCustomer makes request to Torus to create customer
 func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerRequest) (model.Customer, error) {
 	var (
 		err       error
@@ -27,239 +25,80 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 	return response, err
 }
 
-// UpdateCustomer makes an API request using Call to update a customer
+// UpdateCustomer makes request to Torus to update customer
 func (c *Call) UpdateCustomer(ctx context.Context, request model.UpdateCustomerRequest) (model.Customer, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, customerAPIVersion)
+	var (
+		err      error
+		response model.Customer
+		path     = customerAPIVersion
+	)
 
-	fL := c.logger.With().Str("func", "UpdateCustomer").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPatch, nil, nil, nil, request, &response)
 
-	response := struct {
-		Data model.Customer `json:"data"`
-	}{}
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Patch(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.Customer{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.Customer{}, model.ErrNetworkError
-		}
-		return model.Customer{}, model.ParseError(errRes.Error.Details)
-	}
-
-	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
-	return response.Data, nil
+	return response, err
 }
 
-// GetAllCustomers makes an API request using Call to get all customers
-func (c *Call) GetAllCustomers(ctx context.Context) ([]model.Customer, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, customerAPIVersion)
+// GetAllCustomers makes request to Torus to get all customers
+func (c *Call) GetAllCustomers(ctx context.Context) (model.AllCustomersResponse, error) {
+	var (
+		err      error
+		response model.AllCustomersResponse
+		path     = customerAPIVersion
+	)
 
-	fL := c.logger.With().Str("func", "GetAllCustomers").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
 
-	response := struct {
-		Data []model.Customer `json:"data"`
-	}{}
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Get(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return []model.Customer{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return []model.Customer{}, model.ErrNetworkError
-		}
-		return []model.Customer{}, model.ParseError(errRes.Error.Details)
-	}
-
-	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
-	return response.Data, nil
+	return response, err
 }
 
-// GetCustomerByID makes an API request using Call to get a customer by ID
-func (c *Call) GetCustomerByID(ctx context.Context, request model.GetCustomerByIDRequest) (model.CustomerInfo, error) {
-	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, customerAPIVersion, request.CustomerID)
+// GetCustomerByID makes request to Torus to get customer by its ID
+func (c *Call) GetCustomerByID(ctx context.Context, customerID string) (model.Customer, error) {
+	var (
+		err      error
+		response model.Customer
+		path     = fmt.Sprintf("%s/%s", customerAPIVersion, customerID)
+	)
 
-	fL := c.logger.With().Str("func", "GetCustomerByID").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Str("customerID", request.CustomerID).Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
 
-	response := struct {
-		Data model.CustomerInfo `json:"data"`
-	}{}
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Get(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.CustomerInfo{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.CustomerInfo{}, model.ErrNetworkError
-		}
-		return model.CustomerInfo{}, model.ParseError(errRes.Error.Details)
-	}
-
-	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
-	return response.Data, nil
+	return response, err
 }
 
-// GetCustomerBalance to get customer balances
-func (c *Call) GetCustomerBalance(ctx context.Context, request model.GetCustomerBalanceRequest) (model.CustomerBalanceResponse, error) {
-	endpoint := fmt.Sprintf("%s%s%s?customer_id=%s&yield_offering_id=%s", c.baseURL, customerAPIVersion, "/balance", request.CustomerID, request.YieldOfferingID)
+// GetCustomerBalance makes request to Torus to get customer balance from a yield offering
+func (c *Call) GetCustomerBalance(ctx context.Context, customerID, yieldOfferingID string) (model.CustomerBalance, error) {
+	var (
+		err      error
+		response model.CustomerBalance
+		params   = map[string]interface{}{"customer_id": customerID, "yield_offering_id": yieldOfferingID}
+		path     = fmt.Sprintf("%s/balance", customerAPIVersion)
+	)
 
-	fL := c.logger.With().Str("func", "GetCustomerBalance").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Str("customerID", request.CustomerID.String()).Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
 
-	response := struct {
-		Data model.CustomerBalanceResponse `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Get(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.CustomerBalanceResponse{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.CustomerBalanceResponse{}, model.ErrNetworkError
-		}
-		return model.CustomerBalanceResponse{}, model.ParseError(errRes.Error.Details)
-	}
-
-	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
-	return response.Data, nil
+	return response, err
 }
 
-// GetCustomerBalances to get customer balances from different yield offering
-func (c *Call) GetCustomerBalances(ctx context.Context, customerID uuid.UUID) (model.CustomerBalancesResponse, error) {
-	endpoint := fmt.Sprintf("%s%s%s/%s", c.baseURL, customerAPIVersion, "/balances", customerID)
+// GetCustomerBalances makes request to Torus to get customer balance from different yield offering
+func (c *Call) GetCustomerBalances(ctx context.Context, customerID string) (model.CustomerBalances, error) {
+	var (
+		err      error
+		response model.CustomerBalances
+		path     = fmt.Sprintf("%s/balances/%s", customerAPIVersion, customerID)
+	)
 
-	fL := c.logger.With().Str("func", "GetCustomerBalances").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Str("customerID", customerID.String()).Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
 
-	response := struct {
-		Data model.CustomerBalancesResponse `json:"data"`
-	}{}
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Get(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.CustomerBalancesResponse{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.CustomerBalancesResponse{}, model.ErrNetworkError
-		}
-		return model.CustomerBalancesResponse{}, model.ParseError(errRes.Error.Details)
-	}
-
-	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
-	return response.Data, nil
+	return response, err
 }
 
-// DeleteCustomer to delete a customer record by customer id
-func (c *Call) DeleteCustomer(ctx context.Context, customerID uuid.UUID) error {
-	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, customerAPIVersion, customerID)
+// DeleteCustomer makes request to Torus to delete customer
+func (c *Call) DeleteCustomer(ctx context.Context, customerID string) error {
+	var (
+		err  error
+		path = fmt.Sprintf("%s/%s", customerAPIVersion, customerID)
+	)
 
-	fL := c.logger.With().Str("func", "DeleteCustomer").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Str("customerID", customerID.String()).Interface(model.LogStrRequest, "empty").Msg("request")
+	err = c.makeRequest(ctx, path, http.MethodDelete, nil, nil, nil, nil, nil)
 
-	defer fL.Info().Msg("done...")
-
-	var response interface{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Delete(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.ErrNetworkError
-		}
-		return model.ParseError(errRes.Error.Details)
-	}
-
-	fL.Info().Interface(model.LogStrResponse, response).Msg("response")
-
-	return nil
+	return err
 }

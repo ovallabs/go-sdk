@@ -17,11 +17,11 @@ type RemoteCalls interface {
 	// Customer APIs
 	CreateCustomer(ctx context.Context, request model.CreateCustomerRequest) (model.Customer, error)
 	UpdateCustomer(ctx context.Context, request model.UpdateCustomerRequest) (model.Customer, error)
-	GetAllCustomers(ctx context.Context) ([]model.Customer, error)
-	GetCustomerByID(ctx context.Context, request model.GetCustomerByIDRequest) (model.CustomerInfo, error)
-	GetCustomerBalance(ctx context.Context, request model.GetCustomerBalanceRequest) (model.CustomerBalanceResponse, error)
-	GetCustomerBalances(ctx context.Context, customerID uuid.UUID) (model.CustomerBalancesResponse, error)
-	DeleteCustomer(ctx context.Context, customerID uuid.UUID) error
+	GetAllCustomers(ctx context.Context) (model.AllCustomersResponse, error)
+	GetCustomerByID(ctx context.Context, customerID string) (model.Customer, error)
+	GetCustomerBalance(ctx context.Context, customerID, yieldOfferingID string) (model.CustomerBalance, error)
+	GetCustomerBalances(ctx context.Context, customerID string) (model.CustomerBalances, error)
+	DeleteCustomer(ctx context.Context, customerID string) error
 
 	// Yield APIs
 	GetBusinessPortfolios(ctx context.Context) ([]model.Portfolio, error)

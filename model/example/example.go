@@ -9,16 +9,17 @@ import (
 )
 
 var (
-	// NewCreateCustomerRequest creates a CreateCustomerRequest struct to use as an example
+	// NewCreateCustomerRequest sample create customer request
 	NewCreateCustomerRequest = model.CreateCustomerRequest{
 		Name:             "Nonso Adedayo",
 		Email:            "chinonso@ovalfinanc.com",
 		Reference:        "ref1230",
 		MobileNumber:     "090803406089",
-		Type:             "individual",
+		Type:             model.CustomerTypeIndividual,
 		YieldOfferingIDs: []uuid.UUID{uuid.MustParse("ef8891af-e887-4e2c-ac79-7a9682d1ad77")},
 	}
-	// NewUpdateCustomerRequest creates a UpdateCustomerRequest struct to use as an example
+
+	// NewUpdateCustomerRequest sample update customer request
 	NewUpdateCustomerRequest = model.UpdateCustomerRequest{
 		CustomerID:       "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd",
 		Name:             "Chinonso Okoli",
@@ -26,11 +27,6 @@ var (
 		Reference:        "ref123",
 		MobileNumber:     "09080340609",
 		YieldOfferingIDs: []uuid.UUID{uuid.MustParse("ef8891af-e887-4e2c-ac79-7a9682d1ad77")},
-	}
-
-	// NewGetCustomerByIDRequest creates a GetCustomerByIDRequest struct to use as an example
-	NewGetCustomerByIDRequest = model.GetCustomerByIDRequest{
-		CustomerID: "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd",
 	}
 
 	// NewCreateYieldOfferingProfilesRequest creates a CreateYieldOfferingProfilesRequest struct to use as an example

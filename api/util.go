@@ -80,6 +80,8 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 		res, err = client.Patch(endpoint)
 	case http.MethodHead:
 		res, err = client.Head(endpoint)
+	case http.MethodDelete:
+		res, err = client.Delete(endpoint)
 	default:
 		err = errors.New("invalid method")
 		log.Err(err).Str("method", method).Msg("invalid method passed")
