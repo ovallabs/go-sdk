@@ -23,20 +23,6 @@ type RemoteCalls interface {
 	GetCustomerBalances(ctx context.Context, customerID string) (model.CustomerBalances, error)
 	DeleteCustomer(ctx context.Context, customerID string) error
 
-	// Yield APIs
-	GetBusinessPortfolios(ctx context.Context) ([]model.Portfolio, error)
-	CreateYieldOfferingProfile(ctx context.Context, request model.CreateYieldOfferingProfilesRequest) (model.YieldOfferingProfile, error)
-	UpdateYieldOfferingProfile(ctx context.Context, request model.UpdateYieldOfferingProfilesRequest) (model.UpdatedYieldOfferingProfile, error)
-	GetAllYieldProfiles(ctx context.Context) ([]model.YieldOfferingProfile, error)
-	GetYieldProfileByID(ctx context.Context, request model.GetYieldProfileByIDRequest) (model.YieldOfferingProfile, error)
-
-	// Deposit APIs
-	InitiateDeposit(ctx context.Context, request model.InitiateDepositRequest) (model.Deposit, error)
-	GetAllDeposits(ctx context.Context) (model.DepositBatchResponse, error)
-	GetDepositID(ctx context.Context, id uuid.UUID) (model.Deposit, error)
-	InternalFundsTransfer(ctx context.Context, request model.FundTransferRequest) (model.Deposit, error)
-	IntraTransfer(ctx context.Context, request model.IntraTransferRequest) (model.IntraTransferResponse, error)
-
 	// Transfer API
 	InitiateTransfer(ctx context.Context, request model.InitiateTransferRequest) (model.TransferResponse, error)
 	GetExchangeRates(ctx context.Context, amount float64, sourceCurrency, destinationCurrency string) (model.ExchangeRateDetails, error)
@@ -47,17 +33,6 @@ type RemoteCalls interface {
 	GetTerminalTransfers(ctx context.Context, status, sourceCurrency, destinationCurrency string, dateBetween *model.DateBetween, page *model.Page) (model.AllTransfersResponse, error)
 	GetTerminalTransferByID(ctx context.Context, transferID string) (model.TerminalTransfer, error)
 	GetSettlementByID(ctx context.Context, settlementID string) (model.Settlement, error)
-
-	// Withdrawal APIs
-	InitiateWithdrawal(ctx context.Context, request model.InitiateWithdrawalRequest) (model.Withdrawal, error)
-	FiatWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error)
-	CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error)
-	FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalRequest) (model.FeeWithdrawal, error)
-
-	// Wallet APIs
-	GetWallet(ctx context.Context, request model.WalletRequest) (model.Wallet, error)
-	GetWallets(ctx context.Context, customerID string) ([]*model.Wallet, error)
-	GetSupportedAssets(ctx context.Context) ([]*model.SupportedAsset, error)
 
 	// Transaction APIs
 	GetTransactions(ctx context.Context, customerID, yieldOfferingID, status, reference, batchDate string, amount *float64, dateBetween *model.DateBetween, page *model.Page) (model.AllTransactionsResponse, error)

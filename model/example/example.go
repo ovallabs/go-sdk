@@ -29,40 +29,6 @@ var (
 		YieldOfferingIDs: []uuid.UUID{uuid.MustParse("ef8891af-e887-4e2c-ac79-7a9682d1ad77")},
 	}
 
-	// NewCreateYieldOfferingProfilesRequest creates a CreateYieldOfferingProfilesRequest struct to use as an example
-	NewCreateYieldOfferingProfilesRequest = model.CreateYieldOfferingProfilesRequest{
-		Name:                  "aave yield",
-		Description:           "for aave",
-		APYRate:               10,
-		Currency:              "usd",
-		DepositLockDay:        2,
-		MinimumDepositAllowed: 100,
-		MaximumDepositAllowed: 3000,
-		YieldableAfterDay:     1,
-		WithdrawalLimitRate:   900,
-		PortfolioID:           "c7115f87-11aa-4d69-bcb4-c12dd7f5bf2f",
-		Reference:             "ref120",
-	}
-
-	// NewUpdateYieldOfferingProfilesRequest creates a UpdateYieldOfferingProfilesRequest struct to use as an example
-	NewUpdateYieldOfferingProfilesRequest = model.UpdateYieldOfferingProfilesRequest{
-		YieldOfferingID: "ef8891af-e887-4e2c-ac79-7a9682d1ad77",
-		Name:            "aave yield new name",
-		Description:     "for aave new name oh... nothing again",
-	}
-
-	// NewGetYieldProfileByIDRequest creates a GetYieldProfileByIDRequest struct to use as an example
-	NewGetYieldProfileByIDRequest = model.GetYieldProfileByIDRequest{
-		YieldProfileID: "ef8891af-e887-4e2c-ac79-7a9682d1ad77",
-	}
-
-	// NewDepositRequest newDepositRequest model
-	NewDepositRequest = model.InitiateDepositRequest{
-		CustomerID: "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd",
-		Reference:  "ref123",
-		Amount:     300,
-	}
-
 	// NewInitiateTransferRequest sample transfer request
 	NewInitiateTransferRequest = model.InitiateTransferRequest{
 		CustomerID: "c4b9197f-009e-4019-b0dd-0cab6e9e3189",
@@ -86,13 +52,6 @@ var (
 		},
 		Reason:    "Some reason",
 		Reference: "12345678",
-	}
-
-	//NewInitiateWithdrawalRequest newInitiateWithdrawalRequest model
-	NewInitiateWithdrawalRequest = model.InitiateWithdrawalRequest{
-		CustomerID: "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd",
-		Reference:  "ref123",
-		Amount:     210,
 	}
 
 	// NewInitiateBulkPayoutRequest sample bulk payout request
