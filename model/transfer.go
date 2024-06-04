@@ -41,10 +41,10 @@ type (
 
 	// TransferResponse schema for transfer response
 	TransferResponse struct {
-		ID uuid.UUID `json:"id"`
-		InitiateTransferRequest
-		CreatedAt time.Time `json:"created_at"`
-		Status    string    `json:"status"`
+		ID              uuid.UUID               `json:"id"`
+		TransferRequest InitiateTransferRequest `json:"transfer_request"`
+		CreatedAt       time.Time               `json:"created_at"`
+		Status          string                  `json:"status"`
 	}
 
 	// ExchangeRateDetails schema for exchange rate details
