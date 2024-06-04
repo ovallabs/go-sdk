@@ -129,13 +129,12 @@ func main() {
 	//}
 	//fmt.Printf("Has payout been cancelled: %+v\n", isCancelled)
 
-	/*newCustomer, err := apiCalls.CreateCustomer(ctx, example.NewCreateCustomerRequest)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Printf("new customer: %+v\n", newCustomer)*/
-	//"id": "cefec56e-3781-4b3a-bda6-ba4e7c0e49cd"
+	//customer, err := apiCalls.CreateCustomer(ctx, example.NewCreateCustomerRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Customer: %+v\n", customer)
 
 	/*updatedCustomer, err := apiCalls.UpdateCustomer(ctx, example.NewUpdateCustomerRequest)
 	if err != nil {
@@ -144,12 +143,40 @@ func main() {
 	}
 	fmt.Printf("new customer: %+v\n", updatedCustomer)*/
 
-	/*retrievedCustomer, err := apiCalls.GetCustomerByID(context.Background(), example.NewGetCustomerByIDRequest)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-	fmt.Printf("new customer: %+v\n", retrievedCustomer)*/
+	//customer, err := apiCalls.GetCustomerByID(ctx, "2d0378b6-a707-41ec-8636-6b3900ef60fd")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Customer: %+v\n", customer)
+
+	//customers, err := apiCalls.GetAllCustomers(ctx)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Customers: %+v\n", customers)
+
+	//balance, err := apiCalls.GetCustomerBalance(ctx, "625473e1-1dbf-446c-b86d-005d5eae0919", "21c48a42-d840-4f66-bdb0-c7510a038bd4")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Balance: %+v\n", balance)
+
+	//balances, err := apiCalls.GetCustomerBalances(ctx, "625473e1-1dbf-446c-b86d-005d5eae0919")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Balances: %+v\n", balances)
+
+	//err := apiCalls.DeleteCustomer(ctx, "6cef5231-fc1e-45b3-a9ae-4d204245b0ae")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Customer deleted successfully")
 
 	/*portfolios, err := apiCalls.GetBusinessPortfolios(ctx)
 	if err != nil {
