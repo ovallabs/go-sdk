@@ -38,8 +38,15 @@ type RemoteCalls interface {
 	IntraTransfer(ctx context.Context, request model.IntraTransferRequest) (model.IntraTransferResponse, error)
 
 	// Transfer API
-	InitiateTransfer(ctx context.Context, request model.InitiateTransferRequest) (model.Transfer, error)
-	GetExchangeRates(ctx context.Context, request model.GetExchangeRateRequest) (model.ExchangeRateDetails, error)
+	InitiateTransfer(ctx context.Context, request model.InitiateTransferRequest) (model.TransferResponse, error)
+	GetExchangeRates(ctx context.Context, amount float64, sourceCurrency, destinationCurrency string) (model.ExchangeRateDetails, error)
+	GetTransferByID(ctx context.Context, transferID string) (model.Transfer, error)
+	DeleteTransfer(ctx context.Context, transferID, reason string) error
+	DeleteTransferBatch(ctx context.Context, batchDate, currency, reason string) error
+	InitiateTerminalTransfer(ctx context.Context, request model.InitiateTerminalTransferRequest) (model.TerminalTransfer, error)
+	GetTerminalTransfers(ctx context.Context, status, sourceCurrency, destinationCurrency string, dateBetween *model.DateBetween, page *model.Page) (model.AllTransfersResponse, error)
+	GetTerminalTransferByID(ctx context.Context, transferID string) (model.TerminalTransfer, error)
+	GetSettlementByID(ctx context.Context, settlementID string) (model.Settlement, error)
 
 	// Withdrawal APIs
 	InitiateWithdrawal(ctx context.Context, request model.InitiateWithdrawalRequest) (model.Withdrawal, error)
@@ -71,6 +78,11 @@ type RemoteCalls interface {
 	UpdatePayoutAccount(ctx context.Context, payoutID string, request model.TransferBeneficiaryDetails) error
 	GetPayoutConfig(ctx context.Context, currency string) (model.BulkPayoutConfig, error)
 	GetPayoutDocumentTemplate(ctx context.Context, currency, docType string) (string, error)
+
+	// Currency Swap APIs
+	InitiateCurrencySwap(ctx context.Context, request model.InitiateCurrencySwapRequest) (model.CurrencySwap, error)
+	GetCurrencySwaps(ctx context.Context, status, from, to string, dateBetween *model.DateBetween, page *model.Page) (model.AllSwapsResponse, error)
+	GetCurrencySwapByID(ctx context.Context, currencySwapID string) (model.CurrencySwap, error)
 
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()

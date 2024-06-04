@@ -19,6 +19,82 @@ func main() {
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
 	//ctx := context.Background()
 
+	//currencySwap, err := apiCalls.InitiateCurrencySwap(ctx, example.NewInitiateCurrencySwapRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Currency swap: %+v\n", currencySwap)
+
+	//swaps, err := apiCalls.GetCurrencySwaps(ctx, "completed", "USD", "NGN", nil, &model.Page{
+	//	Number: helpers.GetPointerInt(1),
+	//	Size:   helpers.GetPointerInt(5),
+	//})
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Swaps: %+v\n", swaps)
+
+	//swap, err := apiCalls.GetCurrencySwapByID(ctx, "687cf078-c553-47be-b99c-708a6abc9a44")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Swap: %+v\n", swap)
+
+	//transferResponse, err := apiCalls.InitiateTerminalTransfer(ctx, example.NewInitiateTerminalTransferRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfer response: ", transferResponse)
+
+	//getTransfersResponse, err := apiCalls.GetTerminalTransfers(ctx, "", "USD", "NGN", nil, &model.Page{
+	//	Number: helpers.GetPointerInt(1),
+	//	Size:   helpers.GetPointerInt(5),
+	//})
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfers: ", getTransfersResponse)
+
+	//transfer, err := apiCalls.GetTerminalTransferByID(ctx, "50a16aaa-1360-4423-a02e-6469c902ff17")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfer: ", transfer)
+
+	//transferResponse, err := apiCalls.InitiateTransfer(ctx, example.NewInitiateTransferRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfer response: ", transferResponse)
+
+	//rate, err := apiCalls.GetExchangeRates(ctx, 1000000, "NGN", "USD")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Rate: ", rate)
+
+	//transfer, err := apiCalls.GetTransferByID(ctx, "7239478d-a6b7-40ee-85de-8b0a317c3771")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfer: ", transfer)
+
+	//err := apiCalls.DeleteTransfer(ctx, "7239478d-a6b7-40ee-85de-8b0a317c3771", "Some reason")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Transfer has been successfully deleted")
+
 	//doc, err := apiCalls.GetPayoutDocumentTemplate(ctx, "USD", "banks")
 	//if err != nil {
 	//	fmt.Printf("Error: %v\n", err)
@@ -383,6 +459,6 @@ func main() {
 	//	fmt.Printf("Error: %v\n\n", err)
 	//	return
 	//} else {
-	//	fmt.Printf("Succesfuly deleted")
+	//	fmt.Printf("Successfully deleted")
 	//}
 }
