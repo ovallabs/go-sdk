@@ -11,186 +11,58 @@ import (
 
 const withdrawalAPIVersion = "v1/withdrawal"
 
-// InitiateWithdrawal makes an API request using Call to initiate a withdrawal
-func (c *Call) InitiateWithdrawal(ctx context.Context, request model.InitiateWithdrawalRequest) (model.Withdrawal, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, withdrawalAPIVersion)
+// InitiateWithdrawal makes request to Torus to initiate a withdrawal
+func (c *Call) InitiateWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error) {
+	var (
+		err       error
+		response  model.Withdrawal
+		path      = withdrawalAPIVersion
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
 
-	fL := c.logger.With().Str("func", "InitiateWithdrawal").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-
-	response := struct {
-		Data model.Withdrawal `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
-		}).
-		SetContext(ctx).
-		Post(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.Withdrawal{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.Withdrawal{}, model.ErrNetworkError
-		}
-		return model.Withdrawal{}, model.ParseError(errRes.Error.Details)
-	}
-
-	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
-	return response.Data, nil
+	return response, err
 }
 
-// FiatWithdrawal makes an API request to withdrawal to a provided bank account
+// FiatWithdrawal makes request to Torus to withdraw to a provided bank account
 func (c *Call) FiatWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error) {
-	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, withdrawalAPIVersion, "/fiat")
+	var (
+		err       error
+		response  model.Withdrawal
+		path      = fmt.Sprintf("%s/fiat", withdrawalAPIVersion)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
 
-	fL := c.logger.With().Str("func", "FiatWithdrawal").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface("request", request).
-		Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-
-	response := struct {
-		Data model.Withdrawal `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
-		}).
-		SetContext(ctx).
-		Post(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.Withdrawal{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.Withdrawal{}, model.ErrNetworkError
-		}
-		return model.Withdrawal{}, model.ParseError(errRes.Error.Details)
-	}
-
-	return response.Data, nil
+	return response, err
 }
 
-// CryptoWithdrawal makes an API request to withdrawal to a specified crypto wallet address
+// CryptoWithdrawal makes request to Torus to withdraw to a specified crypto wallet address
 func (c *Call) CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error) {
-	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, withdrawalAPIVersion, "/crypto")
+	var (
+		err       error
+		response  model.Withdrawal
+		path      = fmt.Sprintf("%s/crypto", withdrawalAPIVersion)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
 
-	fL := c.logger.With().Str("func", "CryptoWithdrawal").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface("request", request).
-		Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-
-	response := struct {
-		Data model.Withdrawal `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
-		}).
-		SetContext(ctx).
-		Post(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.Withdrawal{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.Withdrawal{}, model.ErrNetworkError
-		}
-		return model.Withdrawal{}, model.ParseError(errRes.Error.Details)
-	}
-
-	return response.Data, nil
+	return response, err
 }
 
-// FeeWithdrawal makes an API request to withdrawal for withdrawal fees
-func (c *Call) FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalRequest) (model.FeeWithdrawal, error) {
-	endpoint := fmt.Sprintf("%s%s%s", c.baseURL, withdrawalAPIVersion, "/fee")
+// FeeWithdrawal makes request to Torus for fee withdrawal
+func (c *Call) FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalRequest) (model.FeeWithdrawalResponse, error) {
+	var (
+		err       error
+		response  model.FeeWithdrawalResponse
+		path      = fmt.Sprintf("%s/fee", withdrawalAPIVersion)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
 
-	fL := c.logger.With().Str("func", "FeeWithdrawal").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface("request", request).
-		Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-
-	response := struct {
-		Data model.FeeWithdrawal `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
-		}).
-		SetContext(ctx).
-		Post(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.FeeWithdrawal{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.FeeWithdrawal{}, model.ErrNetworkError
-		}
-		return model.FeeWithdrawal{}, model.ParseError(errRes.Error.Details)
-	}
-
-	return response.Data, nil
+	return response, err
 }

@@ -4,231 +4,81 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-
-	"github.com/google/uuid"
+	"strconv"
 
 	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
 
-const (
-	depositAPIVersion       = "v1/deposit"
-	depositsAPIVersion      = "v1/deposits"
-	fundTransferAPIVersion  = "v1/transfer-funds"
-	intraTransferAPIVersion = "v1/intra-transfer"
-)
-
-// InitiateDeposit makes an API request using Call to initiate a deposit
+// InitiateDeposit makes request to Torus to initiate a deposit
 func (c *Call) InitiateDeposit(ctx context.Context, request model.InitiateDepositRequest) (model.Deposit, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, depositAPIVersion)
+	var (
+		err       error
+		response  model.Deposit
+		path      = "v1/deposit"
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
 
-	fL := c.logger.With().Str("func", "InitiateDeposit").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, request).Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-
-	response := struct {
-		Data model.Deposit `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
-		}).
-		SetContext(ctx).
-		Post(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.Deposit{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.Deposit{}, model.ErrNetworkError
-		}
-		return model.Deposit{}, model.ParseError(errRes.Error.Details)
-	}
-
-	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
-	return response.Data, nil
+	return response, err
 }
 
-// GetAllDeposits makes an API request using Call to get all deposits
-func (c *Call) GetAllDeposits(ctx context.Context) (model.DepositBatchResponse, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, depositsAPIVersion)
+// GetAllDeposits makes request to Torus to get all deposits
+func (c *Call) GetAllDeposits(ctx context.Context, settled *bool) (model.DepositBatchResponse, error) {
+	var (
+		err      error
+		response model.DepositBatchResponse
+		params   = make(map[string]interface{})
+		path     = "v1/deposits"
+	)
 
-	fL := c.logger.With().Str("func", "GetAllDeposits").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
-
-	response := struct {
-		Data model.DepositBatchResponse `json:"data"`
-	}{}
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Get(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.DepositBatchResponse{}, err
+	if settled != nil {
+		params["settled"] = strconv.FormatBool(*settled)
 	}
 
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.DepositBatchResponse{}, model.ErrNetworkError
-		}
-		return model.DepositBatchResponse{}, model.ParseError(errRes.Error.Details)
-	}
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
 
-	fL.Info().Interface(model.LogStrResponse, response.Data).Msg("response")
-	return response.Data, nil
+	return response, err
 }
 
-// GetDepositID makes an API request using Call to get deposit by id
-func (c *Call) GetDepositID(ctx context.Context, id uuid.UUID) (model.Deposit, error) {
-	endpoint := fmt.Sprintf("%s%s/%s", c.baseURL, depositAPIVersion, id)
+// GetDepositID makes request to Torus to get deposit by its ID
+func (c *Call) GetDepositID(ctx context.Context, id string) (model.Deposit, error) {
+	var (
+		err      error
+		response model.Deposit
+		path     = fmt.Sprintf("v1/deposit/%s", id)
+	)
 
-	fL := c.logger.With().Str("func", "GetDepositID").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
 
-	response := struct {
-		Data model.Deposit `json:"data"`
-	}{}
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetResult(&response).
-		SetHeader(model.RequestIDHeaderKey, helpers.GetRequestID(ctx)).
-		SetContext(ctx).
-		Get(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.Deposit{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.Deposit{}, model.ErrNetworkError
-		}
-		return model.Deposit{}, model.ParseError(errRes.Error.Details)
-	}
-
-	return response.Data, nil
+	return response, err
 }
 
-// InternalFundsTransfer makes an api
+// InternalFundsTransfer makes request to Torus to transfer funds between yield offerings
 func (c *Call) InternalFundsTransfer(ctx context.Context, request model.FundTransferRequest) (model.Deposit, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, fundTransferAPIVersion)
+	var (
+		err       error
+		response  model.Deposit
+		path      = "v1/transfer-funds"
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
 
-	fL := c.logger.With().Str("func", "InternalFundsTransfer").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface("request", request).
-		Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-
-	response := struct {
-		Data model.Deposit `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
-		}).
-		SetContext(ctx).
-		Post(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.Deposit{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.Deposit{}, model.ErrNetworkError
-		}
-		return model.Deposit{}, model.ParseError(errRes.Error.Details)
-	}
-
-	return response.Data, nil
+	return response, err
 }
 
-// IntraTransfer makes an API request to transfer funds between two customers
+// IntraTransfer makes request to Torus to transfer funds between two customers
 func (c *Call) IntraTransfer(ctx context.Context, request model.IntraTransferRequest) (model.IntraTransferResponse, error) {
-	endpoint := fmt.Sprintf("%s%s", c.baseURL, intraTransferAPIVersion)
+	var (
+		err       error
+		response  model.IntraTransferResponse
+		path      = "v1/intra-transfer"
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
 
-	fL := c.logger.With().Str("func", "IntraTransfer").Str("endpoint", endpoint).Logger()
-	fL.Info().Msg("starting...")
-	fL.Info().Interface("request", request).
-		Interface(model.LogStrRequest, "empty").Msg("request")
-	defer fL.Info().Msg("done...")
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
-	signature := helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
-
-	response := struct {
-		Data model.IntraTransferResponse `json:"data"`
-	}{}
-
-	res, err := c.client.R().
-		SetAuthToken(c.bearerToken).
-		SetBody(request).
-		SetResult(&response).
-		SetHeaders(map[string]string{
-			"Signature":              signature,
-			model.RequestIDHeaderKey: helpers.GetRequestID(ctx),
-		}).
-		SetContext(ctx).
-		Post(endpoint)
-
-	if err != nil {
-		fL.Err(err).Msg("error occurred")
-		return model.IntraTransferResponse{}, err
-	}
-
-	if res.StatusCode() != http.StatusOK {
-		fL.Info().Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
-		var errRes model.ErrorResponse
-		errRes, err = model.GetErrorDetails(string(res.Body()))
-		if err != nil {
-			fL.Err(err).Msg("error occurred")
-			return model.IntraTransferResponse{}, model.ErrNetworkError
-		}
-		return model.IntraTransferResponse{}, model.ParseError(errRes.Error.Details)
-	}
-
-	return response.Data, nil
+	return response, err
 }
