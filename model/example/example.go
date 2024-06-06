@@ -113,4 +113,35 @@ var (
 		},
 		Currency: "NGN",
 	}
+
+	// NewInitiateDepositRequest sample initiate deposit request
+	NewInitiateDepositRequest = model.InitiateDepositRequest{
+		CustomerID:      "c4b9197f-009e-4019-b0dd-0cab6e9e3189",
+		Reference:       "ref123",
+		Amount:          100,
+		YieldOfferingID: "63abda53-301f-44c3-bae1-447af643c593",
+	}
+
+	// NewFundTransferRequest sample fund transfer request
+	NewFundTransferRequest = model.FundTransferRequest{
+		CustomerID:      "c4b9197f-009e-4019-b0dd-0cab6e9e3189",
+		Reference:       "ref123",
+		Amount:          100000,
+		Action:          model.Credit,
+		YieldOfferingID: "4890133f-85f2-4b0d-8f26-b8707bc50b45",
+	}
+
+	// NewIntraTransferRequest sample intra transfer request
+	NewIntraTransferRequest = model.IntraTransferRequest{
+		Reference: "ref123",
+		Amount:    100000,
+		Sender: model.TransferParty{
+			CustomerID:      "9f40fb69-64e3-4d23-853a-0243af155427",
+			YieldOfferingID: "9f40fb69-64e3-4d23-853a-0243af155427",
+		},
+		Receiver: model.TransferParty{
+			CustomerID:      "cba2fe07-f8bd-4c5a-97e5-923032f0467b",
+			YieldOfferingID: "42ee80d8-2a95-419c-aad1-5643d306948e",
+		},
+	}
 )

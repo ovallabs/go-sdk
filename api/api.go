@@ -67,6 +67,19 @@ type RemoteCalls interface {
 	GetBeneficiaries(ctx context.Context, currency string, page *model.Page) (model.AllBeneficiariesResponse, error)
 	GetBeneficiaryByID(ctx context.Context, beneficiaryID string) (model.TransferBeneficiary, error)
 
+	// Deposit APIs
+	InitiateDeposit(ctx context.Context, request model.InitiateDepositRequest) (model.Deposit, error)
+	GetAllDeposits(ctx context.Context, settled *bool) (model.DepositBatchResponse, error)
+	GetDepositID(ctx context.Context, id string) (model.Deposit, error)
+	InternalFundsTransfer(ctx context.Context, request model.FundTransferRequest) (model.Deposit, error)
+	IntraTransfer(ctx context.Context, request model.IntraTransferRequest) (model.IntraTransferResponse, error)
+
+	// Withdrawal APIs
+	InitiateWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error)
+	FiatWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error)
+	CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error)
+	FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalRequest) (model.FeeWithdrawalResponse, error)
+
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
 }

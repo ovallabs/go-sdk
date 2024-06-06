@@ -19,6 +19,41 @@ func main() {
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
 	//ctx := context.Background()
 
+	//deposit, err := apiCalls.InitiateDeposit(ctx, example.NewInitiateDepositRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Deposit: %+v\n", deposit)
+
+	//deposits, err := apiCalls.GetAllDeposits(ctx, nil)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Deposits: %+v\n", deposits)
+
+	//deposit, err := apiCalls.GetDepositID(ctx, "82f6e5b7-ad81-4ed5-bdac-153255b6aa17")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Printf("Deposit: %+v\n", deposit)
+
+	//deposit, err := apiCalls.InternalFundsTransfer(ctx, example.NewFundTransferRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("deposit", deposit)
+
+	//intraTransfer, err := apiCalls.IntraTransfer(ctx, example.NewIntraTransferRequest)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Intra Transfer: ", intraTransfer)
+
 	//currencySwap, err := apiCalls.InitiateCurrencySwap(ctx, example.NewInitiateCurrencySwapRequest)
 	//if err != nil {
 	//	fmt.Printf("Error: %v\n", err)
@@ -229,7 +264,7 @@ func main() {
 	//transactions, err := apiCalls.GetTransactions(ctx,
 	//	"c4b9197f-009e-4019-b0dd-0cab6e9e3189",
 	//	"",
-	//	"completed",
+	//	"",
 	//	"",
 	//	"",
 	//	nil,
