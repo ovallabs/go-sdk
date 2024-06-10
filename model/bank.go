@@ -21,6 +21,7 @@ type (
 		IssuedCountryCode *string `json:"issued_country_code,omitempty"`
 		IssuedBy          *string `json:"issued_by,omitempty"`
 		IssuedDate        *string `json:"issued_date,omitempty"`
+		ExpirationDate    *string `json:"expiration_date,omitempty"`
 		Country           *string `json:"country,omitempty"`
 		ZipCode           *string `json:"zip_code,omitempty"`
 		City              *string `json:"city,omitempty"`
