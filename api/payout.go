@@ -39,7 +39,7 @@ func (c *Call) InitiateDirectBulkPayout(ctx context.Context, request model.Initi
 }
 
 // InitiatePayout makes a request to Torus to initiate a bulk payout
-func (c *Call) InitiatePayout(ctx context.Context, currency, payoutType, beneficiaryType, remarks string, document *os.File) (model.PayoutDetails, error) {
+func (c *Call) InitiatePayout(ctx context.Context, currency, payoutType, beneficiaryType, remarks string, customerID *string, document *os.File) (model.PayoutDetails, error) {
 	var (
 		err      error
 		response model.PayoutDetails
@@ -50,6 +50,9 @@ func (c *Call) InitiatePayout(ctx context.Context, currency, payoutType, benefic
 	formData["currency"] = currency
 	formData["payout_type"] = payoutType
 	formData["beneficiary_type"] = beneficiaryType
+	if customerID != nil {
+		formData["customer_id"] = *customerID
+	}
 	formData["remarks"] = remarks
 	formData["document"] = document
 

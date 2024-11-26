@@ -61,6 +61,7 @@ type (
 		Fee          Money      `json:"fee"`
 		Remarks      string     `json:"remarks"`
 		CancelReason *string    `json:"cancel_reason"`
+		CustomerID   *uuid.UUID `json:"customer_id"`
 		CompletedAt  *time.Time `json:"completed_at"`
 		CreatedAt    time.Time  `json:"created_at"`
 		UpdatedAt    time.Time  `json:"updated_at"`
@@ -86,12 +87,14 @@ type (
 
 	// InitiateBulkPayoutRequest schema for payout request
 	InitiateBulkPayoutRequest struct {
-		Currency        string                       `json:"currency"`
-		Remarks         string                       `json:"remarks,omitempty"`
-		Accounts        []BulkPayoutRecipientAccount `json:"accounts,omitempty"`
-		BeneficiaryType PayoutType                   `json:"beneficiary_type"`
-		BeneficiaryID   *string                      `json:"beneficiary_id,omitempty"`
-		Amount          *float64                     `json:"amount,omitempty"`
+		Currency             string                       `json:"currency"`
+		Remarks              string                       `json:"remarks,omitempty"`
+		Accounts             []BulkPayoutRecipientAccount `json:"accounts,omitempty"`
+		BeneficiaryType      PayoutType                   `json:"beneficiary_type"`
+		BeneficiaryID        *string                      `json:"beneficiary_id,omitempty"`
+		Amount               *float64                     `json:"amount,omitempty"`
+		TransactionReference *string                      `json:"transaction_reference,omitempty"`
+		CustomerID           *string                      `json:"customer_id,omitempty"`
 	}
 
 	// BulkPayoutRecipientAccount schema for payout recipient account

@@ -50,7 +50,7 @@ type RemoteCalls interface {
 	// Payout APIs
 	GetPayoutByID(ctx context.Context, payoutID string) (model.PayoutResponse, error)
 	InitiateDirectBulkPayout(ctx context.Context, request model.InitiateBulkPayoutRequest) (model.PayoutDetails, error)
-	InitiatePayout(ctx context.Context, currency, payoutType, beneficiaryType, remarks string, document *os.File) (model.PayoutDetails, error)
+	InitiatePayout(ctx context.Context, currency, payoutType, beneficiaryType, remarks string, customerID *string, document *os.File) (model.PayoutDetails, error)
 	GetAllPayouts(ctx context.Context, status, search string, dateBetween model.DateBetween, page model.Page) (model.AllPayoutsResponse, error)
 	CancelPayout(ctx context.Context, request model.CancelPayoutRequest) error
 	UpdatePayoutAccount(ctx context.Context, payoutID string, request model.TransferBeneficiaryDetails) error
