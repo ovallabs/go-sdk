@@ -14,6 +14,7 @@ type (
 		IntermediaryBank *IntermediaryBank `json:"intermediary_bank,omitempty"`
 		Currency         string            `json:"destination_currency"`
 		Nickname         *string           `json:"nickname,omitempty"`
+		CustomerID       *string           `json:"customer_id,omitempty"`
 	}
 
 	// TransferBeneficiary schema for transfer beneficiary
@@ -26,6 +27,7 @@ type (
 		DestinationCurrency string         `json:"currency"`
 		ComplianceStatus    string         `json:"compliance_status"`
 		Nickname            string         `json:"nickname"`
+		CustomerID          *uuid.UUID     `json:"customer_id"`
 		CreatedAt           time.Time      `json:"created_at"`
 		UpdatedAt           *time.Time     `json:"updated_at"`
 	}
