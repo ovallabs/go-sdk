@@ -38,15 +38,15 @@ func (c *Call) GetBanks(ctx context.Context) ([]model.BankCode, error) {
 }
 
 // GetSupportedBanks makes request to Torus to get list of supported banks
-func (c *Call) GetSupportedBanks(ctx context.Context, currency, country string) ([]model.Bank, error) {
+func (c *Call) GetSupportedBanks(ctx context.Context, currency string, country *string) ([]model.Bank, error) {
 	var (
 		err      error
 		response []model.Bank
 		params   = make(map[string]interface{})
 		path     = fmt.Sprintf("%s/supported-banks/%s", bankAPIVersion, currency)
 	)
-	if country != "" {
-		params["country"] = country
+	if country != nil {
+		params["country"] = *country
 	}
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
