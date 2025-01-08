@@ -314,7 +314,10 @@ func main() {
 	//}
 	//fmt.Println("Banks", banks)
 
-	//banks, err := apiCalls.GetSupportedBanks(ctx, "GHS", "GH")
+	//currency := "GHS"
+	//country := "GH"
+	//payoutType := "banks"
+	//banks, err := apiCalls.GetSupportedBanks(ctx, currency, &country, &payoutType)
 	//if err != nil {
 	//	fmt.Printf("Error: %v\n", err)
 	//	return
