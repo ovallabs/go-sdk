@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"os"
 
 	"github.com/go-resty/resty/v2"
@@ -18,7 +17,7 @@ func main() {
 	defer logger.Info().Msg("stopped")
 	apiCalls := api.New(&logger, client, model.PublicKey, model.BearerToken, model.BaseURL)
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
-	ctx := context.Background()
+	//ctx := context.Background()
 
 	//deposit, err := apiCalls.InitiateDeposit(ctx, example.NewInitiateDepositRequest)
 	//if err != nil {
