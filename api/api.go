@@ -42,6 +42,7 @@ type RemoteCalls interface {
 
 	// Payment APIs
 	GetBanks(ctx context.Context) ([]model.BankCode, error)
+	GetSupportedBanks(ctx context.Context, currency string, country *string) ([]model.Bank, error)
 	ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetails, error)
 	GenerateBankAccount(ctx context.Context, request model.GenerateBankAccountRequest) (model.BankAccount, error)
 	GetBankAccount(ctx context.Context, customerID, currency string) (model.BankAccount, error)

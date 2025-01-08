@@ -314,6 +314,13 @@ func main() {
 	//}
 	//fmt.Println("Banks", banks)
 
+	//banks, err := apiCalls.GetSupportedBanks(ctx, "GHS", "GH")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Banks", banks)
+
 	//account, err := apiCalls.ResolveBankAccount(ctx, model.AccountResolveRequest{
 	//	BankCode:      "044",
 	//	AccountNumber: "9036678078",

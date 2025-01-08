@@ -49,6 +49,13 @@ type (
 		Code     string `json:"code"`
 	}
 
+	// Bank schema for bank
+	Bank struct {
+		Name    string `json:"name"`
+		Code    string `json:"code"`
+		Country string `json:"country"`
+	}
+
 	// AccountResolveRequest schema for account resolve request
 	AccountResolveRequest struct {
 		BankCode      string `json:"bank_code"`
