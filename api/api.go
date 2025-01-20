@@ -13,6 +13,8 @@ import (
 )
 
 // RemoteCalls abstracted definition of supported functions
+//
+//go:generate mockgen -source api.go -destination ./mock/mock_api.go -package mock RemoteCalls
 type RemoteCalls interface {
 	// Customer APIs
 	CreateCustomer(ctx context.Context, request model.CreateCustomerRequest) (model.Customer, error)
