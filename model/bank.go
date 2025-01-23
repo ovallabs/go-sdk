@@ -56,6 +56,12 @@ type (
 		Code     string `json:"code"`
 	}
 
+	// TermsOfServiceResponse schema for terms of service response
+	TermsOfServiceResponse struct {
+		IsRequired bool   `json:"is_required"`
+		URL        string `json:"url"`
+	}
+
 	// Bank schema for bank
 	Bank struct {
 		Name    string `json:"name"`

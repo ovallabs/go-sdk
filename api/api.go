@@ -49,6 +49,7 @@ type RemoteCalls interface {
 	GenerateBankAccount(ctx context.Context, request model.GenerateBankAccountRequest) (model.BankAccount, error)
 	GetBankAccount(ctx context.Context, customerID, currency string) (model.BankAccount, error)
 	MockDeposit(ctx context.Context, request model.MockCustomerDepositRequest) error
+	GetTermsOfService(ctx context.Context, customerID, currency string) (model.TermsOfServiceResponse, error)
 
 	// Payout APIs
 	GetPayoutByID(ctx context.Context, payoutID string) (model.PayoutResponse, error)

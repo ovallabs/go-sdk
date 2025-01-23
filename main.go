@@ -307,6 +307,13 @@ func main() {
 	//}
 	//fmt.Println("Account: ", account)
 
+	//tos, err := apiCalls.GetTermsOfService(context.Background(), "c4b9197f-009e-4019-b0dd-0cab6e9e3189", "USD")
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
+	//fmt.Println("Terms of Service: ", tos)
+
 	//banks, err := apiCalls.GetBanks(ctx)
 	//if err != nil {
 	//	fmt.Printf("Error: %v\n", err)
