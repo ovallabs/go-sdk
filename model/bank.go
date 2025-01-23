@@ -9,25 +9,32 @@ import (
 type (
 	// GenerateBankAccountRequest schema for generate bank account request
 	GenerateBankAccountRequest struct {
-		CustomerID string `json:"customer_id"`
-		Currency   string `json:"currency"`
-		Reference  string `json:"reference"`
-
-		BVN         *string `json:"bvn,omitempty"`
-		PhoneNumber *string `json:"phone_number,omitempty"`
-
-		DocumentType      *string `json:"document_type,omitempty"`
-		Number            *string `json:"document_number,omitempty"`
-		IssuedCountryCode *string `json:"issued_country_code,omitempty"`
-		IssuedBy          *string `json:"issued_by,omitempty"`
-		IssuedDate        *string `json:"issued_date,omitempty"`
-		ExpirationDate    *string `json:"expiration_date,omitempty"`
-		Country           *string `json:"country,omitempty"`
-		ZipCode           *string `json:"zip_code,omitempty"`
-		City              *string `json:"city,omitempty"`
-		Street            *string `json:"street,omitempty"`
-		State             *string `json:"state,omitempty"`
-		DateOfBirth       *string `json:"date_of_birth,omitempty"`
+		CustomerID              string  `json:"customer_id"`
+		Currency                string  `json:"currency"`
+		Reference               string  `json:"reference"`
+		BVN                     *string `json:"bvn,omitempty"`
+		PhoneNumber             *string `json:"phone_number,omitempty"`
+		DocumentType            *string `json:"document_type,omitempty"`
+		Number                  *string `json:"document_number,omitempty"`
+		IssuedCountryCode       *string `json:"issued_country_code,omitempty"`
+		IssuedBy                *string `json:"issued_by,omitempty"`
+		IssuedDate              *string `json:"issued_date,omitempty"`
+		ExpirationDate          *string `json:"expiration_date,omitempty"`
+		Country                 *string `json:"country,omitempty"`
+		ZipCode                 *string `json:"zip_code,omitempty"`
+		City                    *string `json:"city,omitempty"`
+		Street                  *string `json:"street,omitempty"`
+		State                   *string `json:"state,omitempty"`
+		DateOfBirth             *string `json:"date_of_birth,omitempty"`
+		AgreementID             *string `json:"agreement_id,omitempty"`
+		DocumentFrontPage       *string `json:"document_front_page,omitempty"`
+		DocumentBackPage        *string `json:"document_back_page,omitempty"`
+		ProofOfAddressDoc       *string `json:"proof_of_address_doc,omitempty"`
+		ActingAsIntermediary    *string `json:"acting_as_intermediary,omitempty"`    // true or false
+		EmploymentStatus        *string `json:"employment_status,omitempty"`         // employed, homemaker, retired, self_employed, student, unemployed
+		ExpectedMonthlyPayments *string `json:"expected_monthly_payments,omitempty"` // "0_4999", "5000_9999", "10000_49999", "50000_plus"
+		PrimaryPurpose          *string `json:"primary_purpose,omitempty"`           // business_transactions, charitable_donations, investment_purposes, payments_to_friends_or_family_abroad, personal_or_living_expenses, protect_wealth, purchase_goods_and_services, receive_payment_for_freelancing. other
+		SourceOfFunds           *string `json:"source_of_funds,omitempty"`           // "business_transactions", "charitable_donations", "investment_purposes", "payments_to_friends_or_family_abroad", "personal_or_living_expenses", "protect_wealth", "purchase_goods_and_services", "receive_payment_for_freelancing", "other"
 	}
 
 	// BankAccount schema for bank account
