@@ -9,26 +9,23 @@ import (
 type (
 	// GenerateBankAccountRequest schema for generate bank account request
 	GenerateBankAccountRequest struct {
-		CustomerID string `json:"customer_id"`
-		Currency   string `json:"currency"`
-		Reference  string `json:"reference"`
-
-		BVN         *string `json:"bvn,omitempty"`
-		PhoneNumber *string `json:"phone_number,omitempty"`
-
-		DocumentType      *string `json:"document_type,omitempty"`
-		Number            *string `json:"document_number,omitempty"`
-		IssuedCountryCode *string `json:"issued_country_code,omitempty"`
-		IssuedBy          *string `json:"issued_by,omitempty"`
-		IssuedDate        *string `json:"issued_date,omitempty"`
-		ExpirationDate    *string `json:"expiration_date,omitempty"`
-		Country           *string `json:"country,omitempty"`
-		ZipCode           *string `json:"zip_code,omitempty"`
-		City              *string `json:"city,omitempty"`
-		Street            *string `json:"street,omitempty"`
-		State             *string `json:"state,omitempty"`
-		DateOfBirth       *string `json:"date_of_birth,omitempty"`
-
+		CustomerID              string  `json:"customer_id"`
+		Currency                string  `json:"currency"`
+		Reference               string  `json:"reference"`
+		BVN                     *string `json:"bvn,omitempty"`
+		PhoneNumber             *string `json:"phone_number,omitempty"`
+		DocumentType            *string `json:"document_type,omitempty"`
+		Number                  *string `json:"document_number,omitempty"`
+		IssuedCountryCode       *string `json:"issued_country_code,omitempty"`
+		IssuedBy                *string `json:"issued_by,omitempty"`
+		IssuedDate              *string `json:"issued_date,omitempty"`
+		ExpirationDate          *string `json:"expiration_date,omitempty"`
+		Country                 *string `json:"country,omitempty"`
+		ZipCode                 *string `json:"zip_code,omitempty"`
+		City                    *string `json:"city,omitempty"`
+		Street                  *string `json:"street,omitempty"`
+		State                   *string `json:"state,omitempty"`
+		DateOfBirth             *string `json:"date_of_birth,omitempty"`
 		AgreementID             *string `json:"agreement_id,omitempty"`
 		DocumentFrontPage       *string `json:"document_front_page,omitempty"`
 		DocumentBackPage        *string `json:"document_back_page,omitempty"`
