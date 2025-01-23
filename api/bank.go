@@ -90,6 +90,23 @@ func (c *Call) GetBankAccount(ctx context.Context, customerID, currency string) 
 	return response, err
 }
 
+// GetTermsOfService makes request to Torus to get terms of service for a currency
+func (c *Call) GetTermsOfService(ctx context.Context, customerID, currency string) (model.TermsOfServiceResponse, error) {
+	var (
+		err      error
+		response model.TermsOfServiceResponse
+		params   = map[string]interface{}{
+			"customer_id": customerID,
+			"currency":    currency,
+		}
+		path = fmt.Sprintf("%s/account/terms", bankAPIVersion)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
+
+	return response, err
+}
+
 // MockDeposit makes request to Torus to mock customer deposit
 func (c *Call) MockDeposit(ctx context.Context, request model.MockCustomerDepositRequest) error {
 	var (

@@ -540,6 +540,21 @@ func (mr *MockRemoteCallsMockRecorder) GetTerminalTransfers(ctx, status, sourceC
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTerminalTransfers", reflect.TypeOf((*MockRemoteCalls)(nil).GetTerminalTransfers), ctx, status, sourceCurrency, destinationCurrency, dateBetween, page)
 }
 
+// GetTermsOfService mocks base method.
+func (m *MockRemoteCalls) GetTermsOfService(ctx context.Context, customerID, currency string) (model.TermsOfServiceResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetTermsOfService", ctx, customerID, currency)
+	ret0, _ := ret[0].(model.TermsOfServiceResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetTermsOfService indicates an expected call of GetTermsOfService.
+func (mr *MockRemoteCallsMockRecorder) GetTermsOfService(ctx, customerID, currency interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTermsOfService", reflect.TypeOf((*MockRemoteCalls)(nil).GetTermsOfService), ctx, customerID, currency)
+}
+
 // GetTransactions mocks base method.
 func (m *MockRemoteCalls) GetTransactions(ctx context.Context, customerID, yieldOfferingID, status, reference, batchDate string, amount *float64, dateBetween *model.DateBetween, page *model.Page) (model.AllTransactionsResponse, error) {
 	m.ctrl.T.Helper()
