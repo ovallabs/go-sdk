@@ -35,6 +35,7 @@ type (
 		ExpectedMonthlyPayments *string `json:"expected_monthly_payments,omitempty"` // "0_4999", "5000_9999", "10000_49999", "50000_plus"
 		PrimaryPurpose          *string `json:"primary_purpose,omitempty"`           // business_transactions, charitable_donations, investment_purposes, payments_to_friends_or_family_abroad, personal_or_living_expenses, protect_wealth, purchase_goods_and_services, receive_payment_for_freelancing. other
 		SourceOfFunds           *string `json:"source_of_funds,omitempty"`           // "business_transactions", "charitable_donations", "investment_purposes", "payments_to_friends_or_family_abroad", "personal_or_living_expenses", "protect_wealth", "purchase_goods_and_services", "receive_payment_for_freelancing", "other"
+		MostRecentOccupation    *string `json:"most_recent_occupation"`
 	}
 
 	// BankAccount schema for bank account
