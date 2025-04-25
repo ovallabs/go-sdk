@@ -84,6 +84,14 @@ type RemoteCalls interface {
 	CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error)
 	FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalRequest) (model.FeeWithdrawalResponse, error)
 
+	// PaymentCard APIs
+	InitiatePaymentCardRequest(ctx context.Context, request model.InitiateCardRequest) (string, error)
+	CompletePaymentCardRequest(ctx context.Context, request model.CompleteCardRequest) error
+	GetLinkToAddPaymentCard(ctx context.Context, request model.GetLinkToAddCardReq) (string, error)
+	GetLinkToAuthorizeCustomer(ctx context.Context, request model.GetLinkToAddCardReq) (string, error)
+	GetCustomerPaymentCards(ctx context.Context, customerID string, status, search *string, dateBetween *model.DateBetween, page *model.Page) (model.AllPaymentCardsResponse, error)
+	GetCustomerPaymentCardByID(ctx context.Context, customerID, ID string) (model.PaymentCard, error)
+
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
 }

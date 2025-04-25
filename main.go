@@ -348,4 +348,12 @@ func main() {
 	//	return
 	//}
 	//fmt.Println("Deposit successful")
+
+	//	//phone := "+16304421125"
+	//	url, err := apiCalls.GetCustomerPaymentCards(context.Background(), "15485e81-c022-4e70-bb3d-4c1055148bac", nil, nil, nil, nil)
+	//	if err != nil {
+	//		fmt.Printf("Error: %v\n", err)
+	//		return
+	//	}
+	//	fmt.Println("url: ", url)
 }
