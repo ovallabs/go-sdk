@@ -91,6 +91,7 @@ type RemoteCalls interface {
 	GetLinkToAuthorizeCustomer(ctx context.Context, request model.GetLinkToAddCardReq) (string, error)
 	GetCustomerPaymentCards(ctx context.Context, customerID string, status, search *string, dateBetween *model.DateBetween, page *model.Page) (model.AllPaymentCardsResponse, error)
 	GetCustomerPaymentCardByID(ctx context.Context, customerID, ID string) (model.PaymentCard, error)
+	DebitPaymentCard(ctx context.Context, request model.DebitCustomerPaymentCardRequest) (string, error)
 
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()

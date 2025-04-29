@@ -10,7 +10,7 @@ import (
 	"github.com/ovalfi/go-sdk/model"
 )
 
-// InitiatePaymentCardRequest makes request to Torus to initiate a payment card for a
+// InitiatePaymentCardRequest makes request to Torus to initiate a payment card for a customer
 func (c *Call) InitiatePaymentCardRequest(ctx context.Context, request model.InitiateCardRequest) (string, error) {
 	var (
 		err       error
@@ -24,7 +24,7 @@ func (c *Call) InitiatePaymentCardRequest(ctx context.Context, request model.Ini
 	return response, err
 }
 
-// CompletePaymentCardRequest makes request to Torus to complete a payment card for a
+// CompletePaymentCardRequest makes request to Torus to complete a payment card for a customer
 func (c *Call) CompletePaymentCardRequest(ctx context.Context, request model.CompleteCardRequest) error {
 	var (
 		err  error
@@ -98,6 +98,20 @@ func (c *Call) GetCustomerPaymentCardByID(ctx context.Context, customerID, ID st
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
+
+	return response, err
+}
+
+// DebitPaymentCard makes request to Torus to debit a customer payment card
+func (c *Call) DebitPaymentCard(ctx context.Context, request model.DebitCustomerPaymentCardRequest) (string, error) {
+	var (
+		err       error
+		response  string
+		path      = "v1/payments/cards/debit"
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
 
 	return response, err
 }
