@@ -64,11 +64,11 @@ type (
 
 	// DebitCustomerPaymentCardRequest for request payload
 	DebitCustomerPaymentCardRequest struct {
-		CustomerID    uuid.UUID `json:"customer_id"`
-		PaymentCardID uuid.UUID `json:"payment_card_id"`
-		Amount        float64   `json:"amount"`
-		Reference     string    `json:"reference"`
-		Remarks       *string   `json:"remarks"`
+		CustomerID    string  `json:"customer_id"`
+		PaymentCardID string  `json:"payment_card_id"`
+		Amount        float64 `json:"amount"`
+		Reference     string  `json:"reference"`
+		Remarks       *string `json:"remarks"`
 	}
 
 	// PaymentCardType a string representation of customer payment card type
