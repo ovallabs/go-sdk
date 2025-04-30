@@ -10,32 +10,32 @@ import (
 type (
 	// InitiateCardRequest to initiate card request payload
 	InitiateCardRequest struct {
-		CustomerID  uuid.UUID `json:"customer_id"  validate:"required"`
-		Reference   string    `json:"reference"  validate:"required"`
-		DateOfBirth string    `json:"date_of_birth" validate:"required"` // format: DD-MMM-YYYY (17-JAN-1985)
-		SSN         string    `json:"ssn" validate:"required,len=4"`     // Social Security Number of the user (format: Last four ####)
-		Phone       string    `json:"phone" validate:"required"`         // Phone number of the user (format: +15557771234)
-		Address     string    `json:"address" validate:"required"`       // Address line of the user (PO Boxes are not allowed)
-		City        string    `json:"city" validate:"required"`          // City of the user
-		State       string    `json:"state" validate:"required,len=2"`   // State of the user
-		PostalCode  string    `json:"postal_code" validate:"required"`   // Postal code of the user
-		IPAddress   string    `json:"ip_address" validate:"required"`    // IP address of the user
-		RedirectURI string    `json:"redirect_uri" validate:"required"`
+		CustomerID  string `json:"customer_id"  validate:"required"`
+		Reference   string `json:"reference"  validate:"required"`
+		DateOfBirth string `json:"date_of_birth" validate:"required"` // format: DD-MMM-YYYY (17-JAN-1985)
+		SSN         string `json:"ssn" validate:"required,len=4"`     // Social Security Number of the user (format: Last four ####)
+		Phone       string `json:"phone" validate:"required"`         // Phone number of the user (format: +15557771234)
+		Address     string `json:"address" validate:"required"`       // Address line of the user (PO Boxes are not allowed)
+		City        string `json:"city" validate:"required"`          // City of the user
+		State       string `json:"state" validate:"required,len=2"`   // State of the user
+		PostalCode  string `json:"postal_code" validate:"required"`   // Postal code of the user
+		IPAddress   string `json:"ip_address" validate:"required"`    // IP address of the user
+		RedirectURI string `json:"redirect_uri" validate:"required"`
 	}
 
 	// CompleteCardRequest to complete card request payload
 	CompleteCardRequest struct {
-		CustomerID  uuid.UUID `json:"customer_id"  validate:"required"`
-		AuthCode    string    `json:"auth_code"  validate:"required"`
-		RedirectURI string    `json:"redirect_uri" validate:"required"`
+		CustomerID  string `json:"customer_id"  validate:"required"`
+		AuthCode    string `json:"auth_code"  validate:"required"`
+		RedirectURI string `json:"redirect_uri" validate:"required"`
 	}
 
 	// GetLinkToAddCardReq to get link to add payment card
 	GetLinkToAddCardReq struct {
-		CustomerID  uuid.UUID `json:"customer_id" validate:"required"`
-		RedirectURI string    `json:"redirect_uri" validate:"required"`
-		Phone       *string   `json:"phone"`
-		DirectDebit *bool     `json:"direct_debit"`
+		CustomerID  string  `json:"customer_id" validate:"required"`
+		RedirectURI string  `json:"redirect_uri" validate:"required"`
+		Phone       *string `json:"phone"`
+		DirectDebit *bool   `json:"direct_debit"`
 	}
 
 	// PaymentCard schema represents entity that contains all needed information of a customer payment card
