@@ -103,10 +103,10 @@ func (c *Call) GetCustomerPaymentCardByID(ctx context.Context, customerID, ID st
 }
 
 // DebitPaymentCard makes request to Torus to debit a customer payment card
-func (c *Call) DebitPaymentCard(ctx context.Context, request model.DebitCustomerPaymentCardRequest) (string, error) {
+func (c *Call) DebitPaymentCard(ctx context.Context, request model.DebitCustomerPaymentCardRequest) (model.Deposit, error) {
 	var (
 		err       error
-		response  string
+		response  model.Deposit
 		path      = "v1/payments/cards/debit"
 		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
 	)
