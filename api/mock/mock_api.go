@@ -138,10 +138,10 @@ func (mr *MockRemoteCallsMockRecorder) CryptoWithdrawal(ctx, request interface{}
 }
 
 // DebitPaymentCard mocks base method.
-func (m *MockRemoteCalls) DebitPaymentCard(ctx context.Context, request model.DebitCustomerPaymentCardRequest) (string, error) {
+func (m *MockRemoteCalls) DebitPaymentCard(ctx context.Context, request model.DebitCustomerPaymentCardRequest) (model.Deposit, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DebitPaymentCard", ctx, request)
-	ret0, _ := ret[0].(string)
+	ret0, _ := ret[0].(model.Deposit)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
