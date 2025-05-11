@@ -494,6 +494,21 @@ func (mr *MockRemoteCallsMockRecorder) GetExchangeRates(ctx, amount, sourceCurre
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetExchangeRates", reflect.TypeOf((*MockRemoteCalls)(nil).GetExchangeRates), ctx, amount, sourceCurrency, destinationCurrency)
 }
 
+// GetKYCByCustomerID mocks base method.
+func (m *MockRemoteCalls) GetKYCByCustomerID(ctx context.Context, customerID string) (model.KYCResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetKYCByCustomerID", ctx, customerID)
+	ret0, _ := ret[0].(model.KYCResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetKYCByCustomerID indicates an expected call of GetKYCByCustomerID.
+func (mr *MockRemoteCallsMockRecorder) GetKYCByCustomerID(ctx, customerID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetKYCByCustomerID", reflect.TypeOf((*MockRemoteCalls)(nil).GetKYCByCustomerID), ctx, customerID)
+}
+
 // GetLinkToAddPaymentCard mocks base method.
 func (m *MockRemoteCalls) GetLinkToAddPaymentCard(ctx context.Context, request model.GetLinkToAddCardReq) (string, error) {
 	m.ctrl.T.Helper()
