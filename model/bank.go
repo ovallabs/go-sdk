@@ -82,4 +82,16 @@ type (
 		Amount     float64 `json:"amount"`
 		Currency   string  `json:"currency"`
 	}
+
+	// NumberValidationResponse response for mobile number validation
+	NumberValidationResponse struct {
+		Phone               string `json:"phone"`
+		Valid               bool   `json:"valid"`
+		Mno                 string `json:"mno"`
+		LocalFormat         string `json:"local_format"`
+		InternationalFormat string `json:"international_format"`
+		CountryPrefix       string `json:"country_prefix"`
+		CountryCode         string `json:"country_code"`
+		CountryName         string `json:"country_name"`
+	}
 )
