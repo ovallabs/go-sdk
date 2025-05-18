@@ -73,6 +73,7 @@ type (
 		District      string `json:"district,omitempty"`
 		PostalCode    string `json:"postal_code,omitempty"`
 		IsWithinUS    string `json:"is_within_us"`
+		IsMobileMoney string `json:"is_mobile_money"`
 	}
 
 	// PersonalDetails schema for personal details

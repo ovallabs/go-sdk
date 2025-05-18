@@ -10,6 +10,7 @@ import (
 )
 
 const bankAPIVersion = "v1/payments/banks"
+const utilAPIVersion = "v1/utils"
 
 // ResolveBankAccount makes a request to Torus to resolve bank account
 func (c *Call) ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetails, error) {
@@ -54,6 +55,25 @@ func (c *Call) GetSupportedBanks(ctx context.Context, currency string, country, 
 		params["payout_type"] = *payoutType
 	}
 
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
+
+	return response, err
+}
+
+// ValidatePhoneNumber makes request to Torus to validate a phone number
+func (c *Call) ValidatePhoneNumber(ctx context.Context, currency *string, country, phone string) (model.NumberValidationResponse, error) {
+	var (
+		err      error
+		response model.NumberValidationResponse
+		params   = make(map[string]interface{})
+		path     = fmt.Sprintf("%s/validate-phone", utilAPIVersion)
+	)
+
+	params["country"] = country
+	params["phone"] = phone
+	if currency != nil {
+		params["currency"] = *currency
+	}
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
 
 	return response, err

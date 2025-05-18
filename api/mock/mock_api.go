@@ -893,3 +893,18 @@ func (mr *MockRemoteCallsMockRecorder) UpdatePayoutAccount(ctx, payoutID, reques
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdatePayoutAccount", reflect.TypeOf((*MockRemoteCalls)(nil).UpdatePayoutAccount), ctx, payoutID, request)
 }
+
+// ValidatePhoneNumber mocks base method.
+func (m *MockRemoteCalls) ValidatePhoneNumber(ctx context.Context, currency *string, country, phone string) (model.NumberValidationResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ValidatePhoneNumber", ctx, currency, country, phone)
+	ret0, _ := ret[0].(model.NumberValidationResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ValidatePhoneNumber indicates an expected call of ValidatePhoneNumber.
+func (mr *MockRemoteCallsMockRecorder) ValidatePhoneNumber(ctx, currency, country, phone interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidatePhoneNumber", reflect.TypeOf((*MockRemoteCalls)(nil).ValidatePhoneNumber), ctx, currency, country, phone)
+}
