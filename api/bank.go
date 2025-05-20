@@ -69,8 +69,8 @@ func (c *Call) ValidatePhoneNumber(ctx context.Context, currency *string, countr
 		path     = fmt.Sprintf("%s/validate-phone", utilAPIVersion)
 	)
 
-	params["country"] = country
-	params["phone"] = phone
+	params["country_code"] = country
+	params["phone_number"] = phone
 	if currency != nil {
 		params["currency"] = *currency
 	}
