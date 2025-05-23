@@ -51,6 +51,7 @@ type RemoteCalls interface {
 	MockDeposit(ctx context.Context, request model.MockCustomerDepositRequest) error
 	GetTermsOfService(ctx context.Context, customerID, currency string) (model.TermsOfServiceResponse, error)
 	ValidatePhoneNumber(ctx context.Context, currency *string, country, phone string) (model.NumberValidationResponse, error)
+	ValidateBVN(ctx context.Context, customerID, idNumber string) error
 
 	// Payout APIs
 	GetPayoutByID(ctx context.Context, payoutID string) (model.PayoutResponse, error)
