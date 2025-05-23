@@ -95,6 +95,9 @@ type RemoteCalls interface {
 	GetCustomerPaymentCardByID(ctx context.Context, customerID, ID string) (model.PaymentCard, error)
 	DebitPaymentCard(ctx context.Context, request model.DebitCustomerPaymentCardRequest) (model.Deposit, error)
 
+	// KYC APIs
+	GetKYCByCustomerID(ctx context.Context, customerID string) (model.KYCResponse, error)
+
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
 }
