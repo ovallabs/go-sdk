@@ -21,18 +21,6 @@ func (c *Call) GetKYCByCustomerID(ctx context.Context, customerID string) (model
 	return response, err
 }
 
-func (c *Call) SubmitKYCDocuments(ctx context.Context, customerID string) (model.KYCResponse, error) {
-	var (
-		err      error
-		response model.KYCResponse
-		path     = fmt.Sprintf("%s/%s", kycAPIVersion, customerID)
-	)
-
-	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, nil, &response)
-
-	return response, err
-}
-
 func (c *Call) SubmitCustomerKYCDocument(
 	ctx context.Context,
 	customerID string,
