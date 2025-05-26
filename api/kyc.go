@@ -3,9 +3,10 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/ovalfi/go-sdk/model"
 	"net/http"
 	"os"
+
+	"github.com/ovalfi/go-sdk/model"
 )
 
 // GetKYCByCustomerID makes request to get KYC for a customer
