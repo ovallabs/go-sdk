@@ -97,6 +97,7 @@ type RemoteCalls interface {
 
 	// KYC APIs
 	GetKYCByCustomerID(ctx context.Context, customerID string) (model.KYCResponse, error)
+	SubmitCustomerKYCDocument(ctx context.Context, customerID string, document *os.File, documentType string, country string) (model.KYCResponse, error)
 
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
