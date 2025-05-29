@@ -880,6 +880,21 @@ func (mr *MockRemoteCallsMockRecorder) RunInSandboxMode() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RunInSandboxMode", reflect.TypeOf((*MockRemoteCalls)(nil).RunInSandboxMode))
 }
 
+// SubmitCustomerKYCDocument mocks base method.
+func (m *MockRemoteCalls) SubmitCustomerKYCDocument(ctx context.Context, customerID string, document *os.File, documentType, country string) (model.KYCResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SubmitCustomerKYCDocument", ctx, customerID, document, documentType, country)
+	ret0, _ := ret[0].(model.KYCResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SubmitCustomerKYCDocument indicates an expected call of SubmitCustomerKYCDocument.
+func (mr *MockRemoteCallsMockRecorder) SubmitCustomerKYCDocument(ctx, customerID, document, documentType, country interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubmitCustomerKYCDocument", reflect.TypeOf((*MockRemoteCalls)(nil).SubmitCustomerKYCDocument), ctx, customerID, document, documentType, country)
+}
+
 // UpdateCustomer mocks base method.
 func (m *MockRemoteCalls) UpdateCustomer(ctx context.Context, request model.UpdateCustomerRequest) (model.Customer, error) {
 	m.ctrl.T.Helper()
