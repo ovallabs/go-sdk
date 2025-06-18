@@ -99,6 +99,13 @@ type RemoteCalls interface {
 	GetKYCByCustomerID(ctx context.Context, customerID string) (model.KYCResponse, error)
 	SubmitCustomerKYCDocument(ctx context.Context, customerID string, document *os.File, documentType string, country string) (model.KYCResponse, error)
 
+	// Card APIs
+	CreateCustomerCard(ctx context.Context, request model.CreateCustomerCardRequest) (string, error)
+	FreezeUnfreezeCard(ctx context.Context, request model.FreezeUnfreezeCardRequest) (string, error)
+	GetCustomerCards(ctx context.Context, customerID *string) (model.AllCardsResponse, error)
+	GetCustomerCardByID(ctx context.Context, cardID string) (model.Card, error)
+	FundCustomerCard(ctx context.Context, request model.FundCustomerCardRequest) (model.Card, error)
+
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
 }
