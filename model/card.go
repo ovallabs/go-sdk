@@ -24,8 +24,8 @@ type (
 		Phone         string `json:"phone"`
 	}
 
-	// FreezeUnfreezeCardRequest schema
-	FreezeUnfreezeCardRequest struct {
+	// FreezeCardRequest schema
+	FreezeCardRequest struct {
 		CardID     string `json:"card_id"`
 		CustomerID string `json:"customer_id"`
 		FreezeCard string `json:"freeze_card"`

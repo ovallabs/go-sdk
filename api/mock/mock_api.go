@@ -240,7 +240,7 @@ func (mr *MockRemoteCallsMockRecorder) FiatWithdrawal(ctx, request interface{}) 
 }
 
 // FreezeUnfreezeCard mocks base method.
-func (m *MockRemoteCalls) FreezeUnfreezeCard(ctx context.Context, request model.FreezeUnfreezeCardRequest) (string, error) {
+func (m *MockRemoteCalls) FreezeUnfreezeCard(ctx context.Context, request model.FreezeCardRequest) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FreezeUnfreezeCard", ctx, request)
 	ret0, _ := ret[0].(string)

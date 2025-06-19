@@ -24,7 +24,7 @@ func (c *Call) CreateCustomerCard(ctx context.Context, request model.CreateCusto
 }
 
 // FreezeUnfreezeCard makes request to Torus to freeze/unfreeze a customer card
-func (c *Call) FreezeUnfreezeCard(ctx context.Context, request model.FreezeUnfreezeCardRequest) (string, error) {
+func (c *Call) FreezeUnfreezeCard(ctx context.Context, request model.FreezeCardRequest) (string, error) {
 	var (
 		err      error
 		response string

@@ -101,7 +101,7 @@ type RemoteCalls interface {
 
 	// Card APIs
 	CreateCustomerCard(ctx context.Context, request model.CreateCustomerCardRequest) (string, error)
-	FreezeUnfreezeCard(ctx context.Context, request model.FreezeUnfreezeCardRequest) (string, error)
+	FreezeUnfreezeCard(ctx context.Context, request model.FreezeCardRequest) (string, error)
 	GetCustomerCards(ctx context.Context, customerID *string) (model.AllCardsResponse, error)
 	GetCustomerCardByID(ctx context.Context, cardID string) (model.Card, error)
 	FundCustomerCard(ctx context.Context, request model.FundCustomerCardRequest) (model.Card, error)
