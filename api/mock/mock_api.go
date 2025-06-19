@@ -494,6 +494,21 @@ func (mr *MockRemoteCallsMockRecorder) GetCustomerCardByID(ctx, cardID interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCustomerCardByID", reflect.TypeOf((*MockRemoteCalls)(nil).GetCustomerCardByID), ctx, cardID)
 }
 
+// GetCustomerCardSecureDetails mocks base method.
+func (m *MockRemoteCalls) GetCustomerCardSecureDetails(ctx context.Context, cardID, customerID string) (model.VaultedCardDetails, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCustomerCardSecureDetails", ctx, cardID, customerID)
+	ret0, _ := ret[0].(model.VaultedCardDetails)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCustomerCardSecureDetails indicates an expected call of GetCustomerCardSecureDetails.
+func (mr *MockRemoteCallsMockRecorder) GetCustomerCardSecureDetails(ctx, cardID, customerID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCustomerCardSecureDetails", reflect.TypeOf((*MockRemoteCalls)(nil).GetCustomerCardSecureDetails), ctx, cardID, customerID)
+}
+
 // GetCustomerCards mocks base method.
 func (m *MockRemoteCalls) GetCustomerCards(ctx context.Context, customerID *string) (model.AllCardsResponse, error) {
 	m.ctrl.T.Helper()

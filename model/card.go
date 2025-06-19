@@ -71,4 +71,13 @@ type (
 		TransferAmount    float64 `json:"transfer_amount"`
 		TransferNarration string  `json:"transfer_narration"`
 	}
+
+	// VaultedCardDetails secure vaulted card details
+	VaultedCardDetails struct {
+		FullPAN    string `json:"full_pan"`     // full card number
+		CVV        string `json:"cvv"`          // sensitive
+		ExpiryDate string `json:"expiry_date"`  // e.g., "09"
+		NameOnCard string `json:"name_on_card"` // optional
+		Issuer     string `json:"issuer"`       // optional, duplicate allowed
+	}
 )

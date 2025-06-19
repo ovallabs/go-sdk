@@ -73,3 +73,15 @@ func (c *Call) FundCustomerCard(ctx context.Context, request model.FundCustomerC
 	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, &response)
 	return response, err
 }
+
+// GetCustomerCardSecureDetails makes request to Torus to get customer card secure details
+func (c *Call) GetCustomerCardSecureDetails(ctx context.Context, cardID, customerID string) (model.VaultedCardDetails, error) {
+	var (
+		err      error
+		response model.VaultedCardDetails
+		path     = fmt.Sprintf("v1/cards/%s/secure?customer_id=%s", cardID, customerID)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
+	return response, err
+}
