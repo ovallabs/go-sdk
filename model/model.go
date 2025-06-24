@@ -177,4 +177,14 @@ type (
 		From string `json:"from"`
 		To   string `json:"to"`
 	}
+
+	// TransactionFlow a string representation of transaction flow
+	TransactionFlow string
+)
+
+const (
+	// TransactionFlowDebit represents debit transaction flow
+	TransactionFlowDebit TransactionFlow = "debit"
+	// TransactionFlowCredit represents credit transaction flow
+	TransactionFlowCredit TransactionFlow = "credit"
 )

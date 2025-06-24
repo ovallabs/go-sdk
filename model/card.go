@@ -66,10 +66,11 @@ type (
 
 	// FundCustomerCardRequest schema
 	FundCustomerCardRequest struct {
-		CardID            string  `json:"card_id"`
-		CustomerID        string  `json:"customer_id"`
-		TransferAmount    float64 `json:"transfer_amount"`
-		TransferNarration string  `json:"transfer_narration"`
+		CardID            string          `json:"card_id"`
+		CustomerID        string          `json:"customer_id"`
+		TransferAmount    float64         `json:"transfer_amount"`
+		TransferNarration string          `json:"transfer_narration"`
+		TransactionFlow   TransactionFlow `json:"transaction_flow"`
 	}
 
 	// VaultedCardDetails secure vaulted card details
