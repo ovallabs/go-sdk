@@ -85,3 +85,15 @@ func (c *Call) GetCustomerCardSecureDetails(ctx context.Context, cardID, custome
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
 	return response, err
 }
+
+// DeleteCard makes request to Torus to delete/terminate a customer card
+func (c *Call) DeleteCard(ctx context.Context, cardID, customerID string) (string, error) {
+	var (
+		err      error
+		response string
+		path     = fmt.Sprintf("v1/cards/%s?customer_id=%s", cardID, customerID)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodDelete, nil, nil, nil, nil, &response)
+	return response, err
+}

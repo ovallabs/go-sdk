@@ -106,6 +106,7 @@ type RemoteCalls interface {
 	GetCustomerCardByID(ctx context.Context, cardID string) (model.Card, error)
 	FundCustomerCard(ctx context.Context, request model.FundCustomerCardRequest) (model.Card, error)
 	GetCustomerCardSecureDetails(ctx context.Context, cardID, customerID string) (model.VaultedCardDetails, error)
+	DeleteCard(ctx context.Context, cardID, customerID string) (string, error)
 
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
