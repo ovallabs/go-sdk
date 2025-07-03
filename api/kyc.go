@@ -45,3 +45,15 @@ func (c *Call) SubmitCustomerKYCDocument(
 
 	return response, err
 }
+
+// VerifyCustomerKYC makes request to Torus to verify a customer kyc request
+func (c *Call) VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycType string) error {
+	var (
+		err  error
+		path = fmt.Sprintf("%s/%s/%s/%s", kycAPIVersion, customerID, kycType, idNumber)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, nil, nil)
+
+	return err
+}

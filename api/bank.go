@@ -80,18 +80,6 @@ func (c *Call) ValidatePhoneNumber(ctx context.Context, currency *string, countr
 	return response, err
 }
 
-// ValidateBVN makes request to Torus to validate a bvn number
-func (c *Call) ValidateBVN(ctx context.Context, customerID, idNumber string) error {
-	var (
-		err  error
-		path = fmt.Sprintf("%s/%s/BVN/%s", kycAPIVersion, customerID, idNumber)
-	)
-
-	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, nil, nil)
-
-	return err
-}
-
 // GenerateBankAccount makes request to Torus to generate bank account
 func (c *Call) GenerateBankAccount(ctx context.Context, request model.GenerateBankAccountRequest) (model.BankAccount, error) {
 	var (
