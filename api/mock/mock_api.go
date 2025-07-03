@@ -1029,20 +1029,6 @@ func (mr *MockRemoteCallsMockRecorder) UpdatePayoutAccount(ctx, payoutID, reques
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdatePayoutAccount", reflect.TypeOf((*MockRemoteCalls)(nil).UpdatePayoutAccount), ctx, payoutID, request)
 }
 
-// ValidateBVN mocks base method.
-func (m *MockRemoteCalls) ValidateBVN(ctx context.Context, customerID, idNumber string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateBVN", ctx, customerID, idNumber)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// ValidateBVN indicates an expected call of ValidateBVN.
-func (mr *MockRemoteCallsMockRecorder) ValidateBVN(ctx, customerID, idNumber interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateBVN", reflect.TypeOf((*MockRemoteCalls)(nil).ValidateBVN), ctx, customerID, idNumber)
-}
-
 // ValidatePhoneNumber mocks base method.
 func (m *MockRemoteCalls) ValidatePhoneNumber(ctx context.Context, currency *string, country, phone string) (model.NumberValidationResponse, error) {
 	m.ctrl.T.Helper()
@@ -1056,4 +1042,18 @@ func (m *MockRemoteCalls) ValidatePhoneNumber(ctx context.Context, currency *str
 func (mr *MockRemoteCallsMockRecorder) ValidatePhoneNumber(ctx, currency, country, phone interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidatePhoneNumber", reflect.TypeOf((*MockRemoteCalls)(nil).ValidatePhoneNumber), ctx, currency, country, phone)
+}
+
+// VerifyCustomerKYC mocks base method.
+func (m *MockRemoteCalls) VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycType string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "VerifyCustomerKYC", ctx, customerID, idNumber, kycType)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// VerifyCustomerKYC indicates an expected call of VerifyCustomerKYC.
+func (mr *MockRemoteCallsMockRecorder) VerifyCustomerKYC(ctx, customerID, idNumber, kycType interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VerifyCustomerKYC", reflect.TypeOf((*MockRemoteCalls)(nil).VerifyCustomerKYC), ctx, customerID, idNumber, kycType)
 }

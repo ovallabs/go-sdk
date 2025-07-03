@@ -51,7 +51,6 @@ type RemoteCalls interface {
 	MockDeposit(ctx context.Context, request model.MockCustomerDepositRequest) error
 	GetTermsOfService(ctx context.Context, customerID, currency string) (model.TermsOfServiceResponse, error)
 	ValidatePhoneNumber(ctx context.Context, currency *string, country, phone string) (model.NumberValidationResponse, error)
-	ValidateBVN(ctx context.Context, customerID, idNumber string) error
 
 	// Payout APIs
 	GetPayoutByID(ctx context.Context, payoutID string) (model.PayoutResponse, error)
@@ -98,6 +97,7 @@ type RemoteCalls interface {
 	// KYC APIs
 	GetKYCByCustomerID(ctx context.Context, customerID string) (model.KYCResponse, error)
 	SubmitCustomerKYCDocument(ctx context.Context, customerID string, document *os.File, documentType string, country string) (model.KYCResponse, error)
+	VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycType string) error
 
 	// Card APIs
 	CreateCustomerCard(ctx context.Context, request model.CreateCustomerCardRequest) (string, error)
