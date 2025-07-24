@@ -18,6 +18,7 @@ type (
 		Address       string `json:"address"`
 		City          string `json:"city"`
 		Country       string `json:"country"`
+		IDNumber      string `json:"id_number"`
 		StateRegion   string `json:"state_region"`
 		PostalCode    string `json:"postal_code"`
 		BirthDate     string `json:"birth_date"`
