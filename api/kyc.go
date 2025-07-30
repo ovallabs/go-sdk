@@ -22,27 +22,44 @@ func (c *Call) GetKYCByCustomerID(ctx context.Context, customerID string) (model
 	return response, err
 }
 
+// SubmitCustomerKYCDocument allows you to submit a KYC document for a customer
 func (c *Call) SubmitCustomerKYCDocument(
 	ctx context.Context,
 	customerID string,
-	document *os.File,
+	frontDocument *os.File,
+	backDocument *os.File, // nil if you only have a front side
 	documentType string,
 	country string,
 ) (model.KYCResponse, error) {
 	var (
-		err      error
 		response model.KYCResponse
 		formData = make(map[string]interface{})
-		path     = fmt.Sprintf("%s/%s/document-verification", kycAPIVersion, customerID)
+		path     = fmt.Sprintf("%s/%s/document", kycAPIVersion, customerID)
 	)
 
-	// Prepare form data
-	formData["document"] = document
-	formData["documentType"] = documentType
+	// required front side
+	formData["document_front_side"] = frontDocument
+
+	// optional back side
+	if backDocument != nil {
+		formData["document_back_side"] = backDocument
+	}
+
+	// the rest text fields
+	formData["document_type"] = documentType
 	formData["country"] = country
 
-	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, formData, nil, &response)
-
+	// makeRequest
+	err := c.makeRequest(
+		ctx,
+		path,
+		http.MethodPost,
+		nil,      // signature
+		nil,      // url params
+		formData, // form data
+		nil,
+		&response,
+	)
 	return response, err
 }
 
