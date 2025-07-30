@@ -22,12 +22,12 @@ func (c *Call) GetKYCByCustomerID(ctx context.Context, customerID string) (model
 	return response, err
 }
 
-// SubmitCustomerKYCDocument allows you to submit a KYC document for a customer
+// SubmitCustomerKYCDocument make request to submit a KYC document for a customer
 func (c *Call) SubmitCustomerKYCDocument(
 	ctx context.Context,
 	customerID string,
 	frontDocument *os.File,
-	backDocument *os.File, // nil if you only have a front side
+	backDocument *os.File, // nil only if there is a front side
 	documentType string,
 	country string,
 ) (model.KYCResponse, error) {
@@ -54,9 +54,9 @@ func (c *Call) SubmitCustomerKYCDocument(
 		ctx,
 		path,
 		http.MethodPost,
-		nil,      // signature
-		nil,      // url params
-		formData, // form data
+		nil,
+		nil,
+		formData,
 		nil,
 		&response,
 	)
