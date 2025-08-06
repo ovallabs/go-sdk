@@ -794,6 +794,21 @@ func (mr *MockRemoteCallsMockRecorder) GetTransferByID(ctx, transferID interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTransferByID", reflect.TypeOf((*MockRemoteCalls)(nil).GetTransferByID), ctx, transferID)
 }
 
+// GetVerifyBiometricsLink mocks base method.
+func (m *MockRemoteCalls) GetVerifyBiometricsLink(ctx context.Context, customerID string) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetVerifyBiometricsLink", ctx, customerID)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetVerifyBiometricsLink indicates an expected call of GetVerifyBiometricsLink.
+func (mr *MockRemoteCallsMockRecorder) GetVerifyBiometricsLink(ctx, customerID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetVerifyBiometricsLink", reflect.TypeOf((*MockRemoteCalls)(nil).GetVerifyBiometricsLink), ctx, customerID)
+}
+
 // InitiateCurrencySwap mocks base method.
 func (m *MockRemoteCalls) InitiateCurrencySwap(ctx context.Context, request model.InitiateCurrencySwapRequest) (model.CurrencySwap, error) {
 	m.ctrl.T.Helper()
@@ -986,18 +1001,18 @@ func (mr *MockRemoteCallsMockRecorder) RunInSandboxMode() *gomock.Call {
 }
 
 // SubmitCustomerKYCDocument mocks base method.
-func (m *MockRemoteCalls) SubmitCustomerKYCDocument(ctx context.Context, customerID string, document *os.File, documentType, country string) (model.KYCResponse, error) {
+func (m *MockRemoteCalls) SubmitCustomerKYCDocument(ctx context.Context, customerID string, frontDocument, backDocument *os.File, documentType, country string) (model.KYCResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SubmitCustomerKYCDocument", ctx, customerID, document, documentType, country)
+	ret := m.ctrl.Call(m, "SubmitCustomerKYCDocument", ctx, customerID, frontDocument, backDocument, documentType, country)
 	ret0, _ := ret[0].(model.KYCResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // SubmitCustomerKYCDocument indicates an expected call of SubmitCustomerKYCDocument.
-func (mr *MockRemoteCallsMockRecorder) SubmitCustomerKYCDocument(ctx, customerID, document, documentType, country interface{}) *gomock.Call {
+func (mr *MockRemoteCallsMockRecorder) SubmitCustomerKYCDocument(ctx, customerID, frontDocument, backDocument, documentType, country interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubmitCustomerKYCDocument", reflect.TypeOf((*MockRemoteCalls)(nil).SubmitCustomerKYCDocument), ctx, customerID, document, documentType, country)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubmitCustomerKYCDocument", reflect.TypeOf((*MockRemoteCalls)(nil).SubmitCustomerKYCDocument), ctx, customerID, frontDocument, backDocument, documentType, country)
 }
 
 // UpdateCustomer mocks base method.
