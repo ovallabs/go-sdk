@@ -93,10 +93,11 @@ type RemoteCalls interface {
 	GetCustomerPaymentCards(ctx context.Context, customerID string, status, search *string, dateBetween *model.DateBetween, page *model.Page) (model.AllPaymentCardsResponse, error)
 	GetCustomerPaymentCardByID(ctx context.Context, customerID, ID string) (model.PaymentCard, error)
 	DebitPaymentCard(ctx context.Context, request model.DebitCustomerPaymentCardRequest) (model.Deposit, error)
+	RefundCustomerPaymentCardDeposit(ctx context.Context, request model.RefundCustomerDepositPaymentCardRequest) error
 
 	// KYC APIs
 	GetKYCByCustomerID(ctx context.Context, customerID string) (model.KYCResponse, error)
-	SubmitCustomerKYCDocument(ctx context.Context, customerID string, frontDocument *os.File, backDocument *os.File, documentType string, country string, ) (model.KYCResponse, error)
+	SubmitCustomerKYCDocument(ctx context.Context, customerID string, frontDocument *os.File, backDocument *os.File, documentType string, country string) (model.KYCResponse, error)
 	VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycType string) error
 	GetVerifyBiometricsLink(ctx context.Context, customerID string) (string, error)
 
