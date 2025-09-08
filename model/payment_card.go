@@ -71,6 +71,13 @@ type (
 		Remarks       *string `json:"remarks"`
 	}
 
+	// RefundCustomerDepositPaymentCardRequest for request payload
+	RefundCustomerDepositPaymentCardRequest struct {
+		CustomerID string  `json:"customer_id"`
+		DepositID  string  `json:"deposit_id"`
+		Remarks    *string `json:"remarks"`
+	}
+
 	// PaymentCardType a string representation of customer payment card type
 	PaymentCardType string
 )

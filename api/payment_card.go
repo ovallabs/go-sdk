@@ -115,3 +115,15 @@ func (c *Call) DebitPaymentCard(ctx context.Context, request model.DebitCustomer
 
 	return response, err
 }
+
+// RefundCustomerPaymentCardDeposit makes request to Torus to refund a customer deposit through a payment card
+func (c *Call) RefundCustomerPaymentCardDeposit(ctx context.Context, request model.RefundCustomerDepositPaymentCardRequest) error {
+	var (
+		err  error
+		path = "v1/payments/cards/refund"
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, nil)
+
+	return err
+}
