@@ -196,6 +196,20 @@ func (mr *MockRemoteCallsMockRecorder) DeleteCustomer(ctx, customerID interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCustomer", reflect.TypeOf((*MockRemoteCalls)(nil).DeleteCustomer), ctx, customerID)
 }
 
+// DeleteCustomerPaymentCard mocks base method.
+func (m *MockRemoteCalls) DeleteCustomerPaymentCard(ctx context.Context, customerID, cardID string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteCustomerPaymentCard", ctx, customerID, cardID)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteCustomerPaymentCard indicates an expected call of DeleteCustomerPaymentCard.
+func (mr *MockRemoteCallsMockRecorder) DeleteCustomerPaymentCard(ctx, customerID, cardID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCustomerPaymentCard", reflect.TypeOf((*MockRemoteCalls)(nil).DeleteCustomerPaymentCard), ctx, customerID, cardID)
+}
+
 // DeleteTransfer mocks base method.
 func (m *MockRemoteCalls) DeleteTransfer(ctx context.Context, transferID, reason string) error {
 	m.ctrl.T.Helper()

@@ -118,12 +118,16 @@ func (c *Call) DebitPaymentCard(ctx context.Context, request model.DebitCustomer
 
 // RefundCustomerPaymentCardDeposit makes request to Torus to refund a customer deposit through a payment card
 func (c *Call) RefundCustomerPaymentCardDeposit(ctx context.Context, request model.RefundCustomerDepositPaymentCardRequest) error {
-	var (
-		err  error
-		path = "v1/payments/cards/refund"
-	)
+	path := "v1/payments/cards/refund"
 
-	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, nil)
+	err := c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, nil)
+	return err
+}
 
+// DeleteCustomerPaymentCard makes request to Torus to delete a customer payment card by the ID
+func (c *Call) DeleteCustomerPaymentCard(ctx context.Context, customerID, cardID string) error {
+	path := fmt.Sprintf("v1/payments/cards/%s/%s", customerID, cardID)
+
+	err := c.makeRequest(ctx, path, http.MethodDelete, nil, nil, nil, nil, nil)
 	return err
 }
