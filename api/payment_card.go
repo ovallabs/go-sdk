@@ -127,3 +127,15 @@ func (c *Call) RefundCustomerPaymentCardDeposit(ctx context.Context, request mod
 
 	return err
 }
+
+// DeleteCustomerPaymentCard makes request to Torus to delete a customer payment card by the ID
+func (c *Call) DeleteCustomerPaymentCard(ctx context.Context, customerID, cardID string) error {
+	var (
+		err  error
+		path = fmt.Sprintf("v1/payments/cards/%s/%s", customerID, cardID)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodDelete, nil, nil, nil, nil, nil)
+
+	return err
+}
