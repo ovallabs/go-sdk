@@ -97,3 +97,16 @@ func (c *Call) DeleteCard(ctx context.Context, cardID, customerID string) (strin
 	err = c.makeRequest(ctx, path, http.MethodDelete, nil, nil, nil, nil, &response)
 	return response, err
 }
+
+// InitiateCustomerPaymentSession makes request to torus to initiate a customer payment session
+func (c *Call) InitiateCustomerPaymentSession(ctx context.Context, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error) {
+	var (
+		err      error
+		response model.CustomerPaymentSessionResponse
+		path     = fmt.Sprintf("v1/payments/sessions")
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, response)
+
+	return response, err
+}
