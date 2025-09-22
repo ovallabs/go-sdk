@@ -838,6 +838,21 @@ func (mr *MockRemoteCallsMockRecorder) InitiateCurrencySwap(ctx, request interfa
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InitiateCurrencySwap", reflect.TypeOf((*MockRemoteCalls)(nil).InitiateCurrencySwap), ctx, request)
 }
 
+// InitiateCustomerPaymentSession mocks base method.
+func (m *MockRemoteCalls) InitiateCustomerPaymentSession(ctx, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "InitiateCustomerPaymentSession", ctx, request)
+	ret0, _ := ret[0].(model.CustomerPaymentSessionResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// InitiateCustomerPaymentSession indicates an expected call of InitiateCustomerPaymentSession.
+func (mr *MockRemoteCallsMockRecorder) InitiateCustomerPaymentSession(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InitiateCustomerPaymentSession", reflect.TypeOf((*MockRemoteCalls)(nil).InitiateCustomerPaymentSession), ctx, request)
+}
+
 // InitiateDeposit mocks base method.
 func (m *MockRemoteCalls) InitiateDeposit(ctx context.Context, request model.InitiateDepositRequest) (model.Deposit, error) {
 	m.ctrl.T.Helper()

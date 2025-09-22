@@ -82,4 +82,27 @@ type (
 		NameOnCard string `json:"name_on_card"` // optional
 		Issuer     string `json:"issuer"`       // optional, duplicate allowed
 	}
+
+	// CustomerPaymentSessionRequest schema for customer payment session request
+	CustomerPaymentSessionRequest struct {
+		CustomerID    string  `json:"customer_id" validate:"required"`
+		PaymentMethod *string `json:"payment_method,omitempty"`
+		Amount        float64 `json:"amount" validate:"required"`
+		Currency      string  `json:"currency" validate:"required"`
+		Reference     string  `json:"reference" validate:"required"`
+		FailureURL    string  `json:"failure_url" validate:"required"`
+		SuccessURL    string  `json:"success_url" validate:"required"`
+		DisplayName   string  `json:"display_name" validate:"required"`
+		Country       string  `json:"country" validate:"required,max=2"`
+		Remarks       *string `json:"remarks"`
+	}
+
+	// CustomerPaymentSessionResponse schema for customer payment session response
+	CustomerPaymentSessionResponse struct {
+		Reference     string `json:"reference"`
+		CustomerID    string `json:"customer_id"`
+		SessionID     string `json:"session_id"`
+		SessionSecret string `json:"session_secret"`
+		SessionToken  string `json:"session_token"`
+	}
 )
