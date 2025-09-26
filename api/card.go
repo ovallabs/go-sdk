@@ -23,6 +23,19 @@ func (c *Call) CreateCustomerCard(ctx context.Context, request model.CreateCusto
 	return response, err
 }
 
+// CreateCustomerCardV2 makes request to Torus to create a card for a customer
+func (c *Call) CreateCustomerCardV2(ctx context.Context, request model.CreateCustomerCardRequestV2) (string, error) {
+	var (
+		err       error
+		response  string
+		path      = "v1/cards/new"
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
+	return response, err
+}
+
 // FreezeUnfreezeCard makes request to Torus to freeze/unfreeze a customer card
 func (c *Call) FreezeUnfreezeCard(ctx context.Context, request model.FreezeCardRequest) (string, error) {
 	var (
