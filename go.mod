@@ -1,10 +1,6 @@
 module github.com/ovalfi/go-sdk
 
-go 1.23.0
-
-toolchain go1.23.5
-
-//replace github.com/go-resty/resty/v2 => gopkg.in/resty.v1 v1.12.0
+go 1.24.0
 
 require (
 	github.com/go-resty/resty/v2 v2.15.3

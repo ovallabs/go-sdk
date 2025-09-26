@@ -839,7 +839,7 @@ func (mr *MockRemoteCallsMockRecorder) InitiateCurrencySwap(ctx, request interfa
 }
 
 // InitiateCustomerPaymentSession mocks base method.
-func (m *MockRemoteCalls) InitiateCustomerPaymentSession(ctx, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error) {
+func (m *MockRemoteCalls) InitiateCustomerPaymentSession(ctx context.Context, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "InitiateCustomerPaymentSession", ctx, request)
 	ret0, _ := ret[0].(model.CustomerPaymentSessionResponse)
