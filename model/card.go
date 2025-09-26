@@ -25,6 +25,14 @@ type (
 		Phone         string `json:"phone"`
 	}
 
+	// CreateCustomerCardRequestV2 schema
+	CreateCustomerCardRequestV2 struct {
+		CardType      string `json:"card_type"`
+		ImageURL      string `json:"image_url"`
+		PreferredName string `json:"preferred_name"`
+		GenerateBankAccountRequest
+	}
+
 	// FreezeCardRequest schema
 	FreezeCardRequest struct {
 		CardID     string `json:"card_id"`
