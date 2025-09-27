@@ -1,10 +1,6 @@
 package main
 
 import (
-	"context"
-	"encoding/json"
-	"fmt"
-	"log"
 	"os"
 
 	"github.com/go-resty/resty/v2"
@@ -361,32 +357,32 @@ func main() {
 	//	}
 	//	fmt.Println("url: ", url)
 
-	req := model.CustomerPaymentTokenRequest{
-		CustomerID: "c4b9197f-009e-4019-b0dd-0cab6e9e3189",
-		Channel:    "applepay",
-		Amount:     3000,
-		Currency:   "GBP",
-		Country:    "GB",
-		Reference:  "ninja-2942",
-		Remarks:    nil,
-	}
-
-	fileBytes, err := os.ReadFile("applepay.json")
-	if err != nil {
-		log.Fatalf("failed to read file: %v", err)
-	}
-
-	// Step 2: Unmarshal into struct
-	var tokenData model.ApplepayTokenData
-	if err = json.Unmarshal(fileBytes, &tokenData); err != nil {
-		log.Fatalf("failed to unmarshal applepay.json: %v", err)
-	}
-
-	req.AppleToken = &tokenData
-
-	err = apiCalls.ProcessCustomerPaymentToken(context.Background(), req)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
+	//req := model.CustomerPaymentTokenRequest{
+	//	CustomerID: "c4b9197f-009e-4019-b0dd-0cab6e9e3189",
+	//	Channel:    "applepay",
+	//	Amount:     3000,
+	//	Currency:   "GBP",
+	//	Country:    "GB",
+	//	Reference:  "ninja-2942",
+	//	Remarks:    nil,
+	//}
+	//
+	//fileBytes, err := os.ReadFile("applepay.json")
+	//if err != nil {
+	//	log.Fatalf("failed to read file: %v", err)
+	//}
+	//
+	//// Step 2: Unmarshal into struct
+	//var tokenData model.ApplepayTokenData
+	//if err = json.Unmarshal(fileBytes, &tokenData); err != nil {
+	//	log.Fatalf("failed to unmarshal applepay.json: %v", err)
+	//}
+	//
+	//req.AppleToken = &tokenData
+	//
+	//err = apiCalls.ProcessCustomerPaymentToken(context.Background(), req)
+	//if err != nil {
+	//	fmt.Printf("Error: %v\n", err)
+	//	return
+	//}
 }
