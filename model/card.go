@@ -35,9 +35,10 @@ type (
 
 	// FreezeCardRequest schema
 	FreezeCardRequest struct {
-		CardID     string `json:"card_id"`
-		CustomerID string `json:"customer_id"`
-		FreezeCard string `json:"freeze_card"`
+		CardID       string `json:"card_id"`
+		CustomerID   string `json:"customer_id"`
+		FreezeCard   string `json:"freeze_card"`
+		FreezeReason string `json:"freeze_reason"`
 	}
 
 	// Card schema
