@@ -123,3 +123,16 @@ func (c *Call) InitiateCustomerPaymentSession(ctx context.Context, request model
 
 	return response, err
 }
+
+// ProcessCustomerPaymentToken makes request to torus to validate and charge a customer payment token
+func (c *Call) ProcessCustomerPaymentToken(ctx context.Context, request model.CustomerPaymentTokenRequest) error {
+	var (
+		err      error
+		response interface{}
+		path     = fmt.Sprintf("v1/payments/sessions/token/process")
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, response)
+
+	return err
+}

@@ -1002,6 +1002,20 @@ func (mr *MockRemoteCallsMockRecorder) MockDeposit(ctx, request interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MockDeposit", reflect.TypeOf((*MockRemoteCalls)(nil).MockDeposit), ctx, request)
 }
 
+// ProcessCustomerPaymentToken mocks base method.
+func (m *MockRemoteCalls) ProcessCustomerPaymentToken(ctx context.Context, request model.CustomerPaymentTokenRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ProcessCustomerPaymentToken", ctx, request)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// ProcessCustomerPaymentToken indicates an expected call of ProcessCustomerPaymentToken.
+func (mr *MockRemoteCallsMockRecorder) ProcessCustomerPaymentToken(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ProcessCustomerPaymentToken", reflect.TypeOf((*MockRemoteCalls)(nil).ProcessCustomerPaymentToken), ctx, request)
+}
+
 // RefundCustomerPaymentCardDeposit mocks base method.
 func (m *MockRemoteCalls) RefundCustomerPaymentCardDeposit(ctx context.Context, request model.RefundCustomerDepositPaymentCardRequest) error {
 	m.ctrl.T.Helper()
