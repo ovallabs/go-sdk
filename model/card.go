@@ -141,9 +141,9 @@ type (
 		Data      string `json:"data" validate:"required"`
 		Signature string `json:"signature" validate:"required"`
 		Header    struct {
-			EphemeralPublicKey string `json:"ephemeralPublicKey" validate:"required"`
-			PublicKeyHash      string `json:"publicKeyHash" validate:"required"`
-			TransactionID      string `json:"transactionId" validate:"required"`
+			EphemeralPublicKey string `json:"ephemeralPublicKey"`
+			PublicKeyHash      string `json:"publicKeyHash"`
+			TransactionID      string `json:"transactionId"`
 		} `json:"header"`
 	}
 )
