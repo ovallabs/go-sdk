@@ -119,7 +119,7 @@ func (c *Call) InitiateCustomerPaymentSession(ctx context.Context, request model
 		path     = fmt.Sprintf("v1/payments/sessions")
 	)
 
-	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, response)
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, &response)
 
 	return response, err
 }

@@ -35,9 +35,10 @@ type (
 
 	// FreezeCardRequest schema
 	FreezeCardRequest struct {
-		CardID     string `json:"card_id"`
-		CustomerID string `json:"customer_id"`
-		FreezeCard string `json:"freeze_card"`
+		CardID       string `json:"card_id"`
+		CustomerID   string `json:"customer_id"`
+		FreezeCard   string `json:"freeze_card"`
+		FreezeReason string `json:"freeze_reason"`
 	}
 
 	// Card schema
@@ -50,6 +51,8 @@ type (
 		FirstSixDigits string         `json:"first_six_digits"`
 		ExpiryDate     string         `json:"expiry_date"`
 		Frozen         bool           `json:"frozen"`
+		ImageURL       *string        `json:"image_url"`
+		FreezeReason   *string        `json:"freeze_reason"`
 		IssuerName     string         `json:"issuer_name"`
 		Type           string         `json:"type"`
 		Status         string         `json:"status"`
