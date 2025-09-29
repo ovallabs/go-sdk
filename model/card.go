@@ -116,4 +116,37 @@ type (
 		SessionSecret string `json:"session_secret"`
 		SessionToken  string `json:"session_token"`
 	}
+
+	// CustomerPaymentTokenRequest schema for validating a customer payment token and charging the customer (googlepay/applepay)
+	CustomerPaymentTokenRequest struct {
+		CustomerID string  `json:"customer_id" validate:"required"`
+		Channel    string  `json:"channel" validate:"required,oneof=applepay googlepay"`
+		Amount     float64 `json:"amount" validate:"required"`
+		Currency   string  `json:"currency" validate:"required,max=3"`
+		Country    string  `json:"country" validate:"required,max=2"`
+		Reference  string  `json:"reference" validate:"required"`
+		Remarks    *string `json:"remarks"`
+
+		AppleToken  *ApplepayTokenData  `json:"apple_token" validate:"required_if=Channel applepay"`
+		GoogleToken *GooglepayTokenData `json:"google_token" validate:"required_if=Channel googlepay"`
+	}
+
+	// GooglepayTokenData holds Google Pay token data
+	GooglepayTokenData struct {
+		ProtocolVersion string `json:"protocolVersion" validate:"required"`
+		Signature       string `json:"signature" validate:"required"`
+		SignedMessage   string `json:"signedMessage" validate:"required"`
+	}
+
+	// ApplepayTokenData holds Apple Pay token data
+	ApplepayTokenData struct {
+		Version   string `json:"version" validate:"required"`
+		Data      string `json:"data" validate:"required"`
+		Signature string `json:"signature" validate:"required"`
+		Header    struct {
+			EphemeralPublicKey string `json:"ephemeralPublicKey"`
+			PublicKeyHash      string `json:"publicKeyHash"`
+			TransactionID      string `json:"transactionId"`
+		} `json:"header"`
+	}
 )

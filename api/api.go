@@ -113,6 +113,7 @@ type RemoteCalls interface {
 	DeleteCard(ctx context.Context, cardID, customerID string) (string, error)
 
 	InitiateCustomerPaymentSession(ctx context.Context, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error)
+	ProcessCustomerPaymentToken(ctx context.Context, request model.CustomerPaymentTokenRequest) error
 
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
