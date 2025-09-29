@@ -137,6 +137,21 @@ func (mr *MockRemoteCallsMockRecorder) CreateCustomerCard(ctx, request interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateCustomerCard", reflect.TypeOf((*MockRemoteCalls)(nil).CreateCustomerCard), ctx, request)
 }
 
+// CreateCustomerCardV2 mocks base method.
+func (m *MockRemoteCalls) CreateCustomerCardV2(ctx context.Context, request model.CreateCustomerCardRequestV2) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateCustomerCardV2", ctx, request)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateCustomerCardV2 indicates an expected call of CreateCustomerCardV2.
+func (mr *MockRemoteCallsMockRecorder) CreateCustomerCardV2(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateCustomerCardV2", reflect.TypeOf((*MockRemoteCalls)(nil).CreateCustomerCardV2), ctx, request)
+}
+
 // CryptoWithdrawal mocks base method.
 func (m *MockRemoteCalls) CryptoWithdrawal(ctx context.Context, request model.WithdrawalRequest) (model.Withdrawal, error) {
 	m.ctrl.T.Helper()
