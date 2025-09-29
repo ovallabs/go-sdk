@@ -1031,18 +1031,18 @@ func (mr *MockRemoteCallsMockRecorder) ProcessCustomerPaymentToken(ctx, request 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ProcessCustomerPaymentToken", reflect.TypeOf((*MockRemoteCalls)(nil).ProcessCustomerPaymentToken), ctx, request)
 }
 
-// RefundCustomerPaymentCardDeposit mocks base method.
-func (m *MockRemoteCalls) RefundCustomerPaymentCardDeposit(ctx context.Context, request model.RefundCustomerDepositPaymentCardRequest) error {
+// RefundCustomerDeposit mocks base method.
+func (m *MockRemoteCalls) RefundCustomerDeposit(ctx context.Context, request model.RefundCustomerDepositRequest) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RefundCustomerPaymentCardDeposit", ctx, request)
+	ret := m.ctrl.Call(m, "RefundCustomerDeposit", ctx, request)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// RefundCustomerPaymentCardDeposit indicates an expected call of RefundCustomerPaymentCardDeposit.
-func (mr *MockRemoteCallsMockRecorder) RefundCustomerPaymentCardDeposit(ctx, request interface{}) *gomock.Call {
+// RefundCustomerDeposit indicates an expected call of RefundCustomerDeposit.
+func (mr *MockRemoteCallsMockRecorder) RefundCustomerDeposit(ctx, request interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RefundCustomerPaymentCardDeposit", reflect.TypeOf((*MockRemoteCalls)(nil).RefundCustomerPaymentCardDeposit), ctx, request)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RefundCustomerDeposit", reflect.TypeOf((*MockRemoteCalls)(nil).RefundCustomerDeposit), ctx, request)
 }
 
 // ResolveBankAccount mocks base method.
