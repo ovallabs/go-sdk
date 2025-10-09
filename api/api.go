@@ -109,7 +109,7 @@ type RemoteCalls interface {
 	GetCustomerCards(ctx context.Context, customerID *string) (model.AllCardsResponse, error)
 	GetCustomerCardByID(ctx context.Context, cardID string) (model.Card, error)
 	FundCustomerCard(ctx context.Context, request model.FundCustomerCardRequest) (model.Card, error)
-	GetCustomerCardSecureDetails(ctx context.Context, cardID, customerID string) (model.VaultedCardDetails, error)
+	GetCustomerCardSecureDetails(ctx context.Context, cardID, customerID, nonceKey string) (model.VaultedCardDetails, error)
 	DeleteCard(ctx context.Context, cardID, customerID string) (string, error)
 
 	InitiateCustomerPaymentSession(ctx context.Context, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error)

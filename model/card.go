@@ -87,11 +87,12 @@ type (
 
 	// VaultedCardDetails secure vaulted card details
 	VaultedCardDetails struct {
-		FullPAN    string `json:"full_pan"`     // full card number
-		CVV        string `json:"cvv"`          // sensitive
-		ExpiryDate string `json:"expiry_date"`  // e.g., "09"
-		NameOnCard string `json:"name_on_card"` // optional
-		Issuer     string `json:"issuer"`       // optional, duplicate allowed
+		FullPAN      string `json:"full_pan"`      // full card number
+		CVV          string `json:"cvv"`           // sensitive
+		ExpiryDate   string `json:"expiry_date"`   // e.g., "09"
+		NameOnCard   string `json:"name_on_card"`  // optional
+		Issuer       string `json:"issuer"`        // optional, duplicate allowed
+		EphemeralKey string `json:"ephemeral_key"` //optional
 	}
 
 	// CustomerPaymentSessionRequest schema for customer payment session request
