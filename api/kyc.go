@@ -88,3 +88,17 @@ func (c *Call) GetVerifyBiometricsLink(ctx context.Context, customerID string) (
 	return response, err
 
 }
+
+// GetVerifyCustomerKYC makes request to get the link to verify biometrics
+func (c *Call) GetVerifyCustomerKYC(ctx context.Context, customerID string, req model.VerifyCustomerKYCRequest) (model.VerifyCustomerKYCResponse, error) {
+	var (
+		err      error
+		response model.VerifyCustomerKYCResponse
+		path     = fmt.Sprintf("%s/%s/verify", kycAPIVersion, customerID)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, req, &response)
+
+	return response, err
+
+}

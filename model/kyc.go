@@ -66,3 +66,14 @@ type Document struct {
 	VerifiedAt       interface{} `json:"verifiedAt"`
 	DeletedAt        interface{} `json:"deletedAt"`
 }
+
+type VerifyCustomerKYCResponse struct {
+	BusinessID  string `json:"businessID"`
+	URL         string `json:"url"`
+	CustomerID  string `json:"customerID"`
+	KYCProvider string `json:"kycProvider"`
+}
+
+type VerifyCustomerKYCRequest struct {
+	Country *string `json:"country,omitempty"`
+}
