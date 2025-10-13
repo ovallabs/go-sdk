@@ -838,6 +838,21 @@ func (mr *MockRemoteCallsMockRecorder) GetVerifyBiometricsLink(ctx, customerID i
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetVerifyBiometricsLink", reflect.TypeOf((*MockRemoteCalls)(nil).GetVerifyBiometricsLink), ctx, customerID)
 }
 
+// GetVerifyCustomerKYC mocks base method.
+func (m *MockRemoteCalls) GetVerifyCustomerKYC(ctx context.Context, customerID string, req model.VerifyCustomerKYCRequest) (model.VerifyCustomerKYCResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetVerifyCustomerKYC", ctx, customerID, req)
+	ret0, _ := ret[0].(model.VerifyCustomerKYCResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetVerifyCustomerKYC indicates an expected call of GetVerifyCustomerKYC.
+func (mr *MockRemoteCallsMockRecorder) GetVerifyCustomerKYC(ctx, customerID, req interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetVerifyCustomerKYC", reflect.TypeOf((*MockRemoteCalls)(nil).GetVerifyCustomerKYC), ctx, customerID, req)
+}
+
 // InitiateCurrencySwap mocks base method.
 func (m *MockRemoteCalls) InitiateCurrencySwap(ctx context.Context, request model.InitiateCurrencySwapRequest) (model.CurrencySwap, error) {
 	m.ctrl.T.Helper()
