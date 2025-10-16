@@ -101,7 +101,7 @@ type RemoteCalls interface {
 	SubmitCustomerKYCDocument(ctx context.Context, customerID string, frontDocument *os.File, backDocument *os.File, documentType string, country string) (model.KYCResponse, error)
 	VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycType string) error
 	GetVerifyBiometricsLink(ctx context.Context, customerID string) (string, error)
-	GetVerifyCustomerKYC(ctx context.Context, customerID string, req model.VerifyCustomerKYCRequest) (model.VerifyCustomerKYCResponse, error)
+	GetVerifyCustomerKYC(ctx context.Context, customerID string, country *string) (model.VerifyCustomerKYCResponse, error)
 
 	// Card APIs
 	CreateCustomerCard(ctx context.Context, request model.CreateCustomerCardRequest) (string, error)
