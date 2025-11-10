@@ -113,6 +113,9 @@ type RemoteCalls interface {
 	GetCustomerCardSecureDetails(ctx context.Context, cardID, customerID, nonceKey string) (model.VaultedCardDetails, error)
 	DeleteCard(ctx context.Context, cardID, customerID string) (string, error)
 
+	// Crypto APIs
+	GetCustomerWallet(ctx context.Context, request model.CustomerWalletRequest) (model.CustomerWallet, error)
+
 	InitiateCustomerPaymentSession(ctx context.Context, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error)
 	ProcessCustomerPaymentToken(ctx context.Context, request model.CustomerPaymentTokenRequest) error
 

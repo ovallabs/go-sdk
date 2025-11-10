@@ -598,6 +598,21 @@ func (mr *MockRemoteCallsMockRecorder) GetCustomerPaymentCards(ctx, customerID, 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCustomerPaymentCards", reflect.TypeOf((*MockRemoteCalls)(nil).GetCustomerPaymentCards), ctx, customerID, status, search, dateBetween, page)
 }
 
+// GetCustomerWallet mocks base method.
+func (m *MockRemoteCalls) GetCustomerWallet(ctx context.Context, request model.CustomerWalletRequest) (model.CustomerWallet, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCustomerWallet", ctx, request)
+	ret0, _ := ret[0].(model.CustomerWallet)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCustomerWallet indicates an expected call of GetCustomerWallet.
+func (mr *MockRemoteCallsMockRecorder) GetCustomerWallet(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCustomerWallet", reflect.TypeOf((*MockRemoteCalls)(nil).GetCustomerWallet), ctx, request)
+}
+
 // GetDepositID mocks base method.
 func (m *MockRemoteCalls) GetDepositID(ctx context.Context, id string) (model.Deposit, error) {
 	m.ctrl.T.Helper()
