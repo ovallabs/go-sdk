@@ -23,3 +23,14 @@ func (c *Call) GetCustomerWallet(ctx context.Context, request model.CustomerWall
 
 	return response, err
 }
+
+// GetSupportedAssets makes request to Torus to get supported assets
+func (c *Call) GetSupportedAssets(ctx context.Context) ([]*model.SupportedCurrencies, error) {
+	var (
+		err      error
+		response []*model.SupportedCurrencies
+		path     = "v1/supported-assets"
+	)
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
+	return response, err
+}
