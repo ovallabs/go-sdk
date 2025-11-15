@@ -115,6 +115,7 @@ type RemoteCalls interface {
 
 	// Crypto APIs
 	GetCustomerWallet(ctx context.Context, request model.CustomerWalletRequest) (model.CustomerWallet, error)
+	GetSupportedAssets(ctx context.Context) ([]*model.SupportedCurrencies, error)
 
 	InitiateCustomerPaymentSession(ctx context.Context, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error)
 	ProcessCustomerPaymentToken(ctx context.Context, request model.CustomerPaymentTokenRequest) error

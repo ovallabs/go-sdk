@@ -28,4 +28,11 @@ type (
 		CreatedAt     time.Time  `json:"created_at"`
 		UpdatedTime   *time.Time `json:"updated_at"`
 	}
+
+	// SupportedCurrencies schema represents entity that contains supported assets
+	SupportedCurrencies struct {
+		Asset    string   `json:"asset"`
+		LogoURL  string   `json:"logo_url"`
+		Networks []string `json:"networks"`
+	}
 )
