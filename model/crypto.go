@@ -32,7 +32,7 @@ type (
 	// SupportedCurrencies schema represents entity that contains supported assets
 	SupportedCurrencies struct {
 		Asset    string   `json:"asset"`
-		LogoURL  string   `mapstructure:"logo_url" json:"logo_url"`
+		LogoURL  string   `json:"logo_url"`
 		Networks []string `json:"networks"`
 	}
 )
