@@ -8,7 +8,7 @@ import (
 	"github.com/ovalfi/go-sdk/model"
 )
 
-const cryptoAPIVersion = "v1/crypto"
+const cryptoAPIVersion = "v1/payments/crypto"
 
 // GetCustomerWallet makes request to Torus to get customer wallet if available or  create customer wallet if not
 func (c *Call) GetCustomerWallet(ctx context.Context, request model.CustomerWalletRequest) (model.CustomerWallet, error) {
