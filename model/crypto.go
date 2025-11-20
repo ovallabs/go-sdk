@@ -29,10 +29,16 @@ type (
 		UpdatedTime   *time.Time `json:"updated_at"`
 	}
 
-	// SupportedCurrencies schema represents entity that contains supported assets
+	// SupportedCurrencies schema represents an entity that contains supported assets
 	SupportedCurrencies struct {
-		Asset    string   `json:"asset"`
-		LogoURL  string   `json:"logo_url"`
-		Networks []string `json:"networks"`
+		Asset    string           `json:"asset"`
+		LogoURL  string           `json:"logo_url"`
+		Networks []NetworkDetails `json:"networks"`
+	}
+
+	// NetworkDetails schema represents an entity that contains network details
+	NetworkDetails struct {
+		Network string `json:"network"`
+		LogoURL string `json:"logo_url"`
 	}
 )
