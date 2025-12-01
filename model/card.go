@@ -61,6 +61,12 @@ type (
 		CreatedAt      interface{}    `json:"created_at"`
 	}
 
+	// CardEndorsementLinkResponse schema for card endorsement link
+	CardEndorsementLinkResponse struct {
+		IsRequired bool   `json:"is_required"`
+		URL        string `json:"url"`
+	}
+
 	// BillingAddress schema
 	BillingAddress struct {
 		City        string `json:"city"`
