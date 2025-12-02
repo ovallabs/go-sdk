@@ -112,6 +112,11 @@ type RemoteCalls interface {
 	FundCustomerCard(ctx context.Context, request model.FundCustomerCardRequest) (model.Card, error)
 	GetCustomerCardSecureDetails(ctx context.Context, cardID, customerID, nonceKey string) (model.VaultedCardDetails, error)
 	DeleteCard(ctx context.Context, cardID, customerID string) (string, error)
+	GetCardEndorsementLink(ctx context.Context, customerID string) (model.CardEndorsementLinkResponse, error)
+
+	// Crypto APIs
+	GetCustomerWallet(ctx context.Context, request model.CustomerWalletRequest) (model.CustomerWallet, error)
+	GetSupportedAssets(ctx context.Context) ([]*model.SupportedCurrencies, error)
 
 	InitiateCustomerPaymentSession(ctx context.Context, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error)
 	ProcessCustomerPaymentToken(ctx context.Context, request model.CustomerPaymentTokenRequest) error

@@ -448,6 +448,21 @@ func (mr *MockRemoteCallsMockRecorder) GetBeneficiaryByID(ctx, beneficiaryID int
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBeneficiaryByID", reflect.TypeOf((*MockRemoteCalls)(nil).GetBeneficiaryByID), ctx, beneficiaryID)
 }
 
+// GetCardEndorsementLink mocks base method.
+func (m *MockRemoteCalls) GetCardEndorsementLink(ctx context.Context, customerID string) (model.CardEndorsementLinkResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCardEndorsementLink", ctx, customerID)
+	ret0, _ := ret[0].(model.CardEndorsementLinkResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCardEndorsementLink indicates an expected call of GetCardEndorsementLink.
+func (mr *MockRemoteCallsMockRecorder) GetCardEndorsementLink(ctx, customerID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCardEndorsementLink", reflect.TypeOf((*MockRemoteCalls)(nil).GetCardEndorsementLink), ctx, customerID)
+}
+
 // GetCurrencySwapByID mocks base method.
 func (m *MockRemoteCalls) GetCurrencySwapByID(ctx context.Context, currencySwapID string) (model.CurrencySwap, error) {
 	m.ctrl.T.Helper()
@@ -598,19 +613,34 @@ func (mr *MockRemoteCallsMockRecorder) GetCustomerPaymentCards(ctx, customerID, 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCustomerPaymentCards", reflect.TypeOf((*MockRemoteCalls)(nil).GetCustomerPaymentCards), ctx, customerID, status, search, dateBetween, page)
 }
 
-// GetDepositByIDOrReference mocks base method.
-func (m *MockRemoteCalls) GetDepositByIDOrReference(ctx context.Context, id, reference *string) (model.Deposit, error) {
+// GetCustomerWallet mocks base method.
+func (m *MockRemoteCalls) GetCustomerWallet(ctx context.Context, request model.CustomerWalletRequest) (model.CustomerWallet, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetDepositByIDOrReference", ctx, id, reference)
+	ret := m.ctrl.Call(m, "GetCustomerWallet", ctx, request)
+	ret0, _ := ret[0].(model.CustomerWallet)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCustomerWallet indicates an expected call of GetCustomerWallet.
+func (mr *MockRemoteCallsMockRecorder) GetCustomerWallet(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCustomerWallet", reflect.TypeOf((*MockRemoteCalls)(nil).GetCustomerWallet), ctx, request)
+}
+
+// GetDepositID mocks base method.
+func (m *MockRemoteCalls) GetDepositID(ctx context.Context, id string) (model.Deposit, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetDepositID", ctx, id)
 	ret0, _ := ret[0].(model.Deposit)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetDepositByIDOrReference indicates an expected call of GetDepositByIDOrReference.
-func (mr *MockRemoteCallsMockRecorder) GetDepositByIDOrReference(ctx, id, reference interface{}) *gomock.Call {
+// GetDepositID indicates an expected call of GetDepositID.
+func (mr *MockRemoteCallsMockRecorder) GetDepositID(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDepositByIDOrReference", reflect.TypeOf((*MockRemoteCalls)(nil).GetDepositByIDOrReference), ctx, id, reference)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDepositID", reflect.TypeOf((*MockRemoteCalls)(nil).GetDepositID), ctx, id)
 }
 
 // GetExchangeRates mocks base method.
@@ -731,6 +761,21 @@ func (m *MockRemoteCalls) GetSettlementByID(ctx context.Context, settlementID st
 func (mr *MockRemoteCallsMockRecorder) GetSettlementByID(ctx, settlementID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSettlementByID", reflect.TypeOf((*MockRemoteCalls)(nil).GetSettlementByID), ctx, settlementID)
+}
+
+// GetSupportedAssets mocks base method.
+func (m *MockRemoteCalls) GetSupportedAssets(ctx context.Context) ([]*model.SupportedCurrencies, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetSupportedAssets", ctx)
+	ret0, _ := ret[0].([]*model.SupportedCurrencies)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetSupportedAssets indicates an expected call of GetSupportedAssets.
+func (mr *MockRemoteCallsMockRecorder) GetSupportedAssets(ctx interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSupportedAssets", reflect.TypeOf((*MockRemoteCalls)(nil).GetSupportedAssets), ctx)
 }
 
 // GetSupportedBanks mocks base method.

@@ -140,3 +140,19 @@ func (c *Call) ProcessCustomerPaymentToken(ctx context.Context, request model.Cu
 
 	return err
 }
+
+// GetCardEndorsementLink makes request to Torus to get card endorsement for a customer
+func (c *Call) GetCardEndorsementLink(ctx context.Context, customerID string) (model.CardEndorsementLinkResponse, error) {
+	var (
+		err      error
+		response model.CardEndorsementLinkResponse
+		params   = map[string]interface{}{
+			"customer_id": customerID,
+		}
+		path = "v1/cards/endorsement-link"
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
+
+	return response, err
+}
