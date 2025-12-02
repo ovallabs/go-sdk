@@ -448,6 +448,21 @@ func (mr *MockRemoteCallsMockRecorder) GetBeneficiaryByID(ctx, beneficiaryID int
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBeneficiaryByID", reflect.TypeOf((*MockRemoteCalls)(nil).GetBeneficiaryByID), ctx, beneficiaryID)
 }
 
+// GetCardEndorsementLink mocks base method.
+func (m *MockRemoteCalls) GetCardEndorsementLink(ctx context.Context, customerID string) (model.CardEndorsementLinkResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCardEndorsementLink", ctx, customerID)
+	ret0, _ := ret[0].(model.CardEndorsementLinkResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCardEndorsementLink indicates an expected call of GetCardEndorsementLink.
+func (mr *MockRemoteCallsMockRecorder) GetCardEndorsementLink(ctx, customerID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCardEndorsementLink", reflect.TypeOf((*MockRemoteCalls)(nil).GetCardEndorsementLink), ctx, customerID)
+}
+
 // GetCurrencySwapByID mocks base method.
 func (m *MockRemoteCalls) GetCurrencySwapByID(ctx context.Context, currencySwapID string) (model.CurrencySwap, error) {
 	m.ctrl.T.Helper()
