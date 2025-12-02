@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -51,6 +52,36 @@ func (c *Call) GetDepositID(ctx context.Context, id string) (model.Deposit, erro
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
+
+	return response, err
+}
+
+// GetDepositByIDOrReference makes a request to Torus to get a deposit by its ID or by its Reference
+func (c *Call) GetDepositByIDOrReference(ctx context.Context, id string, reference string) (model.Deposit, error) {
+	var (
+		err      error
+		response model.Deposit
+		basePath = "v1/deposit/search"
+		query    string
+		fullPath string
+	)
+
+	if id != "" && reference == "" {
+		query = fmt.Sprintf("?id=%s", id)
+
+	} else if reference != "" && id == "" {
+		query = fmt.Sprintf("?reference=%s", reference)
+
+	} else if id != "" && reference != "" {
+		return model.Deposit{}, errors.New("cannot query deposit with both 'id' and 'reference'. Provide only one")
+
+	} else {
+		return model.Deposit{}, errors.New("must provide either 'id' or 'reference'")
+	}
+
+	fullPath = basePath + query
+
+	err = c.makeRequest(ctx, fullPath, http.MethodGet, nil, nil, nil, nil, &response)
 
 	return response, err
 }
