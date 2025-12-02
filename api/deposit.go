@@ -44,7 +44,7 @@ func (c *Call) GetAllDeposits(ctx context.Context, settled *bool) (model.Deposit
 }
 
 // GetDepositByIDOrReference makes a request to Torus to get a deposit by its ID or by its Reference
-func (c *Call) GetDepositByIDOrReference(ctx context.Context, id string, reference string) (model.Deposit, error) {
+func (c *Call) GetDepositByIDOrReference(ctx context.Context, id, reference *string) (model.Deposit, error) {
 	var (
 		err      error
 		response model.Deposit
@@ -53,13 +53,13 @@ func (c *Call) GetDepositByIDOrReference(ctx context.Context, id string, referen
 		fullPath string
 	)
 
-	if id != "" && reference == "" {
+	if *id != "" && *reference == "" {
 		query = fmt.Sprintf("?id=%s", id)
 
-	} else if reference != "" && id == "" {
+	} else if *reference != "" && *id == "" {
 		query = fmt.Sprintf("?reference=%s", reference)
 
-	} else if id != "" && reference != "" {
+	} else if *id != "" && *reference != "" {
 		return model.Deposit{}, errors.New("cannot query deposit with both 'id' and 'reference'. Provide only one")
 
 	} else {

@@ -629,7 +629,7 @@ func (mr *MockRemoteCallsMockRecorder) GetCustomerWallet(ctx, request interface{
 }
 
 // GetDepositByIDOrReference mocks base method.
-func (m *MockRemoteCalls) GetDepositByIDOrReference(ctx context.Context, id, reference string) (model.Deposit, error) {
+func (m *MockRemoteCalls) GetDepositByIDOrReference(ctx context.Context, id, reference *string) (model.Deposit, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetDepositByIDOrReference", ctx, id, reference)
 	ret0, _ := ret[0].(model.Deposit)
