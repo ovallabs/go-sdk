@@ -43,19 +43,6 @@ func (c *Call) GetAllDeposits(ctx context.Context, settled *bool) (model.Deposit
 	return response, err
 }
 
-// GetDepositID makes request to Torus to get deposit by its ID
-func (c *Call) GetDepositID(ctx context.Context, id string) (model.Deposit, error) {
-	var (
-		err      error
-		response model.Deposit
-		path     = fmt.Sprintf("v1/deposit/%s", id)
-	)
-
-	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
-
-	return response, err
-}
-
 // GetDepositByIDOrReference makes a request to Torus to get a deposit by its ID or by its Reference
 func (c *Call) GetDepositByIDOrReference(ctx context.Context, id string, reference string) (model.Deposit, error) {
 	var (
