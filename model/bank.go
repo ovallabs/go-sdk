@@ -76,8 +76,9 @@ type (
 
 	// AccountResolveRequest schema for account resolve request
 	AccountResolveRequest struct {
-		BankCode      string `json:"bank_code"`
-		AccountNumber string `json:"account_number"`
+		BankCode      string  `json:"bank_code"`
+		AccountNumber string  `json:"account_number"`
+		Currency      *string `json:"currency,omitempty"`
 	}
 
 	// MockCustomerDepositRequest schema for customer mock deposit request
