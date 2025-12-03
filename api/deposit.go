@@ -57,10 +57,8 @@ func (c *Call) GetDepositByIDOrReference(ctx context.Context, id, reference *str
 		query = fmt.Sprintf("?id=%s", id)
 	} else if *reference != "" && *id == "" {
 		query = fmt.Sprintf("?reference=%s", reference)
-
 	} else if *id != "" && *reference != "" {
 		return model.Deposit{}, errors.New("cannot query deposit with both 'id' and 'reference'. Provide only one")
-
 	} else {
 		return model.Deposit{}, errors.New("must provide either 'id' or 'reference'")
 	}
