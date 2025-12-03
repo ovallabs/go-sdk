@@ -55,7 +55,6 @@ func (c *Call) GetDepositByIDOrReference(ctx context.Context, id, reference *str
 
 	if *id != "" && *reference == "" {
 		query = fmt.Sprintf("?id=%s", id)
-
 	} else if *reference != "" && *id == "" {
 		query = fmt.Sprintf("?reference=%s", reference)
 
