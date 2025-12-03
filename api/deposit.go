@@ -53,11 +53,26 @@ func (c *Call) GetDepositByIDOrReference(ctx context.Context, id, reference *str
 		fullPath string
 	)
 
-	if *id != "" && *reference == "" {
-		query = fmt.Sprintf("?id=%s", id)
-	} else if *reference != "" && *id == "" {
-		query = fmt.Sprintf("?reference=%s", reference)
-	} else if *id != "" && *reference != "" {
+	if id == nil && reference == nil {
+		return model.Deposit{}, errors.New("must provide either 'id' or 'reference'")
+	}
+
+	idVal := ""
+	if id != nil {
+		idVal = *id
+	}
+
+	refVal := ""
+	if reference != nil {
+		refVal = *reference
+	}
+
+	// 2. Core logic using the safely dereferenced values (idVal, refVal)
+	if idVal != "" && refVal == "" {
+		query = fmt.Sprintf("?id=%s", idVal)
+	} else if refVal != "" && idVal == "" {
+		query = fmt.Sprintf("?reference=%s", refVal)
+	} else if idVal != "" && refVal != "" {
 		return model.Deposit{}, errors.New("cannot query deposit with both 'id' and 'reference'. Provide only one")
 	} else {
 		return model.Deposit{}, errors.New("must provide either 'id' or 'reference'")
