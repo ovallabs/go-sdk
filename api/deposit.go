@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -42,15 +43,44 @@ func (c *Call) GetAllDeposits(ctx context.Context, settled *bool) (model.Deposit
 	return response, err
 }
 
-// GetDepositID makes request to Torus to get deposit by its ID
-func (c *Call) GetDepositID(ctx context.Context, id string) (model.Deposit, error) {
+// GetDepositByIDOrReference makes a request to Torus to get a deposit by its ID or by its Reference
+func (c *Call) GetDepositByIDOrReference(ctx context.Context, id, reference *string) (model.Deposit, error) {
 	var (
 		err      error
 		response model.Deposit
-		path     = fmt.Sprintf("v1/deposit/%s", id)
+		basePath = "v1/deposit/search"
+		query    string
+		fullPath string
 	)
 
-	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
+	if id == nil && reference == nil {
+		return model.Deposit{}, errors.New("must provide either 'id' or 'reference'")
+	}
+
+	idVal := ""
+	if id != nil {
+		idVal = *id
+	}
+
+	refVal := ""
+	if reference != nil {
+		refVal = *reference
+	}
+
+	// 2. Core logic using the safely dereferenced values (idVal, refVal)
+	if idVal != "" && refVal == "" {
+		query = fmt.Sprintf("?id=%s", idVal)
+	} else if refVal != "" && idVal == "" {
+		query = fmt.Sprintf("?reference=%s", refVal)
+	} else if idVal != "" && refVal != "" {
+		return model.Deposit{}, errors.New("cannot query deposit with both 'id' and 'reference'. Provide only one")
+	} else {
+		return model.Deposit{}, errors.New("must provide either 'id' or 'reference'")
+	}
+
+	fullPath = basePath + query
+
+	err = c.makeRequest(ctx, fullPath, http.MethodGet, nil, nil, nil, nil, &response)
 
 	return response, err
 }
