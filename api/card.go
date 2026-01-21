@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"fmt"
+	"net/url"
 
 	"net/http"
 
@@ -96,7 +97,8 @@ func (c *Call) GetCustomerCardSecureDetails(ctx context.Context, cardID, custome
 
 	path := fmt.Sprintf("v1/cards/%s/secure?customer_id=%s", cardID, customerID)
 	if nonceKey != "" {
-		path = fmt.Sprintf("%s&nonce_key=%s", path, nonceKey)
+		escapedNonce := url.QueryEscape(nonceKey)
+		path = fmt.Sprintf("%s&nonce_key=%s", path, escapedNonce)
 	}
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
