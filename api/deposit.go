@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -49,36 +48,17 @@ func (c *Call) GetDepositByIDOrReference(ctx context.Context, id, reference *str
 		err      error
 		response model.Deposit
 		basePath = "v1/deposit/search"
-		query    string
-		fullPath string
 	)
 
-	if id == nil && reference == nil {
-		return model.Deposit{}, errors.New("must provide either 'id' or 'reference'")
+	// Validate and get the parameter to use
+	value, paramName, err := validateExclusiveParams(id, "id", reference, "reference")
+	if err != nil {
+		return model.Deposit{}, err
 	}
 
-	idVal := ""
-	if id != nil {
-		idVal = *id
-	}
-
-	refVal := ""
-	if reference != nil {
-		refVal = *reference
-	}
-
-	// 2. Core logic using the safely dereferenced values (idVal, refVal)
-	if idVal != "" && refVal == "" {
-		query = fmt.Sprintf("?id=%s", idVal)
-	} else if refVal != "" && idVal == "" {
-		query = fmt.Sprintf("?reference=%s", refVal)
-	} else if idVal != "" && refVal != "" {
-		return model.Deposit{}, errors.New("cannot query deposit with both 'id' and 'reference'. Provide only one")
-	} else {
-		return model.Deposit{}, errors.New("must provide either 'id' or 'reference'")
-	}
-
-	fullPath = basePath + query
+	// Build query based on which parameter was provided
+	query := fmt.Sprintf("?%s=%s", paramName, value)
+	fullPath := basePath + query
 
 	err = c.makeRequest(ctx, fullPath, http.MethodGet, nil, nil, nil, nil, &response)
 

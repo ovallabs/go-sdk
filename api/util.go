@@ -169,3 +169,24 @@ func stringToTimeHookFunc(layout string) mapstructure.DecodeHookFunc {
 		return time.Parse(layout, str)
 	}
 }
+
+// validateExclusiveParams validates that exactly one of the two string pointer parameters is provided and non-empty.
+// Returns the non-empty value and its parameter name, or an error if validation fails.
+func validateExclusiveParams(param1 *string, param1Name string, param2 *string, param2Name string) (value string, paramName string, err error) {
+	// Check that at least one is provided AND not empty
+	if (param1 == nil || *param1 == "") && (param2 == nil || *param2 == "") {
+		return "", "", fmt.Errorf("must provide either '%s' or '%s'", param1Name, param2Name)
+	}
+
+	// Check that both are not provided
+	if param1 != nil && *param1 != "" && param2 != nil && *param2 != "" {
+		return "", "", fmt.Errorf("cannot query with both '%s' and '%s'. Provide only one", param1Name, param2Name)
+	}
+
+	// Return the non-empty value
+	if param1 != nil && *param1 != "" {
+		return *param1, param1Name, nil
+	}
+
+	return *param2, param2Name, nil
+}

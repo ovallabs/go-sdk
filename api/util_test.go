@@ -14,7 +14,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
+	"github.com/ovalfi/go-sdk/helpers"
 	"github.com/ovalfi/go-sdk/model"
 )
 
@@ -230,4 +232,125 @@ func Test_mapstructTimeHook(t *testing.T) {
 		t.Errorf("Expected: %v, \nActual: %v", createdAt, user.CreatedAt)
 	}
 	assert.Equal(t, name, user.Name)
+}
+
+func Test_validateExclusiveParams(t *testing.T) {
+	tests := []struct {
+		name          string
+		param1        *string
+		param1Name    string
+		param2        *string
+		param2Name    string
+		expectedValue string
+		expectedParam string
+		expectedError string
+	}{
+		{
+			name:          "both params are nil",
+			param1:        nil,
+			param1Name:    "id",
+			param2:        nil,
+			param2Name:    "reference",
+			expectedValue: "",
+			expectedParam: "",
+			expectedError: "must provide either 'id' or 'reference'",
+		},
+		{
+			name:          "both params are empty strings",
+			param1:        helpers.GetPointerString(""),
+			param1Name:    "id",
+			param2:        helpers.GetPointerString(""),
+			param2Name:    "reference",
+			expectedValue: "",
+			expectedParam: "",
+			expectedError: "must provide either 'id' or 'reference'",
+		},
+		{
+			name:          "param1 is nil, param2 is empty string",
+			param1:        nil,
+			param1Name:    "id",
+			param2:        helpers.GetPointerString(""),
+			param2Name:    "reference",
+			expectedValue: "",
+			expectedParam: "",
+			expectedError: "must provide either 'id' or 'reference'",
+		},
+		{
+			name:          "param1 is empty string, param2 is nil",
+			param1:        helpers.GetPointerString(""),
+			param1Name:    "id",
+			param2:        nil,
+			param2Name:    "reference",
+			expectedValue: "",
+			expectedParam: "",
+			expectedError: "must provide either 'id' or 'reference'",
+		},
+		{
+			name:          "both params provided with values",
+			param1:        helpers.GetPointerString("123"),
+			param1Name:    "id",
+			param2:        helpers.GetPointerString("ref-456"),
+			param2Name:    "reference",
+			expectedValue: "",
+			expectedParam: "",
+			expectedError: "cannot query with both 'id' and 'reference'. Provide only one",
+		},
+		{
+			name:          "only param1 provided with value",
+			param1:        helpers.GetPointerString("123"),
+			param1Name:    "id",
+			param2:        nil,
+			param2Name:    "reference",
+			expectedValue: "123",
+			expectedParam: "id",
+			expectedError: "",
+		},
+		{
+			name:          "only param2 provided with value",
+			param1:        nil,
+			param1Name:    "id",
+			param2:        helpers.GetPointerString("ref-456"),
+			param2Name:    "reference",
+			expectedValue: "ref-456",
+			expectedParam: "reference",
+			expectedError: "",
+		},
+		{
+			name:          "param1 provided, param2 is empty string",
+			param1:        helpers.GetPointerString("123"),
+			param1Name:    "id",
+			param2:        helpers.GetPointerString(""),
+			param2Name:    "reference",
+			expectedValue: "123",
+			expectedParam: "id",
+			expectedError: "",
+		},
+		{
+			name:          "param1 is empty string, param2 provided",
+			param1:        helpers.GetPointerString(""),
+			param1Name:    "id",
+			param2:        helpers.GetPointerString("ref-456"),
+			param2Name:    "reference",
+			expectedValue: "ref-456",
+			expectedParam: "reference",
+			expectedError: "",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			value, paramName, err := validateExclusiveParams(tt.param1, tt.param1Name, tt.param2, tt.param2Name)
+
+			if tt.expectedError != "" {
+				require.Error(t, err)
+				require.Equal(t, tt.expectedError, err.Error())
+				require.Empty(t, value)
+				require.Empty(t, paramName)
+			} else {
+				require.NoError(t, err)
+				require.Equal(t, tt.expectedValue, value)
+				require.Equal(t, tt.expectedParam, paramName)
+			}
+		})
+	}
 }
