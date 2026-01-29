@@ -90,7 +90,7 @@ func (c *Call) GetVerifyBiometricsLink(ctx context.Context, customerID string) (
 }
 
 // GetVerifyCustomerKYC makes request to get the link to verify biometrics
-func (c *Call) GetVerifyCustomerKYC(ctx context.Context, customerID string, country *string) (model.VerifyCustomerKYCResponse, error) {
+func (c *Call) GetVerifyCustomerKYC(ctx context.Context, customerID string, country, hasExpiredID *string) (model.VerifyCustomerKYCResponse, error) {
 	var (
 		err      error
 		response model.VerifyCustomerKYCResponse
@@ -100,6 +100,10 @@ func (c *Call) GetVerifyCustomerKYC(ctx context.Context, customerID string, coun
 
 	if country != nil {
 		params["country"] = *country
+	}
+
+	if hasExpiredID != nil {
+		params["has_expired_id"] = *hasExpiredID
 	}
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
 
