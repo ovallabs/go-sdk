@@ -22,6 +22,7 @@ type (
 		ID               string      `json:"id"`
 		Name             string      `json:"customer_name"`
 		MobileNumber     string      `json:"mobile_number"`
+		Country          *string     `json:"country"`
 		Email            string      `json:"email"`
 		Channel          string      `json:"channel"`
 		Reference        string      `json:"reference"`
@@ -36,6 +37,7 @@ type (
 		Email            string       `json:"email"`
 		Reference        string       `json:"reference"`
 		MobileNumber     string       `json:"mobile_number"`
+		Country          *string      `json:"country,omitempty"`
 		Type             CustomerType `json:"type"`
 		YieldOfferingIDs []uuid.UUID  `json:"yield_offering_ids"`
 	}
@@ -47,6 +49,7 @@ type (
 		Email            string      `json:"email"`
 		Reference        string      `json:"reference"`
 		MobileNumber     string      `json:"mobile_number"`
+		Country          *string     `json:"country"`
 		YieldOfferingIDs []uuid.UUID `json:"yield_offering_ids"`
 	}
 
