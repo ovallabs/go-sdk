@@ -114,6 +114,9 @@ type RemoteCalls interface {
 	DeleteCard(ctx context.Context, cardID, customerID string) (string, error)
 	GetCardEndorsementLink(ctx context.Context, customerID string) (model.CardEndorsementLinkResponse, error)
 
+	// Report APIs
+	SubmitSTR(ctx context.Context, request model.SubmitSTRRequest) error
+
 	// Crypto APIs
 	GetCustomerWallet(ctx context.Context, request model.CustomerWalletRequest) (model.CustomerWallet, error)
 	GetSupportedAssets(ctx context.Context) ([]*model.SupportedCurrencies, error)

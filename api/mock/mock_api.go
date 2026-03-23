@@ -1147,6 +1147,20 @@ func (mr *MockRemoteCallsMockRecorder) SubmitCustomerKYCDocument(ctx, customerID
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubmitCustomerKYCDocument", reflect.TypeOf((*MockRemoteCalls)(nil).SubmitCustomerKYCDocument), ctx, customerID, frontDocument, backDocument, documentType, country)
 }
 
+// SubmitSTR mocks base method.
+func (m *MockRemoteCalls) SubmitSTR(ctx context.Context, request model.SubmitSTRRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SubmitSTR", ctx, request)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SubmitSTR indicates an expected call of SubmitSTR.
+func (mr *MockRemoteCallsMockRecorder) SubmitSTR(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubmitSTR", reflect.TypeOf((*MockRemoteCalls)(nil).SubmitSTR), ctx, request)
+}
+
 // UpdateCustomer mocks base method.
 func (m *MockRemoteCalls) UpdateCustomer(ctx context.Context, request model.UpdateCustomerRequest) (model.Customer, error) {
 	m.ctrl.T.Helper()
