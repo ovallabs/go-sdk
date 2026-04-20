@@ -36,6 +36,21 @@ func (m *MockRemoteCalls) EXPECT() *MockRemoteCallsMockRecorder {
 	return m.recorder
 }
 
+// AuthenticateCustomerPaymentIntent mocks base method.
+func (m *MockRemoteCalls) AuthenticateCustomerPaymentIntent(ctx context.Context, request model.AuthenticateCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AuthenticateCustomerPaymentIntent", ctx, request)
+	ret0, _ := ret[0].(model.CreateCustomerPaymentIntentResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AuthenticateCustomerPaymentIntent indicates an expected call of AuthenticateCustomerPaymentIntent.
+func (mr *MockRemoteCallsMockRecorder) AuthenticateCustomerPaymentIntent(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthenticateCustomerPaymentIntent", reflect.TypeOf((*MockRemoteCalls)(nil).AuthenticateCustomerPaymentIntent), ctx, request)
+}
+
 // CancelBatchTransaction mocks base method.
 func (m *MockRemoteCalls) CancelBatchTransaction(ctx context.Context, batchDate, transactionType, currency, reason string) error {
 	m.ctrl.T.Helper()
@@ -76,6 +91,21 @@ func (m *MockRemoteCalls) CancelTransaction(ctx context.Context, transactionID, 
 func (mr *MockRemoteCallsMockRecorder) CancelTransaction(ctx, transactionID, transactionType, reason interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelTransaction", reflect.TypeOf((*MockRemoteCalls)(nil).CancelTransaction), ctx, transactionID, transactionType, reason)
+}
+
+// CompleteCustomerPaymentIntent mocks base method.
+func (m *MockRemoteCalls) CompleteCustomerPaymentIntent(ctx context.Context, request model.CompleteCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CompleteCustomerPaymentIntent", ctx, request)
+	ret0, _ := ret[0].(model.CreateCustomerPaymentIntentResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CompleteCustomerPaymentIntent indicates an expected call of CompleteCustomerPaymentIntent.
+func (mr *MockRemoteCallsMockRecorder) CompleteCustomerPaymentIntent(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CompleteCustomerPaymentIntent", reflect.TypeOf((*MockRemoteCalls)(nil).CompleteCustomerPaymentIntent), ctx, request)
 }
 
 // CompletePaymentCardRequest mocks base method.
@@ -150,6 +180,21 @@ func (m *MockRemoteCalls) CreateCustomerCardV2(ctx context.Context, request mode
 func (mr *MockRemoteCallsMockRecorder) CreateCustomerCardV2(ctx, request interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateCustomerCardV2", reflect.TypeOf((*MockRemoteCalls)(nil).CreateCustomerCardV2), ctx, request)
+}
+
+// CreateCustomerPaymentIntent mocks base method.
+func (m *MockRemoteCalls) CreateCustomerPaymentIntent(ctx context.Context, request model.CreateCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateCustomerPaymentIntent", ctx, request)
+	ret0, _ := ret[0].(model.CreateCustomerPaymentIntentResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateCustomerPaymentIntent indicates an expected call of CreateCustomerPaymentIntent.
+func (mr *MockRemoteCallsMockRecorder) CreateCustomerPaymentIntent(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateCustomerPaymentIntent", reflect.TypeOf((*MockRemoteCalls)(nil).CreateCustomerPaymentIntent), ctx, request)
 }
 
 // CryptoWithdrawal mocks base method.
@@ -463,6 +508,21 @@ func (mr *MockRemoteCallsMockRecorder) GetCardEndorsementLink(ctx, customerID in
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCardEndorsementLink", reflect.TypeOf((*MockRemoteCalls)(nil).GetCardEndorsementLink), ctx, customerID)
 }
 
+// GetCompetitorsRates mocks base method.
+func (m *MockRemoteCalls) GetCompetitorsRates(ctx context.Context, from, to string) ([]model.CompetitorRate, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCompetitorsRates", ctx, from, to)
+	ret0, _ := ret[0].([]model.CompetitorRate)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCompetitorsRates indicates an expected call of GetCompetitorsRates.
+func (mr *MockRemoteCallsMockRecorder) GetCompetitorsRates(ctx, from, to interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCompetitorsRates", reflect.TypeOf((*MockRemoteCalls)(nil).GetCompetitorsRates), ctx, from, to)
+}
+
 // GetCurrencySwapByID mocks base method.
 func (m *MockRemoteCalls) GetCurrencySwapByID(ctx context.Context, currencySwapID string) (model.CurrencySwap, error) {
 	m.ctrl.T.Helper()
@@ -611,6 +671,21 @@ func (m *MockRemoteCalls) GetCustomerPaymentCards(ctx context.Context, customerI
 func (mr *MockRemoteCallsMockRecorder) GetCustomerPaymentCards(ctx, customerID, status, search, dateBetween, page interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCustomerPaymentCards", reflect.TypeOf((*MockRemoteCalls)(nil).GetCustomerPaymentCards), ctx, customerID, status, search, dateBetween, page)
+}
+
+// GetCustomerPaymentIntentByID mocks base method.
+func (m *MockRemoteCalls) GetCustomerPaymentIntentByID(ctx context.Context, paymentIntentID string) (model.CustomerPaymentIntent, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCustomerPaymentIntentByID", ctx, paymentIntentID)
+	ret0, _ := ret[0].(model.CustomerPaymentIntent)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCustomerPaymentIntentByID indicates an expected call of GetCustomerPaymentIntentByID.
+func (mr *MockRemoteCallsMockRecorder) GetCustomerPaymentIntentByID(ctx, paymentIntentID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCustomerPaymentIntentByID", reflect.TypeOf((*MockRemoteCalls)(nil).GetCustomerPaymentIntentByID), ctx, paymentIntentID)
 }
 
 // GetCustomerWallet mocks base method.
@@ -791,21 +866,6 @@ func (m *MockRemoteCalls) GetSupportedBanks(ctx context.Context, currency string
 func (mr *MockRemoteCallsMockRecorder) GetSupportedBanks(ctx, currency, country, payoutType interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSupportedBanks", reflect.TypeOf((*MockRemoteCalls)(nil).GetSupportedBanks), ctx, currency, country, payoutType)
-}
-
-// GetCompetitorsRates mocks base method.
-func (m *MockRemoteCalls) GetCompetitorsRates(ctx context.Context, from, to string) ([]model.CompetitorRate, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCompetitorsRates", ctx, from, to)
-	ret0, _ := ret[0].([]model.CompetitorRate)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetCompetitorsRates indicates an expected call of GetCompetitorsRates.
-func (mr *MockRemoteCallsMockRecorder) GetCompetitorsRates(ctx, from, to interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCompetitorsRates", reflect.TypeOf((*MockRemoteCalls)(nil).GetCompetitorsRates), ctx, from, to)
 }
 
 // GetTerminalTransferByID mocks base method.
