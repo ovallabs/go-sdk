@@ -50,8 +50,8 @@ type (
 
 	// MobileMoney mobile money details object
 	MobileMoney struct {
-		Msisdn                  string  `json:"msisdn"`
-		Otp                     *string `json:"otp"`
+		MSISDN                  string  `json:"msisdn"`
+		OTP                     *string `json:"otp"`
 		OnSuccessRedirectionURL *string `json:"on_success_redirection_url"`
 		OnFailedRedirectionURL  *string `json:"on_failed_redirection_url"`
 		OnCancelRedirectionURL  *string `json:"on_cancel_redirection_url"`
