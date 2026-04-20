@@ -793,6 +793,21 @@ func (mr *MockRemoteCallsMockRecorder) GetSupportedBanks(ctx, currency, country,
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSupportedBanks", reflect.TypeOf((*MockRemoteCalls)(nil).GetSupportedBanks), ctx, currency, country, payoutType)
 }
 
+// GetCompetitorsRates mocks base method.
+func (m *MockRemoteCalls) GetCompetitorsRates(ctx context.Context, from, to string) ([]model.CompetitorRate, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCompetitorsRates", ctx, from, to)
+	ret0, _ := ret[0].([]model.CompetitorRate)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCompetitorsRates indicates an expected call of GetCompetitorsRates.
+func (mr *MockRemoteCallsMockRecorder) GetCompetitorsRates(ctx, from, to interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCompetitorsRates", reflect.TypeOf((*MockRemoteCalls)(nil).GetCompetitorsRates), ctx, from, to)
+}
+
 // GetTerminalTransferByID mocks base method.
 func (m *MockRemoteCalls) GetTerminalTransferByID(ctx context.Context, transferID string) (model.TerminalTransfer, error) {
 	m.ctrl.T.Helper()
