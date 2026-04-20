@@ -124,6 +124,10 @@ type RemoteCalls interface {
 
 	InitiateCustomerPaymentSession(ctx context.Context, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error)
 	ProcessCustomerPaymentToken(ctx context.Context, request model.CustomerPaymentTokenRequest) error
+	CreateCustomerPaymentIntent(ctx context.Context, request model.CreateCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error)
+	CompleteCustomerPaymentIntent(ctx context.Context, request model.CompleteCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error)
+	AuthenticateCustomerPaymentIntent(ctx context.Context, request model.AuthenticateCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error)
+	GetCustomerPaymentIntentByID(ctx context.Context, paymentIntentID string) (model.CustomerPaymentIntent, error)
 
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
