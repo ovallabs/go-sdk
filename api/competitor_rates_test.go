@@ -34,7 +34,7 @@ func TestGetCompetitorsRates(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
-		assert.Equal(t, "/v2/utils/competitors-rates", r.URL.Path)
+		assert.Equal(t, "/v1/utils/competitors-rates", r.URL.Path)
 		assert.Equal(t, "USD", r.URL.Query().Get("from"))
 		assert.Equal(t, "NGN", r.URL.Query().Get("to"))
 
