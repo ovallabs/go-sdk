@@ -8,7 +8,7 @@ type (
 		CustomerID  string  `json:"customer_id"`
 		Amount      float64 `json:"amount"`
 		Currency    string  `json:"currency"`
-		Provider    *string `json:"provider,omitempty"`
+		Reference   *string `json:"reference,omitempty"`
 		PhoneNumber *string `json:"phone_number,omitempty"`
 	}
 
