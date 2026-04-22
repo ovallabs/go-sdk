@@ -8,8 +8,6 @@ import (
 	"github.com/ovalfi/go-sdk/model"
 )
 
-const utilV2APIVersion = "v2/utils"
-
 // GetCompetitorsRates fetches the latest competitor rates for a currency pair.
 func (c *Call) GetCompetitorsRates(ctx context.Context, from, to string) ([]model.CompetitorRate, error) {
 	var (
@@ -19,7 +17,7 @@ func (c *Call) GetCompetitorsRates(ctx context.Context, from, to string) ([]mode
 			"from": from,
 			"to":   to,
 		}
-		path = fmt.Sprintf("%s/competitors-rates", utilV2APIVersion)
+		path = fmt.Sprintf("%s/competitors-rates", utilAPIVersion)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
