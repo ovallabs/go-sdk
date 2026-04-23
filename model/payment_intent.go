@@ -9,6 +9,7 @@ type (
 		Amount      float64 `json:"amount"`
 		Currency    string  `json:"currency"`
 		Reference   *string `json:"reference,omitempty"`
+		RedirectURL *string `json:"redirect_url,omitempty"`
 		PhoneNumber *string `json:"phone_number,omitempty"`
 	}
 
