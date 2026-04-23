@@ -46,7 +46,7 @@ type (
 		PaymentMethod     string    `json:"payment_method,omitempty"`
 		Status            string    `json:"status"`
 		Country           *string   `json:"country,omitempty"`
-		RedirectURL       *string   `json:"redirect_url,omitempty"`
+		PaymentURL        *string   `json:"payment_url,omitempty"`
 	}
 
 	// MobileMoney mobile money details object
