@@ -102,5 +102,6 @@ type (
 		Amount      float64                    `json:"amount"`
 		Destination TransferBeneficiaryDetails `json:"destination"`
 		Remarks     string                     `json:"remarks"`
+		PurposeCode string                     `json:"purpose_code,omitempty"`
 	}
 )
