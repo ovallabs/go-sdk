@@ -45,6 +45,7 @@ type RemoteCalls interface {
 	// Payment APIs
 	GetBanks(ctx context.Context) ([]model.BankCode, error)
 	GetSupportedBanks(ctx context.Context, currency string, country, payoutType *string) ([]model.Bank, error)
+	GetCompetitorsRates(ctx context.Context, from, to string) ([]model.CompetitorRate, error)
 	ResolveBankAccount(ctx context.Context, request model.AccountResolveRequest) (model.AccountDetails, error)
 	GenerateBankAccount(ctx context.Context, request model.GenerateBankAccountRequest) (model.BankAccount, error)
 	GetBankAccount(ctx context.Context, customerID, currency string) (model.BankAccount, error)
@@ -114,12 +115,19 @@ type RemoteCalls interface {
 	DeleteCard(ctx context.Context, cardID, customerID string) (string, error)
 	GetCardEndorsementLink(ctx context.Context, customerID string) (model.CardEndorsementLinkResponse, error)
 
+	// Report APIs
+	SubmitSTR(ctx context.Context, request model.SubmitSTRRequest) error
+
 	// Crypto APIs
 	GetCustomerWallet(ctx context.Context, request model.CustomerWalletRequest) (model.CustomerWallet, error)
 	GetSupportedAssets(ctx context.Context) ([]*model.SupportedCurrencies, error)
 
 	InitiateCustomerPaymentSession(ctx context.Context, request model.CustomerPaymentSessionRequest) (model.CustomerPaymentSessionResponse, error)
 	ProcessCustomerPaymentToken(ctx context.Context, request model.CustomerPaymentTokenRequest) error
+	CreateCustomerPaymentIntent(ctx context.Context, request model.CreateCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error)
+	CompleteCustomerPaymentIntent(ctx context.Context, request model.CompleteCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error)
+	AuthenticateCustomerPaymentIntent(ctx context.Context, request model.AuthenticateCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error)
+	GetCustomerPaymentIntentByID(ctx context.Context, paymentIntentID string) (model.CustomerPaymentIntent, error)
 
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
