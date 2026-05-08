@@ -81,6 +81,22 @@ type (
 		Currency      *string `json:"currency,omitempty"`
 	}
 
+	// ConfirmPayeeRequest schema for confirm payee request
+	ConfirmPayeeRequest struct {
+		FirstName     string `json:"first_name"`
+		LastName      string `json:"last_name"`
+		SortCode      string `json:"sort_code"`
+		AccountNumber string `json:"account_number"`
+		Currency      string `json:"currency"`
+	}
+
+	// ConfirmPayeeResponse schema for confirm payee response
+	ConfirmPayeeResponse struct {
+		Matched        bool   `json:"matched"`
+		RegisteredName string `json:"registered_name,omitempty"`
+		Comments       string `json:"comments,omitempty"`
+	}
+
 	// MockCustomerDepositRequest schema for customer mock deposit request
 	MockCustomerDepositRequest struct {
 		CustomerID string  `json:"customer_id"`
