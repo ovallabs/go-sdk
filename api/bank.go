@@ -128,6 +128,19 @@ func (c *Call) GetTermsOfService(ctx context.Context, customerID, currency strin
 	return response, err
 }
 
+// ConfirmPayee makes request to Torus to confirm payee details
+func (c *Call) ConfirmPayee(ctx context.Context, request model.ConfirmPayeeRequest) (model.ConfirmPayeeResponse, error) {
+	var (
+		err      error
+		response model.ConfirmPayeeResponse
+		path     = fmt.Sprintf("%s/confirm-payee", bankAPIVersion)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, request, &response)
+
+	return response, err
+}
+
 // MockDeposit makes request to Torus to mock customer deposit
 func (c *Call) MockDeposit(ctx context.Context, request model.MockCustomerDepositRequest) error {
 	var (
