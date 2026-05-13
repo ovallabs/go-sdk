@@ -64,6 +64,7 @@ type (
 		AccountName   string `json:"account_name"`
 		RoutingNumber string `json:"routing_number,omitempty"`
 		SwiftCode     string `json:"swift_code,omitempty"`
+		SortCode      string `json:"sort_code,omitempty"`
 		BankName      string `json:"bank_name"`
 		BankCode      string `json:"bank_code,omitempty"`
 		BankBranch    string `json:"bank_branch,omitempty"`
