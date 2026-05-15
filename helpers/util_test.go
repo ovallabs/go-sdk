@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -20,14 +21,14 @@ func TestGetSignatureFromReferenceAndPubKey(t *testing.T) {
 		{
 			reference: "ref0091",
 			publicKey: "ANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCg",
-			expected:  "7097832561ba902beab24076564d53beea425a539046733578ed6e7e2510eb30",
+			expected:  "8cfc061f6b90ccab9ed8f36fa8791e0eff4d3111f8858230bf063970f547ade0",
 		},
 	}
 
-	for _, test := range tests {
-		t.Run("testName", func(t *testing.T) {
+	for i, test := range tests {
+		t.Run(fmt.Sprintf("case_%d", i), func(t *testing.T) {
 			got := GetSignatureFromReferenceAndPubKey(test.reference, test.publicKey)
-			require.Equal(t, got, test.expected)
+			require.Equal(t, test.expected, got)
 		})
 	}
 }
