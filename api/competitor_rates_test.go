@@ -19,6 +19,7 @@ func TestGetCompetitorsRates(t *testing.T) {
 		{
 			Provider:     "remitly",
 			ProviderName: "Remitly",
+			LogoURL:      "https://vban-resources.s3.us-east-2.amazonaws.com/logos/remitly.png",
 			From:         "USD",
 			To:           "NGN",
 			Rate:         1500.25,
@@ -26,6 +27,7 @@ func TestGetCompetitorsRates(t *testing.T) {
 		{
 			Provider:     "nala",
 			ProviderName: "Nala",
+			LogoURL:      "https://vban-resources.s3.us-east-2.amazonaws.com/logos/nala.png",
 			From:         "USD",
 			To:           "NGN",
 			Rate:         1498.5,
