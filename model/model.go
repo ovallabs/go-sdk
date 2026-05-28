@@ -75,6 +75,7 @@ type (
 		PostalCode    string `json:"postal_code,omitempty"`
 		IsWithinUS    string `json:"is_within_us"`
 		IsMobileMoney string `json:"is_mobile_money"`
+		PaymentMode   string `json:"payment_mode,omitempty"`
 	}
 
 	// PersonalDetails schema for personal details
