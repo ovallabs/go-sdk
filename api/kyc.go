@@ -64,15 +64,16 @@ func (c *Call) SubmitCustomerKYCDocument(
 }
 
 // VerifyCustomerKYC makes request to Torus to verify a customer kyc request
-func (c *Call) VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycType string) error {
+func (c *Call) VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycType string) (interface{}, error) {
 	var (
 		err  error
+		response interface{}
 		path = fmt.Sprintf("%s/%s/%s/%s", kycAPIVersion, customerID, kycType, idNumber)
 	)
 
-	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, nil, nil)
+	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, nil, &response)
 
-	return err
+	return response,err
 }
 
 // GetVerifyBiometricsLink makes request to get the link to verify biometrics
