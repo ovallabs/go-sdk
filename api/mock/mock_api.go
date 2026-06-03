@@ -93,21 +93,6 @@ func (mr *MockRemoteCallsMockRecorder) CancelTransaction(ctx, transactionID, tra
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelTransaction", reflect.TypeOf((*MockRemoteCalls)(nil).CancelTransaction), ctx, transactionID, transactionType, reason)
 }
 
-// ConfirmPayee mocks base method.
-func (m *MockRemoteCalls) ConfirmPayee(ctx context.Context, request model.ConfirmPayeeRequest) (model.ConfirmPayeeResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ConfirmPayee", ctx, request)
-	ret0, _ := ret[0].(model.ConfirmPayeeResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ConfirmPayee indicates an expected call of ConfirmPayee.
-func (mr *MockRemoteCallsMockRecorder) ConfirmPayee(ctx, request interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ConfirmPayee", reflect.TypeOf((*MockRemoteCalls)(nil).ConfirmPayee), ctx, request)
-}
-
 // CompleteCustomerPaymentIntent mocks base method.
 func (m *MockRemoteCalls) CompleteCustomerPaymentIntent(ctx context.Context, request model.CompleteCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error) {
 	m.ctrl.T.Helper()
@@ -135,6 +120,21 @@ func (m *MockRemoteCalls) CompletePaymentCardRequest(ctx context.Context, reques
 func (mr *MockRemoteCallsMockRecorder) CompletePaymentCardRequest(ctx, request interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CompletePaymentCardRequest", reflect.TypeOf((*MockRemoteCalls)(nil).CompletePaymentCardRequest), ctx, request)
+}
+
+// ConfirmPayee mocks base method.
+func (m *MockRemoteCalls) ConfirmPayee(ctx context.Context, request model.ConfirmPayeeRequest) (model.ConfirmPayeeResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ConfirmPayee", ctx, request)
+	ret0, _ := ret[0].(model.ConfirmPayeeResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ConfirmPayee indicates an expected call of ConfirmPayee.
+func (mr *MockRemoteCallsMockRecorder) ConfirmPayee(ctx, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ConfirmPayee", reflect.TypeOf((*MockRemoteCalls)(nil).ConfirmPayee), ctx, request)
 }
 
 // CreateBeneficiary mocks base method.
@@ -1296,11 +1296,12 @@ func (mr *MockRemoteCallsMockRecorder) ValidatePhoneNumber(ctx, currency, countr
 }
 
 // VerifyCustomerKYC mocks base method.
-func (m *MockRemoteCalls) VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycType string) error {
+func (m *MockRemoteCalls) VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycType string) (interface{}, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "VerifyCustomerKYC", ctx, customerID, idNumber, kycType)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(interface{})
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // VerifyCustomerKYC indicates an expected call of VerifyCustomerKYC.
