@@ -5,13 +5,14 @@ import "github.com/google/uuid"
 type (
 	// CreateCustomerPaymentIntentRequest struct to create a payment intent request
 	CreateCustomerPaymentIntentRequest struct {
-		CustomerID  string  `json:"customer_id"`
-		Amount      float64 `json:"amount"`
-		Currency    string  `json:"currency"`
-		Country     string  `json:"country"`
-		Reference   *string `json:"reference,omitempty"`
-		RedirectURL *string `json:"redirect_url,omitempty"`
-		PhoneNumber *string `json:"phone_number,omitempty"`
+		CustomerID    string  `json:"customer_id"`
+		Amount        float64 `json:"amount"`
+		Currency      string  `json:"currency"`
+		Country       string  `json:"country"`
+		PaymentMethod *string `json:"payment_method,omitempty"`
+		Reference     *string `json:"reference,omitempty"`
+		RedirectURL   *string `json:"redirect_url,omitempty"`
+		PhoneNumber   *string `json:"phone_number,omitempty"`
 	}
 
 	// CompleteCustomerPaymentIntentRequest struct to complete payment intent
