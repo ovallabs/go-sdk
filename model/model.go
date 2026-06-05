@@ -10,8 +10,8 @@ const (
 	// BaseURL is the definition of ovalfi base url
 	BaseURL = "https://sandbox-api.ovalfi-app.com/api/"
 
-	// PublicKey sample sandbox environment signature
-	PublicKey = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
+	// APISecret sample sandbox environment signature
+	APISecret = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
 
 	// BearerToken sample sandbox environment bearer token
 	BearerToken = "eyJidXNpbmVzc0lEIjoiYjIxYTQ0YjAtYzI1Yi00NzRiLWE5ODYtOGFmNjI3MTA5YzE5IiwidXNlcklEIjoiOWVhYmJkYzQtOTg3Ny00ZDI4LTgyNTQtMTg4NjBjYWNjMDQ1Iiwia2V5IjoiUGVudGFtb25leSJ9"

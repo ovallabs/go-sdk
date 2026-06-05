@@ -17,7 +17,7 @@ func (c *Call) InitiateDeposit(ctx context.Context, request model.InitiateDeposi
 		err       error
 		response  model.Deposit
 		path      = "v1/deposit"
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
@@ -91,7 +91,7 @@ func (c *Call) InternalFundsTransfer(ctx context.Context, request model.FundTran
 		err       error
 		response  model.Deposit
 		path      = "v1/transfer-funds"
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
@@ -105,7 +105,7 @@ func (c *Call) IntraTransfer(ctx context.Context, request model.IntraTransferReq
 		err       error
 		response  model.IntraTransferResponse
 		path      = "v1/intra-transfer"
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)

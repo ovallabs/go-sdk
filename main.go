@@ -15,7 +15,7 @@ func main() {
 	client := resty.New()
 	logger.Info().Msg("app is starting")
 	defer logger.Info().Msg("stopped")
-	apiCalls := api.New(&logger, client, model.PublicKey, model.BearerToken, model.BaseURL)
+	apiCalls := api.New(&logger, client, model.APISecret, model.BearerToken, model.BaseURL)
 	apiCalls.RunInSandboxMode() // to ensure it is running in sandbox mode
 	//ctx := context.Background()
 

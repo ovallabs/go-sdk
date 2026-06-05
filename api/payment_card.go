@@ -16,7 +16,7 @@ func (c *Call) InitiatePaymentCardRequest(ctx context.Context, request model.Ini
 		err       error
 		response  string
 		path      = "v1/payments/cards/initiate"
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
@@ -108,7 +108,7 @@ func (c *Call) DebitPaymentCard(ctx context.Context, request model.DebitCustomer
 		err       error
 		response  model.Deposit
 		path      = "v1/payments/cards/debit"
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)

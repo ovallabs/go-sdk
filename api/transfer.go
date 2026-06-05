@@ -24,7 +24,7 @@ func (c *Call) InitiateTransfer(ctx context.Context, request model.InitiateTrans
 		err       error
 		response  model.TransferResponse
 		path      = customerTransferAPIVersion
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)

@@ -17,7 +17,7 @@ func (c *Call) InitiateWithdrawal(ctx context.Context, request model.WithdrawalR
 		err       error
 		response  model.Withdrawal
 		path      = withdrawalAPIVersion
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
@@ -31,7 +31,7 @@ func (c *Call) FiatWithdrawal(ctx context.Context, request model.WithdrawalReque
 		err       error
 		response  model.Withdrawal
 		path      = fmt.Sprintf("%s/fiat", withdrawalAPIVersion)
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
@@ -45,7 +45,7 @@ func (c *Call) CryptoWithdrawal(ctx context.Context, request model.WithdrawalReq
 		err       error
 		response  model.Withdrawal
 		path      = fmt.Sprintf("%s/crypto", withdrawalAPIVersion)
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
@@ -59,7 +59,7 @@ func (c *Call) FeeWithdrawal(ctx context.Context, request model.FeeWithdrawalReq
 		err       error
 		response  model.FeeWithdrawalResponse
 		path      = fmt.Sprintf("%s/fee", withdrawalAPIVersion)
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)

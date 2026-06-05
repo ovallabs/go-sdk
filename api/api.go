@@ -139,19 +139,19 @@ type Call struct {
 	client       *resty.Client
 	logger       zerolog.Logger
 	baseURL      string
-	publicKey    string
+	apiSecret    string
 	bearerToken  string
 	sandboxMode  bool
 	idempotentID uuid.UUID
 }
 
 // New initialises the object Call
-func New(z *zerolog.Logger, c *resty.Client, publicKey, bearerToken, bURL string) RemoteCalls {
+func New(z *zerolog.Logger, c *resty.Client, apiSecret, bearerToken, bURL string) RemoteCalls {
 	call := &Call{
 		client:       c,
 		logger:       z.With().Str("sdk", "ovalfi").Logger(),
 		baseURL:      bURL,
-		publicKey:    publicKey,
+		apiSecret:    apiSecret,
 		bearerToken:  bearerToken,
 		idempotentID: uuid.New(),
 	}

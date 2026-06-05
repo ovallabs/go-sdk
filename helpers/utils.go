@@ -11,8 +11,8 @@ import (
 )
 
 // GetSignatureFromReferenceAndPubKey returns the string equivalent of a SHA256 hash on reference and public key
-func GetSignatureFromReferenceAndPubKey(reference, publicKey string) string {
-	concat := fmt.Sprintf("%s%s", publicKey, reference)
+func GetSignatureFromReferenceAndPubKey(reference, apiSecret string) string {
+	concat := fmt.Sprintf("%s%s", apiSecret, reference)
 	hash := sha256.New()
 	hash.Write([]byte(concat))
 	return fmt.Sprintf("%x", hash.Sum(nil))

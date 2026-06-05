@@ -17,7 +17,7 @@ func (c *Call) CreateCustomer(ctx context.Context, request model.CreateCustomerR
 		err       error
 		response  model.Customer
 		path      = customerAPIVersion
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)

@@ -17,7 +17,7 @@ func (c *Call) CreateCustomerCard(ctx context.Context, request model.CreateCusto
 		err       error
 		response  string
 		path      = "v1/cards"
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
@@ -30,7 +30,7 @@ func (c *Call) CreateCustomerCardV2(ctx context.Context, request model.CreateCus
 		err       error
 		response  string
 		path      = "v1/cards/new"
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)

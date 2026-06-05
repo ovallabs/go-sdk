@@ -86,7 +86,7 @@ func (c *Call) GenerateBankAccount(ctx context.Context, request model.GenerateBa
 		err       error
 		response  model.BankAccount
 		path      = fmt.Sprintf("%s/account", bankAPIVersion)
-		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.publicKey)
+		signature = helpers.GetSignatureFromReferenceAndPubKey(request.Reference, c.apiSecret)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, &signature, nil, nil, request, &response)
