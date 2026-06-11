@@ -69,6 +69,8 @@ type (
 		Amount        float64 `json:"amount"`
 		Reference     string  `json:"reference"`
 		Remarks       *string `json:"remarks"`
+		Currency      string  `json:"currency,omitempty"`
+		RedirectURL   *string `json:"redirect_url"`
 	}
 
 	// RefundCustomerDepositRequest for request payload
