@@ -36,6 +36,7 @@ type (
 		Status            string     `json:"status"`
 		CancelReason      *string    `json:"cancel_reason"`
 		YieldOfferingID   uuid.UUID  `json:"yield_offering_id"`
+		PaymentURL        *string    `json:"payment_url,omitempty"`
 	}
 
 	// InitiateDepositRequest schema for initiate deposit request
