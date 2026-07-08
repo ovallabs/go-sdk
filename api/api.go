@@ -130,6 +130,14 @@ type RemoteCalls interface {
 	AuthenticateCustomerPaymentIntent(ctx context.Context, request model.AuthenticateCustomerPaymentIntentRequest) (model.CreateCustomerPaymentIntentResponse, error)
 	GetCustomerPaymentIntentByID(ctx context.Context, paymentIntentID string) (model.CustomerPaymentIntent, error)
 
+	// Bill Payment APIs
+	GetBillerCategories(ctx context.Context) ([]model.BillerCategory, error)
+	GetBillers(ctx context.Context, category string) ([]model.Biller, error)
+	GetBillerProducts(ctx context.Context, category, biller string, paymentType *string, page *model.Page) (model.AllBillerProductsResponse, error)
+	ValidateBillerCustomer(ctx context.Context, request model.ValidateBillerCustomerRequest) (model.ValidateBillerCustomerResponse, error)
+	PayBill(ctx context.Context, request model.PayBillRequest) (model.PayBillResponse, error)
+	GetBillPaymentTransaction(ctx context.Context, billPaymentID string) (model.BillPaymentTransaction, error)
+
 	// RunInSandboxMode this forces Call functionalities to run in sandbox mode for relevant logic/API consumption
 	RunInSandboxMode()
 }
