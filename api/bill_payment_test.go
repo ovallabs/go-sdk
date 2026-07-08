@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/rs/zerolog"
@@ -77,7 +78,7 @@ func TestGetBillers(t *testing.T) {
 func TestGetBillerProducts(t *testing.T) {
 	expected := model.AllBillerProductsResponse{
 		Items: []model.BillerProduct{
-			{Code: "mtn-100", Name: "MTN 100 NGN", CategoryCode: "airtime", BillerCode: "mtn"},
+			{Code: "ekedc-prepaid-1000", Name: "EKEDC Prepaid 1000 NGN", CategoryCode: "electricity", BillerCode: "ekedc", PaymentType: "prepaid"},
 		},
 		Page: model.PageInfo{Page: 1},
 	}
@@ -170,7 +171,7 @@ func TestGetBillPaymentTransaction(t *testing.T) {
 		CustomerID: "1234567890",
 		Amount:     5000,
 		Status:     "pending",
-		CreatedAt:  "2024-01-01T00:00:00Z",
+		CreatedAt:  time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

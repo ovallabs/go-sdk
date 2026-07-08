@@ -102,8 +102,8 @@ type (
 	PageInfo struct {
 		Page            int64 `json:"page"`
 		Size            int64 `json:"size"`
-		HasNextPage     bool  `json:"has_next_age"`
-		HasPreviousPage bool  `json:"has_previous_age"`
+		HasNextPage     bool  `json:"has_next_page"`
+		HasPreviousPage bool  `json:"has_previous_page"`
 		TotalCount      int64 `json:"total_count"`
 	}
 

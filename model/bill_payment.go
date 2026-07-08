@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type (
 	// BillerCategory is a bill payment category, e.g. airtime, electricity.
 	BillerCategory struct {
@@ -64,14 +66,14 @@ type (
 
 	// BillPaymentTransaction is a bill payment transaction.
 	BillPaymentTransaction struct {
-		ID                  string  `json:"id"`
-		Code                string  `json:"code"`
-		CustomerID          string  `json:"customer_id"`
-		Amount              float64 `json:"amount"`
-		ValidationReference *string `json:"validation_reference,omitempty"`
-		ProviderReference   *string `json:"provider_reference,omitempty"`
-		Status              string  `json:"status"`
-		CreatedAt           string  `json:"created_at"`
-		UpdatedAt           *string `json:"updated_at,omitempty"`
+		ID                  string     `json:"id"`
+		Code                string     `json:"code"`
+		CustomerID          string     `json:"customer_id"`
+		Amount              float64    `json:"amount"`
+		ValidationReference *string    `json:"validation_reference,omitempty"`
+		ProviderReference   *string    `json:"provider_reference,omitempty"`
+		Status              string     `json:"status"`
+		CreatedAt           time.Time  `json:"created_at"`
+		UpdatedAt           *time.Time `json:"updated_at,omitempty"`
 	}
 )
