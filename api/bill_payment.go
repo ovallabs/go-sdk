@@ -11,12 +11,12 @@ import (
 
 const billPaymentAPIVersion = "v1/bills"
 
-// GetBillerCategories makes a request to Torus to get the list of bill payment categories
-func (c *Call) GetBillerCategories(ctx context.Context) ([]model.BillerCategory, error) {
+// GetBillerCategories makes a request to Torus to get the list of bill payment categories in a country
+func (c *Call) GetBillerCategories(ctx context.Context, country string) ([]model.BillerCategory, error) {
 	var (
 		err      error
 		response []model.BillerCategory
-		path     = fmt.Sprintf("%s/categories", billPaymentAPIVersion)
+		path     = fmt.Sprintf("%s/%s/categories", billPaymentAPIVersion, country)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
@@ -24,12 +24,12 @@ func (c *Call) GetBillerCategories(ctx context.Context) ([]model.BillerCategory,
 	return response, err
 }
 
-// GetBillers makes a request to Torus to get the list of billers configured under a category
-func (c *Call) GetBillers(ctx context.Context, category string) ([]model.Biller, error) {
+// GetBillers makes a request to Torus to get the list of billers configured under a category in a country
+func (c *Call) GetBillers(ctx context.Context, category, country string) ([]model.Biller, error) {
 	var (
 		err      error
 		response []model.Biller
-		path     = fmt.Sprintf("%s/categories/%s/billers", billPaymentAPIVersion, category)
+		path     = fmt.Sprintf("%s/%s/categories/%s/billers", billPaymentAPIVersion, country, category)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
@@ -37,13 +37,13 @@ func (c *Call) GetBillers(ctx context.Context, category string) ([]model.Biller,
 	return response, err
 }
 
-// GetBillerProducts makes a request to Torus to get the list of products offered by a biller
-func (c *Call) GetBillerProducts(ctx context.Context, category, biller string, paymentType *string, page *model.Page) (model.AllBillerProductsResponse, error) {
+// GetBillerProducts makes a request to Torus to get the list of products offered by a biller in a country
+func (c *Call) GetBillerProducts(ctx context.Context, category, biller, country string, paymentType *string, page *model.Page) (model.AllBillerProductsResponse, error) {
 	var (
 		err      error
 		response model.AllBillerProductsResponse
 		params   = make(map[string]interface{})
-		path     = fmt.Sprintf("%s/categories/%s/billers/%s/products", billPaymentAPIVersion, category, biller)
+		path     = fmt.Sprintf("%s/%s/categories/%s/billers/%s/products", billPaymentAPIVersion, country, category, biller)
 	)
 
 	if paymentType != nil {

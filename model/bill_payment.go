@@ -70,6 +70,7 @@ type (
 		Code                string     `json:"code"`
 		CustomerID          string     `json:"customer_id"`
 		Amount              float64    `json:"amount"`
+		Currency            string     `json:"currency"`
 		ValidationReference *string    `json:"validation_reference,omitempty"`
 		ProviderReference   *string    `json:"provider_reference,omitempty"`
 		Status              string     `json:"status"`

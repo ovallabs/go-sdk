@@ -32,7 +32,7 @@ func TestGetBillerCategories(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
-		assert.Equal(t, "/v1/bills/categories", r.URL.Path)
+		assert.Equal(t, "/v1/bills/NG/categories", r.URL.Path)
 
 		body, err := json.Marshal(model.GenericResponse{Data: expected})
 		assert.NoError(t, err)
@@ -45,7 +45,7 @@ func TestGetBillerCategories(t *testing.T) {
 
 	call := newTestCall(ts.URL)
 
-	categories, err := call.GetBillerCategories(context.Background())
+	categories, err := call.GetBillerCategories(context.Background(), "NG")
 	assert.NoError(t, err)
 	assert.Equal(t, expected, categories)
 }
@@ -57,7 +57,7 @@ func TestGetBillers(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
-		assert.Equal(t, "/v1/bills/categories/airtime/billers", r.URL.Path)
+		assert.Equal(t, "/v1/bills/NG/categories/airtime/billers", r.URL.Path)
 
 		body, err := json.Marshal(model.GenericResponse{Data: expected})
 		assert.NoError(t, err)
@@ -70,7 +70,7 @@ func TestGetBillers(t *testing.T) {
 
 	call := newTestCall(ts.URL)
 
-	billers, err := call.GetBillers(context.Background(), "airtime")
+	billers, err := call.GetBillers(context.Background(), "airtime", "NG")
 	assert.NoError(t, err)
 	assert.Equal(t, expected, billers)
 }
@@ -85,7 +85,7 @@ func TestGetBillerProducts(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
-		assert.Equal(t, "/v1/bills/categories/electricity/billers/ekedc/products", r.URL.Path)
+		assert.Equal(t, "/v1/bills/NG/categories/electricity/billers/ekedc/products", r.URL.Path)
 		assert.Equal(t, "prepaid", r.URL.Query().Get("payment_type"))
 		assert.Equal(t, "1", r.URL.Query().Get("number"))
 
@@ -102,7 +102,7 @@ func TestGetBillerProducts(t *testing.T) {
 
 	paymentType := "prepaid"
 	number := 1
-	products, err := call.GetBillerProducts(context.Background(), "electricity", "ekedc", &paymentType, &model.Page{Number: &number})
+	products, err := call.GetBillerProducts(context.Background(), "electricity", "ekedc", "NG", &paymentType, &model.Page{Number: &number})
 	assert.NoError(t, err)
 	assert.Equal(t, expected, products)
 }
@@ -170,6 +170,7 @@ func TestGetBillPaymentTransaction(t *testing.T) {
 		Code:       "ekedc-prepaid",
 		CustomerID: "1234567890",
 		Amount:     5000,
+		Currency:   "NGN",
 		Status:     "pending",
 		CreatedAt:  time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
 	}

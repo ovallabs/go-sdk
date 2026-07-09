@@ -524,48 +524,48 @@ func (mr *MockRemoteCallsMockRecorder) GetBillPaymentTransaction(ctx, billPaymen
 }
 
 // GetBillerCategories mocks base method.
-func (m *MockRemoteCalls) GetBillerCategories(ctx context.Context) ([]model.BillerCategory, error) {
+func (m *MockRemoteCalls) GetBillerCategories(ctx context.Context, country string) ([]model.BillerCategory, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetBillerCategories", ctx)
+	ret := m.ctrl.Call(m, "GetBillerCategories", ctx, country)
 	ret0, _ := ret[0].([]model.BillerCategory)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetBillerCategories indicates an expected call of GetBillerCategories.
-func (mr *MockRemoteCallsMockRecorder) GetBillerCategories(ctx interface{}) *gomock.Call {
+func (mr *MockRemoteCallsMockRecorder) GetBillerCategories(ctx, country interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBillerCategories", reflect.TypeOf((*MockRemoteCalls)(nil).GetBillerCategories), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBillerCategories", reflect.TypeOf((*MockRemoteCalls)(nil).GetBillerCategories), ctx, country)
 }
 
 // GetBillerProducts mocks base method.
-func (m *MockRemoteCalls) GetBillerProducts(ctx context.Context, category, biller string, paymentType *string, page *model.Page) (model.AllBillerProductsResponse, error) {
+func (m *MockRemoteCalls) GetBillerProducts(ctx context.Context, category, biller, country string, paymentType *string, page *model.Page) (model.AllBillerProductsResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetBillerProducts", ctx, category, biller, paymentType, page)
+	ret := m.ctrl.Call(m, "GetBillerProducts", ctx, category, biller, country, paymentType, page)
 	ret0, _ := ret[0].(model.AllBillerProductsResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetBillerProducts indicates an expected call of GetBillerProducts.
-func (mr *MockRemoteCallsMockRecorder) GetBillerProducts(ctx, category, biller, paymentType, page interface{}) *gomock.Call {
+func (mr *MockRemoteCallsMockRecorder) GetBillerProducts(ctx, category, biller, country, paymentType, page interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBillerProducts", reflect.TypeOf((*MockRemoteCalls)(nil).GetBillerProducts), ctx, category, biller, paymentType, page)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBillerProducts", reflect.TypeOf((*MockRemoteCalls)(nil).GetBillerProducts), ctx, category, biller, country, paymentType, page)
 }
 
 // GetBillers mocks base method.
-func (m *MockRemoteCalls) GetBillers(ctx context.Context, category string) ([]model.Biller, error) {
+func (m *MockRemoteCalls) GetBillers(ctx context.Context, category, country string) ([]model.Biller, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetBillers", ctx, category)
+	ret := m.ctrl.Call(m, "GetBillers", ctx, category, country)
 	ret0, _ := ret[0].([]model.Biller)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetBillers indicates an expected call of GetBillers.
-func (mr *MockRemoteCallsMockRecorder) GetBillers(ctx, category interface{}) *gomock.Call {
+func (mr *MockRemoteCallsMockRecorder) GetBillers(ctx, category, country interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBillers", reflect.TypeOf((*MockRemoteCalls)(nil).GetBillers), ctx, category)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBillers", reflect.TypeOf((*MockRemoteCalls)(nil).GetBillers), ctx, category, country)
 }
 
 // GetCardEndorsementLink mocks base method.
