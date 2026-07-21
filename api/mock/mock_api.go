@@ -539,18 +539,18 @@ func (mr *MockRemoteCallsMockRecorder) GetBillerCategories(ctx, country interfac
 }
 
 // GetBillerProducts mocks base method.
-func (m *MockRemoteCalls) GetBillerProducts(ctx context.Context, category, biller, country string, paymentType *string, page *model.Page) (model.AllBillerProductsResponse, error) {
+func (m *MockRemoteCalls) GetBillerProducts(ctx context.Context, category, biller, country string, billingType *string, page *model.Page) (model.AllBillerProductsResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetBillerProducts", ctx, category, biller, country, paymentType, page)
+	ret := m.ctrl.Call(m, "GetBillerProducts", ctx, category, biller, country, billingType, page)
 	ret0, _ := ret[0].(model.AllBillerProductsResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetBillerProducts indicates an expected call of GetBillerProducts.
-func (mr *MockRemoteCallsMockRecorder) GetBillerProducts(ctx, category, biller, country, paymentType, page interface{}) *gomock.Call {
+func (mr *MockRemoteCallsMockRecorder) GetBillerProducts(ctx, category, biller, country, billingType, page interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBillerProducts", reflect.TypeOf((*MockRemoteCalls)(nil).GetBillerProducts), ctx, category, biller, country, paymentType, page)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBillerProducts", reflect.TypeOf((*MockRemoteCalls)(nil).GetBillerProducts), ctx, category, biller, country, billingType, page)
 }
 
 // GetBillers mocks base method.
@@ -1228,10 +1228,10 @@ func (mr *MockRemoteCallsMockRecorder) MockDeposit(ctx, request interface{}) *go
 }
 
 // PayBill mocks base method.
-func (m *MockRemoteCalls) PayBill(ctx context.Context, request model.PayBillRequest) (model.PayBillResponse, error) {
+func (m *MockRemoteCalls) PayBill(ctx context.Context, request model.PayBillRequest) (model.BillPaymentTransaction, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PayBill", ctx, request)
-	ret0, _ := ret[0].(model.PayBillResponse)
+	ret0, _ := ret[0].(model.BillPaymentTransaction)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

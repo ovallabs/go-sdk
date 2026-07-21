@@ -52,7 +52,7 @@ func TestGetBillerCategories(t *testing.T) {
 
 func TestGetBillers(t *testing.T) {
 	expected := []model.Biller{
-		{Code: "mtn", Name: "MTN", PaymentTypes: []string{"prepaid"}},
+		{Code: "mtn", Name: "MTN", BillingTypes: []string{"prepaid"}},
 	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -78,7 +78,7 @@ func TestGetBillers(t *testing.T) {
 func TestGetBillerProducts(t *testing.T) {
 	expected := model.AllBillerProductsResponse{
 		Items: []model.BillerProduct{
-			{Code: "ekedc-prepaid-1000", Name: "EKEDC Prepaid 1000 NGN", CategoryCode: "electricity", BillerCode: "ekedc", PaymentType: "prepaid"},
+			{Code: "ekedc-prepaid-1000", Name: "EKEDC Prepaid 1000 NGN", CategoryCode: "electricity", BillerCode: "ekedc", BillingType: "prepaid"},
 		},
 		Page: model.PageInfo{Page: 1},
 	}
@@ -86,7 +86,7 @@ func TestGetBillerProducts(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
 		assert.Equal(t, "/v1/bills/NG/categories/electricity/billers/ekedc/products", r.URL.Path)
-		assert.Equal(t, "prepaid", r.URL.Query().Get("payment_type"))
+		assert.Equal(t, "prepaid", r.URL.Query().Get("billing_type"))
 		assert.Equal(t, "1", r.URL.Query().Get("number"))
 
 		body, err := json.Marshal(model.GenericResponse{Data: expected})
@@ -100,9 +100,9 @@ func TestGetBillerProducts(t *testing.T) {
 
 	call := newTestCall(ts.URL)
 
-	paymentType := "prepaid"
+	billingType := "prepaid"
 	number := 1
-	products, err := call.GetBillerProducts(context.Background(), "electricity", "ekedc", "NG", &paymentType, &model.Page{Number: &number})
+	products, err := call.GetBillerProducts(context.Background(), "electricity", "ekedc", "NG", &billingType, &model.Page{Number: &number})
 	assert.NoError(t, err)
 	assert.Equal(t, expected, products)
 }
@@ -138,7 +138,15 @@ func TestValidateBillerCustomer(t *testing.T) {
 func TestPayBill(t *testing.T) {
 	validationRef := "ref-123"
 	request := model.PayBillRequest{Code: "ekedc-prepaid", CustomerID: "1234567890", Amount: 5000, ValidationReference: &validationRef}
-	expected := model.PayBillResponse{ID: "bp-1", Status: "pending"}
+	expected := model.BillPaymentTransaction{
+		ID:         "bp-1",
+		Code:       "ekedc-prepaid",
+		CustomerID: "1234567890",
+		Amount:     5000,
+		Currency:   "NGN",
+		Status:     "pending",
+		CreatedAt:  time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
+	}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodPost, r.Method)
