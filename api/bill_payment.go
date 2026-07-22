@@ -38,7 +38,7 @@ func (c *Call) GetBillers(ctx context.Context, category, country string) ([]mode
 }
 
 // GetBillerProducts makes a request to Torus to get the list of products offered by a biller in a country
-func (c *Call) GetBillerProducts(ctx context.Context, category, biller, country string, paymentType *string, page *model.Page) (model.AllBillerProductsResponse, error) {
+func (c *Call) GetBillerProducts(ctx context.Context, category, biller, country string, billingType *string, page *model.Page) (model.AllBillerProductsResponse, error) {
 	var (
 		err      error
 		response model.AllBillerProductsResponse
@@ -46,8 +46,8 @@ func (c *Call) GetBillerProducts(ctx context.Context, category, biller, country 
 		path     = fmt.Sprintf("%s/%s/categories/%s/billers/%s/products", billPaymentAPIVersion, country, category, biller)
 	)
 
-	if paymentType != nil {
-		params["payment_type"] = *paymentType
+	if billingType != nil {
+		params["billing_type"] = *billingType
 	}
 	if page != nil {
 		helpers.FillParamsWithPage(params, *page)
@@ -73,10 +73,10 @@ func (c *Call) ValidateBillerCustomer(ctx context.Context, request model.Validat
 }
 
 // PayBill makes a request to Torus to initiate a bill payment
-func (c *Call) PayBill(ctx context.Context, request model.PayBillRequest) (model.PayBillResponse, error) {
+func (c *Call) PayBill(ctx context.Context, request model.PayBillRequest) (model.BillPaymentTransaction, error) {
 	var (
 		err      error
-		response model.PayBillResponse
+		response model.BillPaymentTransaction
 		path     = fmt.Sprintf("%s/pay", billPaymentAPIVersion)
 	)
 

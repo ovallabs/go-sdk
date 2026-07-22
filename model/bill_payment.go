@@ -13,7 +13,7 @@ type (
 	Biller struct {
 		Code         string   `json:"code"`
 		Name         string   `json:"name"`
-		PaymentTypes []string `json:"payment_types,omitempty"`
+		BillingTypes []string `json:"billing_types,omitempty"`
 	}
 
 	// BillerProduct is a payable product offered by a biller.
@@ -22,9 +22,9 @@ type (
 		Name             string   `json:"name"`
 		CategoryCode     string   `json:"category_code"`
 		BillerCode       string   `json:"biller_code"`
-		PaymentType      string   `json:"payment_type,omitempty"`
+		BillingType      string   `json:"billing_type,omitempty"`
 		IsAmountEditable bool     `json:"is_amount_editable"`
-		Price            *float64 `json:"price,omitempty"`
+		Amount           *float64 `json:"amount,omitempty"`
 		MinAmount        *float64 `json:"min_amount,omitempty"`
 		MaxAmount        *float64 `json:"max_amount,omitempty"`
 	}
@@ -58,23 +58,25 @@ type (
 		ValidationReference *string `json:"validation_reference,omitempty"`
 	}
 
-	// PayBillResponse is returned immediately after the bill payment is accepted for processing.
-	PayBillResponse struct {
-		ID     string `json:"id"`
-		Status string `json:"status"`
+	// BillPaymentMetadata holds provider-returned vend details, e.g. the prepaid meter token
+	// and unit for an electricity bill payment.
+	BillPaymentMetadata struct {
+		Token *string `json:"token,omitempty"`
+		Unit  *string `json:"unit,omitempty"`
 	}
 
 	// BillPaymentTransaction is a bill payment transaction.
 	BillPaymentTransaction struct {
-		ID                  string     `json:"id"`
-		Code                string     `json:"code"`
-		CustomerID          string     `json:"customer_id"`
-		Amount              float64    `json:"amount"`
-		Currency            string     `json:"currency"`
-		ValidationReference *string    `json:"validation_reference,omitempty"`
-		ProviderReference   *string    `json:"provider_reference,omitempty"`
-		Status              string     `json:"status"`
-		CreatedAt           time.Time  `json:"created_at"`
-		UpdatedAt           *time.Time `json:"updated_at,omitempty"`
+		ID                  string               `json:"id"`
+		Code                string               `json:"code"`
+		CustomerID          string               `json:"customer_id"`
+		Amount              float64              `json:"amount"`
+		Currency            string               `json:"currency"`
+		ValidationReference *string              `json:"validation_reference,omitempty"`
+		ProviderReference   *string              `json:"provider_reference,omitempty"`
+		Status              string               `json:"status"`
+		Metadata            *BillPaymentMetadata `json:"metadata,omitempty"`
+		CreatedAt           time.Time            `json:"created_at"`
+		UpdatedAt           *time.Time           `json:"updated_at,omitempty"`
 	}
 )
