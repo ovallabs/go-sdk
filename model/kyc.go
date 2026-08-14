@@ -72,6 +72,7 @@ type VerifyCustomerKYCResponse struct {
 	URL         string `json:"url"`
 	CustomerID  string `json:"customerID"`
 	KYCProvider string `json:"kycProvider"`
+	SessionType string `json:"sessionType,omitempty"`
 }
 
 type VerifyCustomerKYCRequest struct {
