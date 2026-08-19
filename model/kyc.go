@@ -40,6 +40,12 @@ type KYCData struct {
 	TaxIDVerified                  bool        `json:"tax_id_verified"`
 	TaxVerificationStatus          bool        `json:"tax_verification_status"`
 	AMLDetails                     interface{} `json:"aml_details"`
+	BiometricsVerified             bool        `json:"biometrics_verified"`
+	BiometricsVerificationStatus   interface{} `json:"biometrics_verification_status"`
+	BiometricsDocumentDetails      interface{} `json:"biometrics_document_details"`
+	HasBiometricsVerification      bool        `json:"has_biometrics_verification"`
+	HasTaxVerification             bool        `json:"has_tax_verification"`
+	HasIdentityVerification        bool        `json:"has_identity_verification"`
 	CreatedAt                      time.Time   `json:"created_at"`
 	UpdatedAt                      time.Time   `json:"updated_at"`
 	DeletedAt                      *time.Time  `json:"deleted_at"`
@@ -48,32 +54,33 @@ type KYCData struct {
 
 type Document struct {
 	ID               string      `json:"id"`
-	BusinessID       string      `json:"businessId"`
-	CustomerID       string      `json:"customerId"`
-	CustomerKYCID    string      `json:"customerKycId"`
-	DocType          string      `json:"docType"`
-	DocSubtype       string      `json:"docSubtype"`
+	BusinessID       string      `json:"business_id"`
+	CustomerID       string      `json:"customer_id"`
+	CustomerKYCID    string      `json:"customer_kyc_id"`
+	DocType          string      `json:"doc_type"`
+	DocSubtype       string      `json:"doc_subtype"`
 	Description      interface{} `json:"description"`
 	Status           string      `json:"status"`
-	FailureNotes     interface{} `json:"failureNotes"`
+	FailureNotes     interface{} `json:"failure_notes"`
 	Extension        string      `json:"extension"`
-	Label            string      `json:"label"`
-	IsIdentity       bool        `json:"isIdentity"`
-	IsProofOfAddress bool        `json:"isProofOfAddress"`
-	ProviderPayload  interface{} `json:"providerPayload"`
-	CreatedAt        string      `json:"createdAt"`
-	UpdatedAt        interface{} `json:"updatedAt"`
-	VerifiedAt       interface{} `json:"verifiedAt"`
-	DeletedAt        interface{} `json:"deletedAt"`
+	FrontSideLabel   string      `json:"front_side_label"`
+	BackSideLabel    string      `json:"back_side_label"`
+	IsIdentity       bool        `json:"is_identity"`
+	IsProofOfAddress bool        `json:"is_proof_of_address"`
+	ProviderPayload  interface{} `json:"provider_payload"`
+	CreatedAt        string      `json:"created_at"`
+	UpdatedAt        interface{} `json:"updated_at"`
+	VerifiedAt       interface{} `json:"verified_at"`
+	DeletedAt        interface{} `json:"deleted_at"`
 }
 
 type VerifyCustomerKYCResponse struct {
-	BusinessID  string `json:"businessID"`
+	BusinessID  string `json:"business_id"`
 	URL         string `json:"url"`
-	CustomerID  string `json:"customerID"`
-	KYCProvider string `json:"kycProvider"`
-	SessionType string `json:"sessionType,omitempty"`
-	FlowID      string `json:"flowID,omitempty"`
+	CustomerID  string `json:"customer_id"`
+	KYCProvider string `json:"kyc_provider"`
+	SessionType string `json:"session_type,omitempty"`
+	FlowID      string `json:"flow_id,omitempty"`
 }
 
 type VerifyCustomerKYCRequest struct {
