@@ -9,7 +9,7 @@ import (
 	"github.com/ovalfi/go-sdk/model"
 )
 
-// GetKYCByCustomerID makes request to get KYC for a customer
+// GetKYCByCustomerID makes request to get KYC for a customer.
 func (c *Call) GetKYCByCustomerID(ctx context.Context, customerID string) (model.KYCResponse, error) {
 	var (
 		err      error
@@ -17,7 +17,7 @@ func (c *Call) GetKYCByCustomerID(ctx context.Context, customerID string) (model
 		path     = fmt.Sprintf("%s/%s", kycAPIVersion, customerID)
 	)
 
-	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
+	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response.Data)
 
 	return response, err
 }
@@ -66,14 +66,14 @@ func (c *Call) SubmitCustomerKYCDocument(
 // VerifyCustomerKYC makes request to Torus to verify a customer kyc request
 func (c *Call) VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycType string) (interface{}, error) {
 	var (
-		err  error
+		err      error
 		response interface{}
-		path = fmt.Sprintf("%s/%s/%s/%s", kycAPIVersion, customerID, kycType, idNumber)
+		path     = fmt.Sprintf("%s/%s/%s/%s", kycAPIVersion, customerID, kycType, idNumber)
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, nil, &response)
 
-	return response,err
+	return response, err
 }
 
 // GetVerifyBiometricsLink makes request to get the link to verify biometrics

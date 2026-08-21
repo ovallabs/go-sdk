@@ -1,10 +1,8 @@
 // Package model/kyc.go
 package model
 
-import (
-	"time"
-)
-
+// KYCResponse wraps the customer-kyc lookup. GetKYCByCustomerID decodes
+// external-api's response body directly into Data
 type KYCResponse struct {
 	Status  int         `json:"status"`
 	Message string      `json:"message"`
@@ -18,7 +16,7 @@ type KYCData struct {
 	CustomerID                     string      `json:"customer_id"`
 	KYCProvider                    string      `json:"kyc_provider"`
 	KYCType                        string      `json:"kyc_type"`
-	ProviderContactID              string      `json:"provider_contact_id"`
+	ProviderContactID              string      `json:"provider_verification_id"`
 	Name                           string      `json:"name"`
 	Sex                            string      `json:"sex"`
 	MaritalStatus                  string      `json:"marital_status"`
@@ -26,6 +24,11 @@ type KYCData struct {
 	Email                          string      `json:"email"`
 	PhoneNumber                    string      `json:"phone_number"`
 	Country                        string      `json:"country"`
+	Nationality                    string      `json:"nationality"`
+	State                          string      `json:"state"`
+	Address                        string      `json:"address"`
+	City                           string      `json:"city"`
+	PostalCode                     string      `json:"postal_code"`
 	ContactType                    string      `json:"contact_type"`
 	Status                         string      `json:"status"`
 	Identity                       string      `json:"identity"`
@@ -38,7 +41,7 @@ type KYCData struct {
 	TaxCountry                     string      `json:"tax_country"`
 	TaxState                       string      `json:"tax_state"`
 	TaxIDVerified                  bool        `json:"tax_id_verified"`
-	TaxVerificationStatus          bool        `json:"tax_verification_status"`
+	TaxVerificationStatus          interface{} `json:"tax_verification_status"`
 	AMLDetails                     interface{} `json:"aml_details"`
 	BiometricsVerified             bool        `json:"biometrics_verified"`
 	BiometricsVerificationStatus   interface{} `json:"biometrics_verification_status"`
@@ -46,9 +49,9 @@ type KYCData struct {
 	HasBiometricsVerification      bool        `json:"has_biometrics_verification"`
 	HasTaxVerification             bool        `json:"has_tax_verification"`
 	HasIdentityVerification        bool        `json:"has_identity_verification"`
-	CreatedAt                      time.Time   `json:"created_at"`
-	UpdatedAt                      time.Time   `json:"updated_at"`
-	DeletedAt                      *time.Time  `json:"deleted_at"`
+	CreatedAt                      string      `json:"created_at"`
+	UpdatedAt                      string      `json:"updated_at"`
+	DeletedAt                      interface{} `json:"-"`
 	Documents                      []Document  `json:"documents"`
 }
 
@@ -63,15 +66,15 @@ type Document struct {
 	Status           string      `json:"status"`
 	FailureNotes     interface{} `json:"failure_notes"`
 	Extension        string      `json:"extension"`
-	FrontSideLabel   string      `json:"front_side_label"`
-	BackSideLabel    string      `json:"back_side_label"`
+	FrontSideLabel   string      `json:"front_label"`
+	BackSideLabel    string      `json:"back_label"`
 	IsIdentity       bool        `json:"is_identity"`
 	IsProofOfAddress bool        `json:"is_proof_of_address"`
-	ProviderPayload  interface{} `json:"provider_payload"`
-	CreatedAt        string      `json:"created_at"`
-	UpdatedAt        interface{} `json:"updated_at"`
-	VerifiedAt       interface{} `json:"verified_at"`
-	DeletedAt        interface{} `json:"deleted_at"`
+	ProviderPayload  interface{} `json:"-"`
+	CreatedAt        string      `json:"-"`
+	UpdatedAt        interface{} `json:"-"`
+	VerifiedAt       interface{} `json:"-"`
+	DeletedAt        interface{} `json:"-"`
 }
 
 type VerifyCustomerKYCResponse struct {
