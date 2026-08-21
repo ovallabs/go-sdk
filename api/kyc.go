@@ -22,7 +22,14 @@ func (c *Call) GetKYCByCustomerID(ctx context.Context, customerID string) (model
 	return response, err
 }
 
-// SubmitCustomerKYCDocument make request to submit a KYC document for a customer
+// SubmitCustomerKYCDocument make request to submit a KYC document for a customer.
+//
+// Targets &response.Data, not &response, for the same reason as
+// GetKYCByCustomerID above: makeRequest always decodes the already-unwrapped
+// genericResponse.Data into whatever target is passed, never the outer
+// envelope. Passing &response here previously meant every successful
+// submission decoded the flat KYC object against KYCResponse{Status int,
+// ...}, which fails on the object's own string "status" field.
 func (c *Call) SubmitCustomerKYCDocument(
 	ctx context.Context,
 	customerID string,
@@ -58,7 +65,7 @@ func (c *Call) SubmitCustomerKYCDocument(
 		nil,
 		formData,
 		nil,
-		&response,
+		&response.Data,
 	)
 	return response, err
 }
