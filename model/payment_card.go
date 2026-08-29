@@ -36,6 +36,7 @@ type (
 		RedirectURI string  `json:"redirect_uri" validate:"required"`
 		Phone       *string `json:"phone"`
 		DirectDebit *bool   `json:"direct_debit"`
+		Currency    *string `json:"currency" validate:"oneof=USD GBP EUR CAD"`
 	}
 
 	// PaymentCard schema represents entity that contains all needed information of a customer payment card
