@@ -75,7 +75,7 @@ type (
 		// Sender data for checkout.com Account Funding Transactions (AFT)
 		SenderFirstName   *string        `json:"sender_first_name,omitempty"`
 		SenderLastName    *string        `json:"sender_last_name,omitempty"`
-		SenderDateOfBirth *string        `json:"sender_date_of_birth,omitempty"`
+		SenderDateOfBirth *string        `json:"sender_date_of_birth,omitempty"` // format: per Checkout.com AFT requirements
 		SenderAddress     *SenderAddress `json:"sender_address,omitempty"`
 	}
 
