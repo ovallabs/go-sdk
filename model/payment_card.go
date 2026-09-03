@@ -72,6 +72,21 @@ type (
 		Remarks       *string `json:"remarks"`
 		Currency      string  `json:"currency,omitempty"`
 		RedirectURL   *string `json:"redirect_url"`
+		// Sender data for checkout.com Account Funding Transactions (AFT)
+		SenderFirstName   *string        `json:"sender_first_name,omitempty"`
+		SenderLastName    *string        `json:"sender_last_name,omitempty"`
+		SenderDateOfBirth *string        `json:"sender_date_of_birth,omitempty"`
+		SenderAddress     *SenderAddress `json:"sender_address,omitempty"`
+	}
+
+	// SenderAddress is the sender's postal address for a checkout.com Account Funding
+	// Transaction (AFT).
+	SenderAddress struct {
+		Address     string `json:"address,omitempty"`
+		City        string `json:"city,omitempty"`
+		Country     string `json:"country,omitempty"`
+		StateRegion string `json:"state_region,omitempty"`
+		PostalCode  string `json:"postal_code,omitempty"`
 	}
 
 	// RefundCustomerDepositRequest for request payload
