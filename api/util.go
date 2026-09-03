@@ -9,7 +9,6 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
-	"strings"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -23,7 +22,7 @@ import (
 func (c *Call) makeRequest(ctx context.Context, path, method string, signature *string, params, formData map[string]interface{}, requestBody, responseData interface{}) error {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, path)
 
-	log := c.logger.With().Str("method", method).Str("endpoint", sanitizeLogEndpoint(endpoint)).Logger()
+	log := c.logger.With().Str("method", method).Str("endpoint", endpoint).Logger()
 	log.Info().Msg("starting...")
 
 	var (
@@ -111,20 +110,6 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 		}
 	}
 	return nil
-}
-
-func sanitizeLogEndpoint(endpoint string) string {
-	if strings.Contains(strings.ToLower(endpoint), "/ssn/") {
-		parts := strings.Split(endpoint, "/")
-		for i, part := range parts {
-			if strings.EqualFold(part, "kycs") && len(parts) >= 2 {
-				kycType := parts[len(parts)-2]
-				return strings.Join(append(parts[:i+1], kycType, "{redacted}"), "/")
-			}
-		}
-	}
-
-	return endpoint
 }
 
 // mapstruct map api call result to the expected interface
