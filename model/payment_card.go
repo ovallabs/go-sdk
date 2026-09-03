@@ -65,22 +65,43 @@ type (
 
 	// DebitCustomerPaymentCardRequest for request payload
 	DebitCustomerPaymentCardRequest struct {
-		CustomerID    string  `json:"customer_id"`
-		PaymentCardID string  `json:"payment_card_id"`
-		Amount        float64 `json:"amount"`
-		Reference     string  `json:"reference"`
-		Remarks       *string `json:"remarks"`
-		Currency      string  `json:"currency,omitempty"`
-		RedirectURL   *string `json:"redirect_url"`
-		// Sender data for checkout.com Account Funding Transactions (AFT)
-		SenderFirstName   *string        `json:"sender_first_name,omitempty"`
-		SenderLastName    *string        `json:"sender_last_name,omitempty"`
-		SenderDateOfBirth *string        `json:"sender_date_of_birth,omitempty"`
-		SenderAddress     *SenderAddress `json:"sender_address,omitempty"`
+		CustomerID    string      `json:"customer_id"`
+		PaymentCardID string      `json:"payment_card_id"`
+		Amount        float64     `json:"amount"`
+		Reference     string      `json:"reference"`
+		Remarks       *string     `json:"remarks"`
+		Currency      string      `json:"currency,omitempty"`
+		RedirectURL   *string     `json:"redirect_url"`
+		FailureURL    *string     `json:"failure_url,omitempty"`
+		TrxDetails    *TrxDetails `json:"trx_details,omitempty"`
 	}
 
-	// SenderAddress is the sender's postal address for a checkout.com Account Funding
-	// Transaction (AFT).
+	// TrxDetails carries provider-specific transaction details for a payment card debit.
+	TrxDetails struct {
+		Sender    *TrxSender    `json:"sender,omitempty"`
+		Recipient *TrxRecipient `json:"recipient,omitempty"`
+		Rate      *float64      `json:"rate,omitempty"`
+		IPAddress *string       `json:"ip_address,omitempty"`
+	}
+
+	// TrxSender identifies who is funding the transaction.
+	TrxSender struct {
+		FirstName   *string        `json:"first_name,omitempty"`
+		LastName    *string        `json:"last_name,omitempty"`
+		DateOfBirth *string        `json:"date_of_birth,omitempty"`
+		Address     *SenderAddress `json:"address,omitempty"`
+	}
+
+	// TrxRecipient identifies the account being funded.
+	TrxRecipient struct {
+		FirstName     *string  `json:"first_name,omitempty"`
+		LastName      *string  `json:"last_name,omitempty"`
+		AccountNumber *string  `json:"account_number,omitempty"`
+		Amount        *float64 `json:"amount,omitempty"`
+		Currency      *string  `json:"currency,omitempty"`
+	}
+
+	// SenderAddress is a sender's postal address
 	SenderAddress struct {
 		Address     string `json:"address,omitempty"`
 		City        string `json:"city,omitempty"`
