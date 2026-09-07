@@ -86,10 +86,10 @@ type (
 
 	// TrxSender identifies who is funding the transaction.
 	TrxSender struct {
-		FirstName   *string        `json:"first_name,omitempty"`
-		LastName    *string        `json:"last_name,omitempty"`
-		DateOfBirth *string        `json:"date_of_birth,omitempty"`
-		Address     *SenderAddress `json:"address,omitempty"`
+		FirstName   *string  `json:"first_name,omitempty"`
+		LastName    *string  `json:"last_name,omitempty"`
+		DateOfBirth *string  `json:"date_of_birth,omitempty"`
+		Address     *Address `json:"address,omitempty"`
 	}
 
 	// TrxRecipient identifies the account being funded.
@@ -101,11 +101,11 @@ type (
 		Currency      *string  `json:"currency,omitempty"`
 	}
 
-	// SenderAddress is a sender's postal address
-	SenderAddress struct {
+	// Address is a sender's postal address
+	Address struct {
 		Address     string `json:"address,omitempty"`
 		City        string `json:"city,omitempty"`
-		Country     string `json:"country,omitempty"`
+		CountryCode string `json:"country_code,omitempty"`
 		StateRegion string `json:"state_region,omitempty"`
 		PostalCode  string `json:"postal_code,omitempty"`
 	}
