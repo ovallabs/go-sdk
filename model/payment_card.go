@@ -65,19 +65,19 @@ type (
 
 	// DebitCustomerPaymentCardRequest for request payload
 	DebitCustomerPaymentCardRequest struct {
-		CustomerID    string      `json:"customer_id"`
-		PaymentCardID string      `json:"payment_card_id"`
-		Amount        float64     `json:"amount"`
-		Reference     string      `json:"reference"`
-		Remarks       *string     `json:"remarks"`
-		Currency      string      `json:"currency,omitempty"`
-		RedirectURL   *string     `json:"redirect_url"`
-		FailureURL    *string     `json:"failure_url,omitempty"`
-		TrxDetails    *TrxDetails `json:"trx_details,omitempty"`
+		CustomerID         string              `json:"customer_id"`
+		PaymentCardID      string              `json:"payment_card_id"`
+		Amount             float64             `json:"amount"`
+		Reference          string              `json:"reference"`
+		Remarks            *string             `json:"remarks"`
+		Currency           string              `json:"currency,omitempty"`
+		RedirectURL        *string             `json:"redirect_url"`
+		FailureURL         *string             `json:"failure_url,omitempty"`
+		TransactionDetails *TransactionDetails `json:"transaction_details,omitempty"`
 	}
 
-	// TrxDetails carries provider-specific transaction details for a payment card debit.
-	TrxDetails struct {
+	// TransactionDetails carries provider-specific transaction details for a payment card debit.
+	TransactionDetails struct {
 		Sender    *TrxSender    `json:"sender,omitempty"`
 		Recipient *TrxRecipient `json:"recipient,omitempty"`
 		Rate      *float64      `json:"rate,omitempty"`
