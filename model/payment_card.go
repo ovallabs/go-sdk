@@ -86,10 +86,10 @@ type (
 
 	// TrxSender identifies who is funding the transaction.
 	TrxSender struct {
-		FirstName   *string  `json:"first_name,omitempty"`
-		LastName    *string  `json:"last_name,omitempty"`
-		DateOfBirth *string  `json:"date_of_birth,omitempty"`
-		Address     *Address `json:"address,omitempty"`
+		FirstName   *string         `json:"first_name,omitempty"`
+		LastName    *string         `json:"last_name,omitempty"`
+		DateOfBirth *string         `json:"date_of_birth,omitempty"`
+		Address     *BillingAddress `json:"address,omitempty"`
 	}
 
 	// TrxRecipient identifies the account being funded.
@@ -99,15 +99,6 @@ type (
 		AccountNumber *string  `json:"account_number,omitempty"`
 		Amount        *float64 `json:"amount,omitempty"`
 		Currency      *string  `json:"currency,omitempty"`
-	}
-
-	// Address is a sender's postal address
-	Address struct {
-		Address     string `json:"address,omitempty"`
-		City        string `json:"city,omitempty"`
-		CountryCode string `json:"country_code,omitempty"`
-		StateRegion string `json:"state_region,omitempty"`
-		PostalCode  string `json:"postal_code,omitempty"`
 	}
 
 	// RefundCustomerDepositRequest for request payload
