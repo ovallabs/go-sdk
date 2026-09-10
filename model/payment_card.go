@@ -86,10 +86,13 @@ type (
 
 	// TrxSender identifies who is funding the transaction.
 	TrxSender struct {
-		FirstName   *string         `json:"first_name,omitempty"`
-		LastName    *string         `json:"last_name,omitempty"`
-		DateOfBirth *string         `json:"date_of_birth,omitempty"`
-		Address     *BillingAddress `json:"address,omitempty"`
+		FirstName         *string         `json:"first_name,omitempty"`
+		LastName          *string         `json:"last_name,omitempty"`
+		DateOfBirth       *string         `json:"date_of_birth,omitempty"`
+		Address           *BillingAddress `json:"address,omitempty"`
+		SelfieURL         *string         `json:"selfie_url"`
+		IdentityDocURL    *string         `json:"identity_doc_url"`
+		ProofOfAddressURL *string         `json:"proof_of_address_url"`
 	}
 
 	// TrxRecipient identifies the account being funded.
