@@ -66,8 +66,8 @@ type Document struct {
 	Status           string      `json:"status"`
 	FailureNotes     interface{} `json:"failure_notes"`
 	Extension        string      `json:"extension"`
-	FrontSideLabel   string      `json:"front_side_label"`
-	BackSideLabel    string      `json:"back_side_label"`
+	FrontSideLabel   string      `json:"front_label"`
+	BackSideLabel    string      `json:"back_label"`
 	IsIdentity       bool        `json:"is_identity"`
 	IsProofOfAddress bool        `json:"is_proof_of_address"`
 	ProviderPayload  interface{} `json:"-"`

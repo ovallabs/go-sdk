@@ -136,6 +136,8 @@ type (
 
 		AppleToken  *ApplepayTokenData  `json:"apple_token" validate:"required_if=Channel applepay"`
 		GoogleToken *GooglepayTokenData `json:"google_token" validate:"required_if=Channel googlepay"`
+
+		TransactionDetails *TransactionDetails `json:"transaction_details,omitempty"`
 	}
 
 	// GooglepayTokenData holds Google Pay token data

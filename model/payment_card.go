@@ -32,10 +32,12 @@ type (
 
 	// GetLinkToAddCardReq to get link to add payment card
 	GetLinkToAddCardReq struct {
-		CustomerID  string  `json:"customer_id" validate:"required"`
-		RedirectURI string  `json:"redirect_uri" validate:"required"`
-		Phone       *string `json:"phone"`
-		DirectDebit *bool   `json:"direct_debit"`
+		CustomerID  string          `json:"customer_id" validate:"required"`
+		RedirectURI string          `json:"redirect_uri" validate:"required"`
+		Phone       *string         `json:"phone"`
+		DirectDebit *bool           `json:"direct_debit"`
+		Currency    *string         `json:"currency" validate:"oneof=USD GBP EUR CAD"`
+		Address     *BillingAddress `json:"address,omitempty"`
 	}
 
 	// PaymentCard schema represents entity that contains all needed information of a customer payment card
@@ -64,13 +66,43 @@ type (
 
 	// DebitCustomerPaymentCardRequest for request payload
 	DebitCustomerPaymentCardRequest struct {
-		CustomerID    string  `json:"customer_id"`
-		PaymentCardID string  `json:"payment_card_id"`
-		Amount        float64 `json:"amount"`
-		Reference     string  `json:"reference"`
-		Remarks       *string `json:"remarks"`
-		Currency      string  `json:"currency,omitempty"`
-		RedirectURL   *string `json:"redirect_url"`
+		CustomerID         string              `json:"customer_id"`
+		PaymentCardID      string              `json:"payment_card_id"`
+		Amount             float64             `json:"amount"`
+		Reference          string              `json:"reference"`
+		Remarks            *string             `json:"remarks"`
+		Currency           string              `json:"currency,omitempty"`
+		RedirectURL        *string             `json:"redirect_url"`
+		FailureURL         *string             `json:"failure_url,omitempty"`
+		TransactionDetails *TransactionDetails `json:"transaction_details,omitempty"`
+	}
+
+	// TransactionDetails carries provider-specific transaction details for a payment card debit.
+	TransactionDetails struct {
+		Sender    *TrxSender    `json:"sender,omitempty"`
+		Recipient *TrxRecipient `json:"recipient,omitempty"`
+		Rate      *float64      `json:"rate,omitempty"`
+		IPAddress *string       `json:"ip_address,omitempty"`
+	}
+
+	// TrxSender identifies who is funding the transaction.
+	TrxSender struct {
+		FirstName         *string         `json:"first_name,omitempty"`
+		LastName          *string         `json:"last_name,omitempty"`
+		DateOfBirth       *string         `json:"date_of_birth,omitempty"`
+		Address           *BillingAddress `json:"address,omitempty"`
+		SelfieURL         *string         `json:"selfie_url"`
+		IdentityDocURL    *string         `json:"identity_doc_url"`
+		ProofOfAddressURL *string         `json:"proof_of_address_url"`
+	}
+
+	// TrxRecipient identifies the account being funded.
+	TrxRecipient struct {
+		FirstName     *string  `json:"first_name,omitempty"`
+		LastName      *string  `json:"last_name,omitempty"`
+		AccountNumber *string  `json:"account_number,omitempty"`
+		Amount        *float64 `json:"amount,omitempty"`
+		Currency      *string  `json:"currency,omitempty"`
 	}
 
 	// RefundCustomerDepositRequest for request payload
