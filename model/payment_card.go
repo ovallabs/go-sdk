@@ -32,11 +32,12 @@ type (
 
 	// GetLinkToAddCardReq to get link to add payment card
 	GetLinkToAddCardReq struct {
-		CustomerID  string  `json:"customer_id" validate:"required"`
-		RedirectURI string  `json:"redirect_uri" validate:"required"`
-		Phone       *string `json:"phone"`
-		DirectDebit *bool   `json:"direct_debit"`
-		Currency    *string `json:"currency" validate:"oneof=USD GBP EUR CAD"`
+		CustomerID  string          `json:"customer_id" validate:"required"`
+		RedirectURI string          `json:"redirect_uri" validate:"required"`
+		Phone       *string         `json:"phone"`
+		DirectDebit *bool           `json:"direct_debit"`
+		Currency    *string         `json:"currency" validate:"oneof=USD GBP EUR CAD"`
+		Address     *BillingAddress `json:"address,omitempty"`
 	}
 
 	// PaymentCard schema represents entity that contains all needed information of a customer payment card
