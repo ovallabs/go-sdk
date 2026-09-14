@@ -13,7 +13,7 @@ type (
 		Reference          *string             `json:"reference,omitempty"`
 		RedirectURL        *string             `json:"redirect_url,omitempty"`
 		PhoneNumber        *string             `json:"phone_number,omitempty"`
-		TransactionDetails *TransactionDetails `json:"transaction_details"`
+		TransactionDetails *TransactionDetails `json:"transaction_details,omitempty"`
 	}
 
 	// CompleteCustomerPaymentIntentRequest struct to complete payment intent
