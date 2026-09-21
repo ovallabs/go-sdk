@@ -149,13 +149,49 @@ type (
 
 	// ApplepayTokenData holds Apple Pay token data
 	ApplepayTokenData struct {
+		Token struct {
+			PaymentData   ApplepayPaymentData `json:"paymentData" validate:"required"`
+			PaymentMethod struct {
+				DisplayName       string                     `json:"displayName" validate:"required"`
+				Network           string                     `json:"network" validate:"required"`
+				Type              string                     `json:"type" validate:"required"` // debit, credit, prepaid, store, unknown
+				SecureElementPass *ApplepaySecureElementPass `json:"secureElementPass,omitempty"`
+				BillingAddress    *ApplepayBillingAddress    `json:"billingAddress,omitempty"`
+			} `json:"paymentMethod" validate:"required"`
+			TransactionIdentifier string `json:"transactionIdentifier" validate:"required"`
+		} `json:"token" validate:"required"`
+	}
+
+	// ApplepayPaymentData holds Apple Pay payment data
+	ApplepayPaymentData struct {
 		Version   string `json:"version" validate:"required"`
 		Data      string `json:"data" validate:"required"`
 		Signature string `json:"signature" validate:"required"`
 		Header    struct {
-			EphemeralPublicKey string `json:"ephemeralPublicKey"`
-			PublicKeyHash      string `json:"publicKeyHash"`
-			TransactionID      string `json:"transactionId"`
-		} `json:"header"`
+			EphemeralPublicKey string `json:"ephemeralPublicKey" validate:"required"`
+			PublicKeyHash      string `json:"publicKeyHash" validate:"required"`
+			TransactionID      string `json:"transactionId" validate:"required"`
+		} `json:"header" validate:"required"`
+	}
+
+	// ApplepaySecureElementPass holds Apple Pay secure element pass data
+	ApplepaySecureElementPass struct {
+		PrimaryAccountIdentifier   string `json:"primaryAccountIdentifier"`
+		PrimaryAccountNumberSuffix string `json:"primaryAccountNumberSuffix"`
+		DeviceAccountIdentifier    string `json:"deviceAccountIdentifier"`
+		DeviceAccountNumberSuffix  string `json:"deviceAccountNumberSuffix"`
+		PassActivationState        string `json:"passActivationState"`
+	}
+
+	// ApplepayBillingAddress holds Apple Pay billing address data
+	ApplepayBillingAddress struct {
+		GivenName      string `json:"givenName,omitempty"`
+		FamilyName     string `json:"familyName,omitempty"`
+		Street         string `json:"street,omitempty"`
+		City           string `json:"city,omitempty"`
+		State          string `json:"state,omitempty"`
+		PostalCode     string `json:"postalCode,omitempty"`
+		Country        string `json:"country,omitempty"`
+		ISOCountryCode string `json:"isoCountryCode,omitempty"`
 	}
 )
