@@ -1048,6 +1048,21 @@ func (mr *MockRemoteCallsMockRecorder) GetVerifyCustomerKYC(ctx, customerID, cou
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetVerifyCustomerKYC", reflect.TypeOf((*MockRemoteCalls)(nil).GetVerifyCustomerKYC), ctx, customerID, country, hasExpiredID)
 }
 
+// GetVerifyCustomerKYCWithSessionType mocks base method.
+func (m *MockRemoteCalls) GetVerifyCustomerKYCWithSessionType(ctx context.Context, customerID string, country, hasExpiredID *string, preferredSessionType *model.SessionType) (model.VerifyCustomerKYCResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetVerifyCustomerKYCWithSessionType", ctx, customerID, country, hasExpiredID, preferredSessionType)
+	ret0, _ := ret[0].(model.VerifyCustomerKYCResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetVerifyCustomerKYCWithSessionType indicates an expected call of GetVerifyCustomerKYCWithSessionType.
+func (mr *MockRemoteCallsMockRecorder) GetVerifyCustomerKYCWithSessionType(ctx, customerID, country, hasExpiredID, preferredSessionType interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetVerifyCustomerKYCWithSessionType", reflect.TypeOf((*MockRemoteCalls)(nil).GetVerifyCustomerKYCWithSessionType), ctx, customerID, country, hasExpiredID, preferredSessionType)
+}
+
 // InitiateCurrencySwap mocks base method.
 func (m *MockRemoteCalls) InitiateCurrencySwap(ctx context.Context, request model.InitiateCurrencySwapRequest) (model.CurrencySwap, error) {
 	m.ctrl.T.Helper()
