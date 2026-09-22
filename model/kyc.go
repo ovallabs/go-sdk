@@ -89,3 +89,11 @@ type VerifyCustomerKYCResponse struct {
 type VerifyCustomerKYCRequest struct {
 	Country *string `json:"country,omitempty"`
 }
+
+// SessionType is the shape of a KYC verification session's URL.
+type SessionType string
+
+const (
+	SessionTypeRedirectURL SessionType = "redirect_url"
+	SessionTypeAccessToken SessionType = "access_token"
+)

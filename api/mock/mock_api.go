@@ -1049,7 +1049,7 @@ func (mr *MockRemoteCallsMockRecorder) GetVerifyCustomerKYC(ctx, customerID, cou
 }
 
 // GetVerifyCustomerKYCWithSessionType mocks base method.
-func (m *MockRemoteCalls) GetVerifyCustomerKYCWithSessionType(ctx context.Context, customerID string, country, hasExpiredID, preferredSessionType *string) (model.VerifyCustomerKYCResponse, error) {
+func (m *MockRemoteCalls) GetVerifyCustomerKYCWithSessionType(ctx context.Context, customerID string, country, hasExpiredID *string, preferredSessionType *model.SessionType) (model.VerifyCustomerKYCResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetVerifyCustomerKYCWithSessionType", ctx, customerID, country, hasExpiredID, preferredSessionType)
 	ret0, _ := ret[0].(model.VerifyCustomerKYCResponse)
