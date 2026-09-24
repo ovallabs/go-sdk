@@ -149,22 +149,14 @@ type (
 
 	// ApplepayTokenData holds Apple Pay token data
 	ApplepayTokenData struct {
-		Token struct {
-			PaymentData   ApplepayPaymentData `json:"paymentData" validate:"required"`
-			PaymentMethod struct {
-				DisplayName       string                     `json:"displayName" validate:"required"`
-				Network           string                     `json:"network" validate:"required"`
-				Type              string                     `json:"type" validate:"required"` // debit, credit, prepaid, store, unknown
-				SecureElementPass *ApplepaySecureElementPass `json:"secureElementPass,omitempty"`
-				BillingAddress    *ApplepayBillingAddress    `json:"billingAddress,omitempty"`
-			} `json:"paymentMethod" validate:"required"`
-			TransactionIdentifier string `json:"transactionIdentifier" validate:"required"`
-		} `json:"token" validate:"required"`
+		Token                 ApplepayPaymentData    `json:"token" validate:"required"`
+		TransactionIdentifier string                 `json:"transactionIdentifier" validate:"required"`
+		PaymentMethod         ApplepayPaymentMethod  `json:"paymentMethod" validate:"required"`
+		BillingContact        ApplepayBillingContact `json:"billingContact"`
 	}
 
 	// ApplepayPaymentData holds Apple Pay payment data
 	ApplepayPaymentData struct {
-		Version   string `json:"version" validate:"required"`
 		Data      string `json:"data" validate:"required"`
 		Signature string `json:"signature" validate:"required"`
 		Header    struct {
@@ -172,26 +164,30 @@ type (
 			PublicKeyHash      string `json:"publicKeyHash" validate:"required"`
 			TransactionID      string `json:"transactionId" validate:"required"`
 		} `json:"header" validate:"required"`
+		Version string `json:"version" validate:"required"`
 	}
 
-	// ApplepaySecureElementPass holds Apple Pay secure element pass data
-	ApplepaySecureElementPass struct {
-		PrimaryAccountIdentifier   string `json:"primaryAccountIdentifier"`
-		PrimaryAccountNumberSuffix string `json:"primaryAccountNumberSuffix"`
-		DeviceAccountIdentifier    string `json:"deviceAccountIdentifier"`
-		DeviceAccountNumberSuffix  string `json:"deviceAccountNumberSuffix"`
-		PassActivationState        string `json:"passActivationState"`
+	// ApplepayPaymentMethod holds the card the customer paid with
+	ApplepayPaymentMethod struct {
+		DisplayName string `json:"displayName" validate:"required"`
+		Network     string `json:"network" validate:"required"`
+		Type        int    `json:"type"` // 0 unknown, 1 debit, 2 credit, 3 prepaid, 4 store
 	}
 
-	// ApplepayBillingAddress holds Apple Pay billing address data
-	ApplepayBillingAddress struct {
-		GivenName      string `json:"givenName,omitempty"`
-		FamilyName     string `json:"familyName,omitempty"`
-		Street         string `json:"street,omitempty"`
-		City           string `json:"city,omitempty"`
-		State          string `json:"state,omitempty"`
-		PostalCode     string `json:"postalCode,omitempty"`
-		Country        string `json:"country,omitempty"`
-		ISOCountryCode string `json:"isoCountryCode,omitempty"`
+	// ApplepayBillingContact holds Apple Pay billing contact data
+	ApplepayBillingContact struct {
+		Name struct {
+			NamePrefix             string `json:"namePrefix"`
+			GivenName              string `json:"givenName"`
+			MiddleName             string `json:"middleName"`
+			FamilyName             string `json:"familyName"`
+			NameSuffix             string `json:"nameSuffix"`
+			Nickname               string `json:"nickname"`
+			PhoneticRepresentation struct {
+				GivenName  string `json:"givenName"`
+				MiddleName string `json:"middleName"`
+				FamilyName string `json:"familyName"`
+			} `json:"phoneticRepresentation"`
+		} `json:"name"`
 	}
 )
