@@ -13,9 +13,6 @@ const (
 	// APISecret sample sandbox environment signature
 	APISecret = "YbAO71rFXyWp0WJq-_yH7AFV6cZ7P71V53Y=" //"_Wjz3hGNJ8h1FwjJhNHnHXJJmT9Dkg=="  // "XC-WlyMxbC7MdS-mlzZ0G1tBBUXu"
 
-	// BearerToken sample sandbox environment bearer token
-	BearerToken = "eyJidXNpbmVzc0lEIjoiMWZmOGYxNTAtM2JiMi00ZWViLTkzOTYtOGZlZDZhZjNkNmUwIiwidXNlcklEIjoiYmMyNTFiZDItNDNkMy00Y2E2LWIzM2QtODlmNjFmMWZmZDE4Iiwia2V5Ijoic2VjcmV0In0="
-
 	//PublicKey   = "6UCepOuO2ULaL7upafQMe3NPIeX0uNjyXZEKAw=="
 	//BearerToken = "eyJidXNpbmVzc0lEIjoiM2VmMjE0NmMtMmE0Mi00ODM0LWFhMWYtMDhiMzQ1N2IwZjdlIiwidXNlcklEIjoiNWY3ZTVjY2MtY2U5MC00MDQ0LTk2NjUtYTExZjIyNjVlMWFlIiwia2V5IjoiYWJjZGVmMTIzNDU2In0="
 
