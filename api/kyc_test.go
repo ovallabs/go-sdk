@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/ovalfi/go-sdk/model"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/require"
 )
@@ -153,4 +154,70 @@ func Test_SubmitCustomerKYCDocument_DecodesFlatCustomerKYCDetails(t *testing.T) 
 	require.Equal(t, "biz-1", response.Data.BusinessID)
 	require.Equal(t, "customer-123", response.Data.CustomerID)
 	require.Equal(t, "pending", response.Data.Status)
+}
+
+func Test_GetProofOfAddressVerificationLink_SendsVerificationPurpose(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodGet, r.Method)
+		require.Equal(t, "/v1/kycs/customer-123/verify", r.URL.Path)
+		require.Equal(t, "proof_of_address", r.URL.Query().Get("verification_purpose"))
+		require.Equal(t, "GB", r.URL.Query().Get("country"))
+		require.Equal(t, "redirect_url", r.URL.Query().Get("preferred_session_type"))
+		require.False(t, r.URL.Query().Has("has_expired_id"))
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, err := w.Write([]byte(`{
+			"status": 200,
+			"message": "Biometrics verification fetched successfully!",
+			"error": null,
+			"data": {
+				"business_id": "biz-1",
+				"customer_id": "customer-123",
+				"url": "https://in.sumsub.com/websdk/l/poa123",
+				"kyc_provider": "sumsub",
+				"session_type": "redirect_url",
+				"flow_id": "poa-only"
+			}
+		}`))
+		require.NoError(t, err)
+	}))
+	defer ts.Close()
+
+	c := &Call{
+		baseURL: ts.URL + "/",
+		client:  resty.New(),
+		logger:  zerolog.Nop(),
+	}
+
+	country := "GB"
+	sessionType := model.SessionTypeRedirectURL
+	response, err := c.GetProofOfAddressVerificationLink(context.Background(), "customer-123", &country, &sessionType)
+	require.NoError(t, err)
+	require.Equal(t, "https://in.sumsub.com/websdk/l/poa123", response.URL)
+	require.Equal(t, "sumsub", response.KYCProvider)
+	require.Equal(t, "redirect_url", response.SessionType)
+	require.Equal(t, "poa-only", response.FlowID)
+}
+
+func Test_GetVerifyCustomerKYC_OmitsVerificationPurpose(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.False(t, r.URL.Query().Has("verification_purpose"))
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, err := w.Write([]byte(`{"status": 200, "message": "ok", "error": null, "data": {"url": "tok"}}`))
+		require.NoError(t, err)
+	}))
+	defer ts.Close()
+
+	c := &Call{
+		baseURL: ts.URL + "/",
+		client:  resty.New(),
+		logger:  zerolog.Nop(),
+	}
+
+	country := "GB"
+	_, err := c.GetVerifyCustomerKYC(context.Background(), "customer-123", &country, nil)
+	require.NoError(t, err)
 }

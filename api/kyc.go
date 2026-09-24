@@ -99,16 +99,22 @@ func (c *Call) GetVerifyBiometricsLink(ctx context.Context, customerID string) (
 
 // GetVerifyCustomerKYC makes request to get the link to verify biometrics.
 func (c *Call) GetVerifyCustomerKYC(ctx context.Context, customerID string, country, hasExpiredID *string) (model.VerifyCustomerKYCResponse, error) {
-	return c.getVerifyCustomerKYC(ctx, customerID, country, hasExpiredID, nil)
+	return c.getVerifyCustomerKYC(ctx, customerID, country, hasExpiredID, nil, nil)
 }
 
 // GetVerifyCustomerKYCWithSessionType is GetVerifyCustomerKYC plus preferredSessionType
 // ("redirect_url" | "access_token")
 func (c *Call) GetVerifyCustomerKYCWithSessionType(ctx context.Context, customerID string, country, hasExpiredID *string, preferredSessionType *model.SessionType) (model.VerifyCustomerKYCResponse, error) {
-	return c.getVerifyCustomerKYC(ctx, customerID, country, hasExpiredID, preferredSessionType)
+	return c.getVerifyCustomerKYC(ctx, customerID, country, hasExpiredID, preferredSessionType, nil)
 }
 
-func (c *Call) getVerifyCustomerKYC(ctx context.Context, customerID string, country, hasExpiredID *string, preferredSessionType *model.SessionType) (model.VerifyCustomerKYCResponse, error) {
+// GetProofOfAddressVerificationLink gets a session for collecting only a proof of address document
+func (c *Call) GetProofOfAddressVerificationLink(ctx context.Context, customerID string, country *string, preferredSessionType *model.SessionType) (model.VerifyCustomerKYCResponse, error) {
+	purpose := model.VerificationPurposeProofOfAddress
+	return c.getVerifyCustomerKYC(ctx, customerID, country, nil, preferredSessionType, &purpose)
+}
+
+func (c *Call) getVerifyCustomerKYC(ctx context.Context, customerID string, country, hasExpiredID *string, preferredSessionType *model.SessionType, verificationPurpose *model.VerificationPurpose) (model.VerifyCustomerKYCResponse, error) {
 	var (
 		err      error
 		response model.VerifyCustomerKYCResponse
@@ -125,6 +131,9 @@ func (c *Call) getVerifyCustomerKYC(ctx context.Context, customerID string, coun
 	}
 	if preferredSessionType != nil {
 		params["preferred_session_type"] = string(*preferredSessionType)
+	}
+	if verificationPurpose != nil {
+		params["verification_purpose"] = string(*verificationPurpose)
 	}
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
 
