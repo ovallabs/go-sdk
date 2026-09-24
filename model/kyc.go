@@ -97,3 +97,12 @@ const (
 	SessionTypeRedirectURL SessionType = "redirect_url"
 	SessionTypeAccessToken SessionType = "access_token"
 )
+
+// VerificationPurpose is what a KYC verification session collects.
+type VerificationPurpose string
+
+// VerificationPurpose values
+const (
+	VerificationPurposeIdentity       VerificationPurpose = "identity"
+	VerificationPurposeProofOfAddress VerificationPurpose = "proof_of_address"
+)
