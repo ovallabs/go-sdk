@@ -103,16 +103,17 @@ type (
 
 	// CustomerPaymentSessionRequest schema for customer payment session request
 	CustomerPaymentSessionRequest struct {
-		CustomerID    string  `json:"customer_id" validate:"required"`
-		PaymentMethod *string `json:"payment_method,omitempty"`
-		Amount        float64 `json:"amount" validate:"required"`
-		Currency      string  `json:"currency" validate:"required"`
-		Reference     string  `json:"reference" validate:"required"`
-		FailureURL    string  `json:"failure_url" validate:"required"`
-		SuccessURL    string  `json:"success_url" validate:"required"`
-		DisplayName   string  `json:"display_name" validate:"required"`
-		Country       string  `json:"country" validate:"required,max=2"`
-		Remarks       *string `json:"remarks"`
+		CustomerID         string              `json:"customer_id" validate:"required"`
+		PaymentMethod      *string             `json:"payment_method,omitempty"`
+		Amount             float64             `json:"amount" validate:"required"`
+		Currency           string              `json:"currency" validate:"required"`
+		Reference          string              `json:"reference" validate:"required"`
+		FailureURL         string              `json:"failure_url" validate:"required"`
+		SuccessURL         string              `json:"success_url" validate:"required"`
+		DisplayName        string              `json:"display_name" validate:"required"`
+		Country            string              `json:"country" validate:"required,max=2"`
+		Remarks            *string             `json:"remarks"`
+		TransactionDetails *TransactionDetails `json:"transaction_details,omitempty"`
 	}
 
 	// CustomerPaymentSessionResponse schema for customer payment session response
