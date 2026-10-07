@@ -113,6 +113,8 @@ type (
 		DisplayName   string  `json:"display_name" validate:"required"`
 		Country       string  `json:"country" validate:"required,max=2"`
 		Remarks       *string `json:"remarks"`
+		// TransactionDetails optionally carries the sender's address, used as the session billing address.
+		TransactionDetails *TransactionDetails `json:"transaction_details,omitempty"`
 	}
 
 	// CustomerPaymentSessionResponse schema for customer payment session response
