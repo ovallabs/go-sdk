@@ -189,5 +189,15 @@ type (
 				FamilyName string `json:"familyName"`
 			} `json:"phoneticRepresentation"`
 		} `json:"name"`
+		PostalAddress struct {
+			Street                string `json:"street"`
+			SubLocality           string `json:"subLocality"`
+			City                  string `json:"city"`
+			SubAdministrativeArea string `json:"subAdministrativeArea"`
+			State                 string `json:"state"`
+			PostalCode            string `json:"postalCode"`
+			Country               string `json:"country"`
+			ISOCountryCode        string `json:"isoCountryCode"`
+		} `json:"postalAddress"`
 	}
 )
