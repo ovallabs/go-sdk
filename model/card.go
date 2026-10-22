@@ -145,6 +145,22 @@ type (
 		ProtocolVersion string `json:"protocolVersion" validate:"required"`
 		Signature       string `json:"signature" validate:"required"`
 		SignedMessage   string `json:"signedMessage" validate:"required"`
+		// BillingAddress is the billing address the customer chose on the Google Pay sheet. It travels beside
+		// the token (it is not part of it) and must not be forwarded as token data. All fields are empty when the sheet gave no address.
+		BillingAddress GooglepayBillingAddress `json:"billingAddress"`
+	}
+
+	// GooglepayBillingAddress holds the billing address Google Pay returns in paymentMethodData.info.billingAddress
+	GooglepayBillingAddress struct {
+		Name               string `json:"name"`
+		Address1           string `json:"address1"`
+		Address2           string `json:"address2"`
+		Address3           string `json:"address3"`
+		Locality           string `json:"locality"`
+		AdministrativeArea string `json:"administrativeArea"`
+		PostalCode         string `json:"postalCode"`
+		CountryCode        string `json:"countryCode"`
+		SortingCode        string `json:"sortingCode"`
 	}
 
 	// ApplepayTokenData holds Apple Pay token data
