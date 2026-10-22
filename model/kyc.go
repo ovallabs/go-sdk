@@ -66,8 +66,8 @@ type Document struct {
 	Status           string      `json:"status"`
 	FailureNotes     interface{} `json:"failure_notes"`
 	Extension        string      `json:"extension"`
-	FrontSideLabel   string      `json:"front_label"`
-	BackSideLabel    string      `json:"back_label"`
+	FrontSideLabel   string      `json:"front_side_label"`
+	BackSideLabel    string      `json:"back_side_label"`
 	IsIdentity       bool        `json:"is_identity"`
 	IsProofOfAddress bool        `json:"is_proof_of_address"`
 	ProviderPayload  interface{} `json:"-"`
@@ -89,3 +89,20 @@ type VerifyCustomerKYCResponse struct {
 type VerifyCustomerKYCRequest struct {
 	Country *string `json:"country,omitempty"`
 }
+
+// SessionType is the shape of a KYC verification session's URL.
+type SessionType string
+
+const (
+	SessionTypeRedirectURL SessionType = "redirect_url"
+	SessionTypeAccessToken SessionType = "access_token"
+)
+
+// VerificationPurpose is what a KYC verification session collects.
+type VerificationPurpose string
+
+// VerificationPurpose values
+const (
+	VerificationPurposeIdentity       VerificationPurpose = "identity"
+	VerificationPurposeProofOfAddress VerificationPurpose = "proof_of_address"
+)

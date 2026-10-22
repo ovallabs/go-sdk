@@ -149,13 +149,45 @@ type (
 
 	// ApplepayTokenData holds Apple Pay token data
 	ApplepayTokenData struct {
-		Version   string `json:"version" validate:"required"`
+		Token                 ApplepayPaymentData    `json:"token" validate:"required"`
+		TransactionIdentifier string                 `json:"transactionIdentifier" validate:"required"`
+		PaymentMethod         ApplepayPaymentMethod  `json:"paymentMethod" validate:"required"`
+		BillingContact        ApplepayBillingContact `json:"billingContact"`
+	}
+
+	// ApplepayPaymentData holds Apple Pay payment data
+	ApplepayPaymentData struct {
 		Data      string `json:"data" validate:"required"`
 		Signature string `json:"signature" validate:"required"`
 		Header    struct {
-			EphemeralPublicKey string `json:"ephemeralPublicKey"`
-			PublicKeyHash      string `json:"publicKeyHash"`
-			TransactionID      string `json:"transactionId"`
-		} `json:"header"`
+			EphemeralPublicKey string `json:"ephemeralPublicKey" validate:"required"`
+			PublicKeyHash      string `json:"publicKeyHash" validate:"required"`
+			TransactionID      string `json:"transactionId" validate:"required"`
+		} `json:"header" validate:"required"`
+		Version string `json:"version" validate:"required"`
+	}
+
+	// ApplepayPaymentMethod holds the card the customer paid with
+	ApplepayPaymentMethod struct {
+		DisplayName string `json:"displayName" validate:"required"`
+		Network     string `json:"network" validate:"required"`
+		Type        int    `json:"type"` // 0 unknown, 1 debit, 2 credit, 3 prepaid, 4 store
+	}
+
+	// ApplepayBillingContact holds Apple Pay billing contact data
+	ApplepayBillingContact struct {
+		Name struct {
+			NamePrefix             string `json:"namePrefix"`
+			GivenName              string `json:"givenName"`
+			MiddleName             string `json:"middleName"`
+			FamilyName             string `json:"familyName"`
+			NameSuffix             string `json:"nameSuffix"`
+			Nickname               string `json:"nickname"`
+			PhoneticRepresentation struct {
+				GivenName  string `json:"givenName"`
+				MiddleName string `json:"middleName"`
+				FamilyName string `json:"familyName"`
+			} `json:"phoneticRepresentation"`
+		} `json:"name"`
 	}
 )
