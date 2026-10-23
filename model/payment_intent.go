@@ -13,6 +13,7 @@ type (
 		Reference          *string             `json:"reference,omitempty"`
 		RedirectURL        *string             `json:"redirect_url,omitempty"`
 		PhoneNumber        *string             `json:"phone_number,omitempty"`
+		Email              *string             `json:"email,omitempty"`
 		TransactionDetails *TransactionDetails `json:"transaction_details,omitempty"`
 	}
 
