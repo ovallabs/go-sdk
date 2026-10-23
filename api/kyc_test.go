@@ -221,3 +221,55 @@ func Test_GetVerifyCustomerKYC_OmitsVerificationPurpose(t *testing.T) {
 	_, err := c.GetVerifyCustomerKYC(context.Background(), "customer-123", &country, nil)
 	require.NoError(t, err)
 }
+
+// Test_GetKYCByCustomerID_NotFound confirms external-api's 404 for a customer
+// with no KYC record surfaces as model.ErrCustomerKYCNotFound.
+func Test_GetKYCByCustomerID_NotFound(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusNotFound)
+		_, err := w.Write([]byte(`{
+			"status": 404,
+			"message": "error has occurred",
+			"data": null,
+			"error": {"id": "req-1", "service": "kyc", "details": "customer kyc details not found", "publicMessage": "Customer kyc details not found."}
+		}`))
+		require.NoError(t, err)
+	}))
+	defer ts.Close()
+
+	c := &Call{
+		baseURL: ts.URL + "/",
+		client:  resty.New(),
+		logger:  zerolog.Nop(),
+	}
+
+	_, err := c.GetKYCByCustomerID(context.Background(), "customer-789")
+	require.ErrorIs(t, err, model.ErrCustomerKYCNotFound)
+}
+
+// Test_GetKYCByCustomerID_OtherErrorsAreNotNotFound confirms a generic failure
+// is not mistaken for a missing KYC record.
+func Test_GetKYCByCustomerID_OtherErrorsAreNotNotFound(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusUnprocessableEntity)
+		_, err := w.Write([]byte(`{
+			"status": 422,
+			"data": null,
+			"error": {"details": "We were unable to process your request at this time. Please try again later."}
+		}`))
+		require.NoError(t, err)
+	}))
+	defer ts.Close()
+
+	c := &Call{
+		baseURL: ts.URL + "/",
+		client:  resty.New(),
+		logger:  zerolog.Nop(),
+	}
+
+	_, err := c.GetKYCByCustomerID(context.Background(), "customer-789")
+	require.Error(t, err)
+	require.NotErrorIs(t, err, model.ErrCustomerKYCNotFound)
+}
