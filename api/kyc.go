@@ -10,6 +10,7 @@ import (
 )
 
 // GetKYCByCustomerID makes request to get KYC for a customer.
+// It returns model.ErrCustomerKYCNotFound when the customer has no KYC record.
 func (c *Call) GetKYCByCustomerID(ctx context.Context, customerID string) (model.KYCResponse, error) {
 	var (
 		err      error
@@ -18,6 +19,10 @@ func (c *Call) GetKYCByCustomerID(ctx context.Context, customerID string) (model
 	)
 
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response.Data)
+	// makeRequest only surfaces the error details as plain text, so map the known message to its sentinel
+	if err != nil && err.Error() == model.ErrCustomerKYCNotFound.Error() {
+		return response, model.ErrCustomerKYCNotFound
+	}
 
 	return response, err
 }
