@@ -11,6 +11,8 @@ import (
 var (
 	// ErrNetworkError when something goes wrong with the API call
 	ErrNetworkError = errors.New("network error")
+	// ErrCustomerKYCNotFound when a customer has no KYC record
+	ErrCustomerKYCNotFound = errors.New("customer kyc details not found")
 )
 
 // ParseError parses error message to a more specific format
