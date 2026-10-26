@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -19,10 +20,35 @@ import (
 	"github.com/ovalfi/go-sdk/model"
 )
 
+// withRedactedLogging returns a context that makes makeRequest redact its logs for the call.
+// maskedPath is the path to log in place of the real one, e.g. with an ID number replaced by ***.
+func withRedactedLogging(ctx context.Context, maskedPath string) context.Context {
+	return context.WithValue(ctx, model.RedactedLogContextKey, model.RedactedLog{MaskedPath: maskedPath})
+}
+
+func redactedLogFrom(ctx context.Context) (model.RedactedLog, bool) {
+	r, ok := ctx.Value(model.RedactedLogContextKey).(model.RedactedLog)
+	return r, ok
+}
+
+// maskEndpoint replaces the real endpoint in err's text, as net/http copies the URL into transport errors
+func maskEndpoint(err error, endpoint, maskedEndpoint string) error {
+	if err == nil || !strings.Contains(err.Error(), endpoint) {
+		return err
+	}
+	return errors.New(strings.ReplaceAll(err.Error(), endpoint, maskedEndpoint))
+}
+
 func (c *Call) makeRequest(ctx context.Context, path, method string, signature *string, params, formData map[string]interface{}, requestBody, responseData interface{}) error {
 	endpoint := fmt.Sprintf("%s%s", c.baseURL, path)
 
-	log := c.logger.With().Str("method", method).Str("endpoint", endpoint).Logger()
+	redact, redacted := redactedLogFrom(ctx)
+	logEndpoint := endpoint
+	if redacted {
+		logEndpoint = fmt.Sprintf("%s%s", c.baseURL, redact.MaskedPath)
+	}
+
+	log := c.logger.With().Str("method", method).Str("endpoint", logEndpoint).Logger()
 	log.Info().Msg("starting...")
 
 	var (
@@ -43,19 +69,31 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 	}
 
 	if requestBody != nil {
-		log.Info().Interface(model.LogStrRequest, requestBody).Msg("request")
+		if redacted {
+			log.Info().Msg(model.LogMsgRequestRedacted)
+		} else {
+			log.Info().Interface(model.LogStrRequest, requestBody).Msg("request")
+		}
 		client.SetBody(requestBody)
 	}
 
 	if params != nil {
-		log.Info().Interface(model.LogStrParams, params).Msg("parameters")
+		if redacted {
+			log.Info().Msg(model.LogMsgParamsRedacted)
+		} else {
+			log.Info().Interface(model.LogStrParams, params).Msg("parameters")
+		}
 		for k, v := range params {
 			client.SetQueryParam(k, v.(string))
 		}
 	}
 
 	if formData != nil {
-		log.Info().Interface(model.LogStrForm, formData).Msg("form data")
+		if redacted {
+			log.Info().Msg(model.LogMsgFormRedacted)
+		} else {
+			log.Info().Interface(model.LogStrForm, formData).Msg("form data")
+		}
 		formDataConv := make(map[string]string)
 		for k, v := range formData {
 			if file, ok := v.(*os.File); ok {
@@ -89,6 +127,14 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 	}
 
 	if err != nil {
+		if redacted {
+			err = maskEndpoint(err, endpoint, logEndpoint)
+			log.Err(err).Msg("something went wrong")
+			if res != nil {
+				log.Err(err).Str(model.LogErrorCode, fmt.Sprintf("%d", res.StatusCode())).Msg(model.LogMsgErrorBodyRedacted)
+			}
+			return err
+		}
 		log.Err(err).Msg("something went wrong")
 		if res != nil {
 			log.Err(err).Str("error_code", fmt.Sprintf("%d", res.StatusCode())).Msg(string(res.Body()))
@@ -102,7 +148,11 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 		return err
 	}
 
-	log.Info().Interface(model.LogStrResponse, genericResponse.Data).Msg("response")
+	if redacted {
+		log.Info().Msg(model.LogMsgResponseRedacted)
+	} else {
+		log.Info().Interface(model.LogStrResponse, genericResponse.Data).Msg("response")
+	}
 	if responseData != nil {
 		err = mapstruct(genericResponse.Data, responseData)
 		if err != nil {
