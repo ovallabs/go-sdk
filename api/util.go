@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"regexp"
 	"strings"
 	"time"
 
@@ -31,12 +32,24 @@ func redactedLogFrom(ctx context.Context) (model.RedactedLog, bool) {
 	return r, ok
 }
 
-// maskEndpoint replaces the real endpoint in err's text, as net/http copies the URL into transport errors
+// maskedError carries a sanitized message while keeping the original error in the chain for errors.Is/As
+type maskedError struct {
+	msg   string
+	cause error
+}
+
+func (e *maskedError) Error() string { return e.msg }
+func (e *maskedError) Unwrap() error { return e.cause }
+
+// maskEndpoint replaces the real endpoint in err's text and drops any query string that follows it,
+// as net/http copies the full URL into transport errors. The original error stays reachable via Unwrap.
 func maskEndpoint(err error, endpoint, maskedEndpoint string) error {
 	if err == nil || !strings.Contains(err.Error(), endpoint) {
 		return err
 	}
-	return errors.New(strings.ReplaceAll(err.Error(), endpoint, maskedEndpoint))
+	msg := strings.ReplaceAll(err.Error(), endpoint, maskedEndpoint)
+	msg = regexp.MustCompile(regexp.QuoteMeta(maskedEndpoint)+`\?[^\s"']*`).ReplaceAllString(msg, maskedEndpoint)
+	return &maskedError{msg: msg, cause: err}
 }
 
 func (c *Call) makeRequest(ctx context.Context, path, method string, signature *string, params, formData map[string]interface{}, requestBody, responseData interface{}) error {
@@ -63,6 +76,11 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 		SetResult(&genericResponse).
 		SetError(&genericResponse).
 		SetContext(ctx)
+
+	if redacted {
+		// resty's debug dump prints the real URL and bodies; turn it off for this request only
+		client.SetDebug(false)
+	}
 
 	if signature != nil {
 		client = client.SetHeader("Signature", *signature)
@@ -144,6 +162,11 @@ func (c *Call) makeRequest(ctx context.Context, path, method string, signature *
 
 	if genericResponse.Error != nil {
 		err = errors.New(genericResponse.Error.Details)
+		if redacted {
+			// the details may echo submitted identity values; callers still get them in the returned error
+			log.Error().Msg(model.LogMsgErrorBodyRedacted)
+			return err
+		}
 		log.Err(err).Msg("error while making request")
 		return err
 	}
