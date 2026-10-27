@@ -18,6 +18,8 @@ func (c *Call) GetKYCByCustomerID(ctx context.Context, customerID string) (model
 		path     = fmt.Sprintf("%s/%s", kycAPIVersion, customerID)
 	)
 
+	// the response carries the customer's identity and biometric details
+	ctx = withRedactedLogging(ctx, path)
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response.Data)
 	// makeRequest only surfaces the error details as plain text, so map the known message to its sentinel
 	if err != nil && err.Error() == model.ErrCustomerKYCNotFound.Error() {
@@ -61,7 +63,8 @@ func (c *Call) SubmitCustomerKYCDocument(
 	formData["document_type"] = documentType
 	formData["country"] = country
 
-	// makeRequest
+	// the form carries the customer's identity documents and the response their KYC details
+	ctx = withRedactedLogging(ctx, path)
 	err := c.makeRequest(
 		ctx,
 		path,
@@ -83,6 +86,8 @@ func (c *Call) VerifyCustomerKYC(ctx context.Context, customerID, idNumber, kycT
 		path     = fmt.Sprintf("%s/%s/%s/%s", kycAPIVersion, customerID, kycType, idNumber)
 	)
 
+	// the ID number (e.g. an SSN) is part of the path, so mask it in the logged path too
+	ctx = withRedactedLogging(ctx, fmt.Sprintf("%s/%s/%s/***", kycAPIVersion, customerID, kycType))
 	err = c.makeRequest(ctx, path, http.MethodPost, nil, nil, nil, nil, &response)
 
 	return response, err
@@ -96,6 +101,8 @@ func (c *Call) GetVerifyBiometricsLink(ctx context.Context, customerID string) (
 		path     = fmt.Sprintf("%s/%s/biometrics", kycAPIVersion, customerID)
 	)
 
+	// the response is a one-time verification link for the customer
+	ctx = withRedactedLogging(ctx, path)
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, nil, nil, nil, &response)
 
 	return response, err
@@ -140,6 +147,8 @@ func (c *Call) getVerifyCustomerKYC(ctx context.Context, customerID string, coun
 	if verificationPurpose != nil {
 		params["verification_purpose"] = string(*verificationPurpose)
 	}
+	// the response is a one-time verification link for the customer
+	ctx = withRedactedLogging(ctx, path)
 	err = c.makeRequest(ctx, path, http.MethodGet, nil, params, nil, nil, &response)
 
 	return response, err
