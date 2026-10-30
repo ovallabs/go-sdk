@@ -10,5 +10,5 @@ type CompetitorRate struct {
 	From         string    `json:"from"`
 	To           string    `json:"to"`
 	Rate         float64   `json:"rate"`
-	CreatedAt    time.Time `json:"created_at"` // when Torus saved the rate; zero if it was not sent
+	CreatedAt    time.Time `json:"created_at"`
 }
