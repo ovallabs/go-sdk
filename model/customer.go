@@ -43,11 +43,11 @@ type (
 		Reference        string       `json:"reference"`
 		MobileNumber     string       `json:"mobile_number"`
 		Country          *string      `json:"country,omitempty"`
-		Address          *string      `json:"address,omitempty"`       // max 255 characters
-		City             *string      `json:"city,omitempty"`          // max 100 characters
-		State            *string      `json:"state,omitempty"`         // max 100 characters
-		PostalCode       *string      `json:"postal_code,omitempty"`   // max 20 characters
-		DateOfBirth      *string      `json:"date_of_birth,omitempty"` // yyyy-MM-dd
+		Address          *string      `json:"address,omitempty"`
+		City             *string      `json:"city,omitempty"`
+		State            *string      `json:"state,omitempty"`
+		PostalCode       *string      `json:"postal_code,omitempty"`
+		DateOfBirth      *string      `json:"date_of_birth,omitempty"`
 		Type             CustomerType `json:"type"`
 		YieldOfferingIDs []uuid.UUID  `json:"yield_offering_ids"`
 	}
@@ -60,11 +60,11 @@ type (
 		Reference        string      `json:"reference"`
 		MobileNumber     string      `json:"mobile_number"`
 		Country          *string     `json:"country"`
-		Address          *string     `json:"address,omitempty"`       // max 255 characters
-		City             *string     `json:"city,omitempty"`          // max 100 characters
-		State            *string     `json:"state,omitempty"`         // max 100 characters
-		PostalCode       *string     `json:"postal_code,omitempty"`   // max 20 characters
-		DateOfBirth      *string     `json:"date_of_birth,omitempty"` // yyyy-MM-dd
+		Address          *string     `json:"address,omitempty"`
+		City             *string     `json:"city,omitempty"`
+		State            *string     `json:"state,omitempty"`
+		PostalCode       *string     `json:"postal_code,omitempty"`
+		DateOfBirth      *string     `json:"date_of_birth,omitempty"`
 		YieldOfferingIDs []uuid.UUID `json:"yield_offering_ids"`
 	}
 
