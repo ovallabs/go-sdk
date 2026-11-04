@@ -200,12 +200,12 @@ func Test_GetProofOfAddressVerificationLink_SendsVerificationPurpose(t *testing.
 	require.Equal(t, "poa-only", response.FlowID)
 }
 
-func Test_GetKYCSSNVerificationSession_RequestsAccessTokenForKYCSSN(t *testing.T) {
+func Test_GetKYCSSNVerificationSession_SendsKYCSSNPurposeOnly(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		require.Equal(t, http.MethodGet, r.Method)
 		require.Equal(t, "/v1/kycs/customer-123/verify", r.URL.Path)
 		require.Equal(t, "kyc_ssn", r.URL.Query().Get("verification_purpose"))
-		require.Equal(t, "access_token", r.URL.Query().Get("preferred_session_type"))
+		require.False(t, r.URL.Query().Has("preferred_session_type"))
 		require.Equal(t, "US", r.URL.Query().Get("country"))
 		require.False(t, r.URL.Query().Has("has_expired_id"))
 
@@ -218,9 +218,9 @@ func Test_GetKYCSSNVerificationSession_RequestsAccessTokenForKYCSSN(t *testing.T
 			"data": {
 				"business_id": "biz-1",
 				"customer_id": "customer-123",
-				"url": "obtok_session",
+				"url": "https://verify.onefootprint.com/?type=user#obtok_session",
 				"kyc_provider": "footprint",
-				"session_type": "access_token",
+				"session_type": "redirect_url",
 				"flow_id": "pb_kyc_ssn"
 			}
 		}`))
@@ -237,9 +237,9 @@ func Test_GetKYCSSNVerificationSession_RequestsAccessTokenForKYCSSN(t *testing.T
 	country := "US"
 	response, err := c.GetKYCSSNVerificationSession(context.Background(), "customer-123", &country)
 	require.NoError(t, err)
-	require.Equal(t, "obtok_session", response.URL)
+	require.Equal(t, "https://verify.onefootprint.com/?type=user#obtok_session", response.URL)
 	require.Equal(t, "footprint", response.KYCProvider)
-	require.Equal(t, "access_token", response.SessionType)
+	require.Equal(t, "redirect_url", response.SessionType)
 	require.Equal(t, "pb_kyc_ssn", response.FlowID)
 }
 

@@ -126,12 +126,11 @@ func (c *Call) GetProofOfAddressVerificationLink(ctx context.Context, customerID
 	return c.getVerifyCustomerKYC(ctx, customerID, country, nil, preferredSessionType, &purpose)
 }
 
-// GetKYCSSNVerificationSession gets a session token for the combined KYC and SSN flow of an existing customer.
-// The token is for the provider's client SDK, so the access token session type is always requested.
+// GetKYCSSNVerificationSession gets a session link for the combined KYC and SSN flow of an existing customer.
+// No session type is requested, so the provider's default (the hosted link) is returned.
 func (c *Call) GetKYCSSNVerificationSession(ctx context.Context, customerID string, country *string) (model.VerifyCustomerKYCResponse, error) {
 	purpose := model.VerificationPurposeKYCSSN
-	sessionType := model.SessionTypeAccessToken
-	return c.getVerifyCustomerKYC(ctx, customerID, country, nil, &sessionType, &purpose)
+	return c.getVerifyCustomerKYC(ctx, customerID, country, nil, nil, &purpose)
 }
 
 func (c *Call) getVerifyCustomerKYC(ctx context.Context, customerID string, country, hasExpiredID *string, preferredSessionType *model.SessionType, verificationPurpose *model.VerificationPurpose) (model.VerifyCustomerKYCResponse, error) {
