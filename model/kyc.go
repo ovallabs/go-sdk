@@ -105,4 +105,6 @@ type VerificationPurpose string
 const (
 	VerificationPurposeIdentity       VerificationPurpose = "identity"
 	VerificationPurposeProofOfAddress VerificationPurpose = "proof_of_address"
+	// VerificationPurposeKYCSSN is a combined KYC and SSN session for a customer that already exists
+	VerificationPurposeKYCSSN VerificationPurpose = "kyc_ssn"
 )

@@ -43,6 +43,10 @@ func Test_KYCCalls_DoNotLogResponseBody(t *testing.T) {
 			_, err := c.GetVerifyCustomerKYC(context.Background(), "customer-1", nil, nil)
 			return err
 		},
+		"GetKYCSSNVerificationSession": func(c *Call) error {
+			_, err := c.GetKYCSSNVerificationSession(context.Background(), "customer-1", nil)
+			return err
+		},
 		"GetVerifyBiometricsLink": func(c *Call) error {
 			_, _ = c.GetVerifyBiometricsLink(context.Background(), "customer-1")
 			return nil
