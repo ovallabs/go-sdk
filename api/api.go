@@ -106,6 +106,7 @@ type RemoteCalls interface {
 	GetVerifyCustomerKYC(ctx context.Context, customerID string, country, hasExpiredID *string) (model.VerifyCustomerKYCResponse, error)
 	GetVerifyCustomerKYCWithSessionType(ctx context.Context, customerID string, country, hasExpiredID *string, preferredSessionType *model.SessionType) (model.VerifyCustomerKYCResponse, error)
 	GetProofOfAddressVerificationLink(ctx context.Context, customerID string, country *string, preferredSessionType *model.SessionType) (model.VerifyCustomerKYCResponse, error)
+	GetKYCSSNVerificationSession(ctx context.Context, customerID string, country *string) (model.VerifyCustomerKYCResponse, error)
 
 	// Card APIs
 	CreateCustomerCard(ctx context.Context, request model.CreateCustomerCardRequest) (string, error)

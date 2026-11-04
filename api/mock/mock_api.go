@@ -823,6 +823,21 @@ func (mr *MockRemoteCallsMockRecorder) GetKYCByCustomerID(ctx, customerID interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetKYCByCustomerID", reflect.TypeOf((*MockRemoteCalls)(nil).GetKYCByCustomerID), ctx, customerID)
 }
 
+// GetKYCSSNVerificationSession mocks base method.
+func (m *MockRemoteCalls) GetKYCSSNVerificationSession(ctx context.Context, customerID string, country *string) (model.VerifyCustomerKYCResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetKYCSSNVerificationSession", ctx, customerID, country)
+	ret0, _ := ret[0].(model.VerifyCustomerKYCResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetKYCSSNVerificationSession indicates an expected call of GetKYCSSNVerificationSession.
+func (mr *MockRemoteCallsMockRecorder) GetKYCSSNVerificationSession(ctx, customerID, country interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetKYCSSNVerificationSession", reflect.TypeOf((*MockRemoteCalls)(nil).GetKYCSSNVerificationSession), ctx, customerID, country)
+}
+
 // GetLinkToAddPaymentCard mocks base method.
 func (m *MockRemoteCalls) GetLinkToAddPaymentCard(ctx context.Context, request model.GetLinkToAddCardReq) (string, error) {
 	m.ctrl.T.Helper()
