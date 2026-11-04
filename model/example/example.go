@@ -15,6 +15,11 @@ var (
 		Email:            "chinonso@ovalfinanc.com",
 		Reference:        "ref1230",
 		MobileNumber:     "090803406089",
+		Address:          helpers.GetPointerString("12 Admiralty Way"),
+		City:             helpers.GetPointerString("Lagos"),
+		State:            helpers.GetPointerString("Lagos"),
+		PostalCode:       helpers.GetPointerString("101233"),
+		DateOfBirth:      helpers.GetPointerString("1990-01-31"),
 		Type:             model.CustomerTypeIndividual,
 		YieldOfferingIDs: []uuid.UUID{uuid.MustParse("ef8891af-e887-4e2c-ac79-7a9682d1ad77")},
 	}
