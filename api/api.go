@@ -97,6 +97,7 @@ type RemoteCalls interface {
 	DebitPaymentCard(ctx context.Context, request model.DebitCustomerPaymentCardRequest) (model.Deposit, error)
 	RefundCustomerDeposit(ctx context.Context, request model.RefundCustomerDepositRequest) error
 	DeleteCustomerPaymentCard(ctx context.Context, customerID, cardID string) error
+	UpdateCustomerPaymentCard(ctx context.Context, customerID, cardID string, request model.UpdatePaymentCardRequest) (model.PaymentCard, error)
 
 	// KYC APIs
 	GetKYCByCustomerID(ctx context.Context, customerID string) (model.KYCResponse, error)

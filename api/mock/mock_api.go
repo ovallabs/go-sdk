@@ -1386,6 +1386,21 @@ func (mr *MockRemoteCallsMockRecorder) UpdateCustomer(ctx, request interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateCustomer", reflect.TypeOf((*MockRemoteCalls)(nil).UpdateCustomer), ctx, request)
 }
 
+// UpdateCustomerPaymentCard mocks base method.
+func (m *MockRemoteCalls) UpdateCustomerPaymentCard(ctx context.Context, customerID, cardID string, request model.UpdatePaymentCardRequest) (model.PaymentCard, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateCustomerPaymentCard", ctx, customerID, cardID, request)
+	ret0, _ := ret[0].(model.PaymentCard)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateCustomerPaymentCard indicates an expected call of UpdateCustomerPaymentCard.
+func (mr *MockRemoteCallsMockRecorder) UpdateCustomerPaymentCard(ctx, customerID, cardID, request interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateCustomerPaymentCard", reflect.TypeOf((*MockRemoteCalls)(nil).UpdateCustomerPaymentCard), ctx, customerID, cardID, request)
+}
+
 // UpdatePayoutAccount mocks base method.
 func (m *MockRemoteCalls) UpdatePayoutAccount(ctx context.Context, payoutID string, request model.TransferBeneficiaryDetails) error {
 	m.ctrl.T.Helper()
