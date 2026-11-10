@@ -34,7 +34,7 @@ type KYCData struct {
 	Identity                       string      `json:"identity"`
 	IdentityType                   string      `json:"identity_type"`
 	IdentityConfirmed              bool        `json:"identity_confirmed"`
-	IdentityVerificationStatus     string      `json:"identity_verification_status"`
+	IdentityVerificationStatus     interface{} `json:"identity_verification_status"`
 	IdentityDocumentVerified       bool        `json:"identity_document_verified"`
 	ProofOfAddressDocumentVerified bool        `json:"proof_of_address_document_verified"`
 	TaxIDNumber                    string      `json:"tax_id_number"`
