@@ -131,3 +131,16 @@ func (c *Call) DeleteCustomerPaymentCard(ctx context.Context, customerID, cardID
 	err := c.makeRequest(ctx, path, http.MethodDelete, nil, nil, nil, nil, nil)
 	return err
 }
+
+// UpdateCustomerPaymentCard makes request to Torus to set a customer payment card's status
+func (c *Call) UpdateCustomerPaymentCard(ctx context.Context, customerID, cardID string, request model.UpdatePaymentCardRequest) (model.PaymentCard, error) {
+	var (
+		err      error
+		response model.PaymentCard
+		path     = fmt.Sprintf("v1/payments/cards/%s/%s", customerID, cardID)
+	)
+
+	err = c.makeRequest(ctx, path, http.MethodPatch, nil, nil, nil, request, &response)
+
+	return response, err
+}

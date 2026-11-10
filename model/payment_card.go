@@ -58,6 +58,13 @@ type (
 		CreatedAt      time.Time       `json:"created_at"`
 	}
 
+	// UpdatePaymentCardRequest sets a customer payment card's status, e.g. after a manual review
+	UpdatePaymentCardRequest struct {
+		Status    string `json:"status"` // approved, rejected or flagged
+		Reason    string `json:"reason"`
+		UpdatedBy string `json:"updated_by"` // who made the change, e.g. an admin's email
+	}
+
 	// AllPaymentCardsResponse schema for all payment cards response
 	AllPaymentCardsResponse struct {
 		Items *[]PaymentCard `json:"items"`

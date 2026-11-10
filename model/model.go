@@ -4,6 +4,13 @@ package model
 type (
 	// Key is a middleware key sting value
 	Key string
+
+	// RedactedLog marks a request whose path, payload or response carries sensitive data (KYC), so the
+	// request is logged with only its method and masked path, never the bodies, query params, form data or raw URL
+	RedactedLog struct {
+		// MaskedPath is the path logged in place of the real one, e.g. with an ID number replaced by ***
+		MaskedPath string
+	}
 )
 
 const (
@@ -34,8 +41,25 @@ const (
 	// LogErrorCode log error_code
 	LogErrorCode = "error_code"
 
+	// LogMsgRequestRedacted log message for a request whose payload is withheld from logs
+	LogMsgRequestRedacted = "request (redacted)"
+
+	// LogMsgParamsRedacted log message for query params withheld from logs
+	LogMsgParamsRedacted = "parameters (redacted)"
+
+	// LogMsgFormRedacted log message for form data withheld from logs
+	LogMsgFormRedacted = "form data (redacted)"
+
+	// LogMsgResponseRedacted log message for a response withheld from logs
+	LogMsgResponseRedacted = "response (redacted)"
+
+	// LogMsgErrorBodyRedacted log message for an error response body withheld from logs
+	LogMsgErrorBodyRedacted = "response body redacted"
+
 	// RequestIDContextKey contact that holds the RequestID context key for
 	RequestIDContextKey Key = "api_RequestIDContextKey"
+	// RedactedLogContextKey context key that holds the RedactedLog of a request whose logs must be redacted
+	RedactedLogContextKey Key = "api_RedactedLogContextKey"
 	// RequestIDHeaderKey a constant for the request id header key
 	RequestIDHeaderKey string = "X-REQUEST-ID"
 )
