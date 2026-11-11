@@ -110,6 +110,8 @@ type (
 		AccountNumber *string  `json:"account_number,omitempty"`
 		Amount        *float64 `json:"amount,omitempty"`
 		Currency      *string  `json:"currency,omitempty"`
+		// Country is the recipient's ISO 3166-1 alpha-2 country, which picks the payout corridor.
+		Country *string `json:"country,omitempty"`
 	}
 
 	// RefundCustomerDepositRequest for request payload
