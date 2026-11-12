@@ -23,6 +23,11 @@ type (
 		Name             string      `json:"customer_name"`
 		MobileNumber     string      `json:"mobile_number"`
 		Country          *string     `json:"country"`
+		Address          *string     `json:"address"`
+		City             *string     `json:"city"`
+		State            *string     `json:"state"`
+		PostalCode       *string     `json:"postal_code"`
+		DateOfBirth      *string     `json:"date_of_birth"` // yyyy-MM-dd
 		Email            string      `json:"email"`
 		Channel          string      `json:"channel"`
 		Reference        string      `json:"reference"`
@@ -38,6 +43,11 @@ type (
 		Reference        string       `json:"reference"`
 		MobileNumber     string       `json:"mobile_number"`
 		Country          *string      `json:"country,omitempty"`
+		Address          *string      `json:"address,omitempty"`
+		City             *string      `json:"city,omitempty"`
+		State            *string      `json:"state,omitempty"`
+		PostalCode       *string      `json:"postal_code,omitempty"`
+		DateOfBirth      *string      `json:"date_of_birth,omitempty"`
 		Type             CustomerType `json:"type"`
 		YieldOfferingIDs []uuid.UUID  `json:"yield_offering_ids"`
 	}
@@ -50,6 +60,11 @@ type (
 		Reference        string      `json:"reference"`
 		MobileNumber     string      `json:"mobile_number"`
 		Country          *string     `json:"country"`
+		Address          *string     `json:"address,omitempty"`
+		City             *string     `json:"city,omitempty"`
+		State            *string     `json:"state,omitempty"`
+		PostalCode       *string     `json:"postal_code,omitempty"`
+		DateOfBirth      *string     `json:"date_of_birth,omitempty"`
 		YieldOfferingIDs []uuid.UUID `json:"yield_offering_ids"`
 	}
 
